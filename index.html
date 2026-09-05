@@ -3,74 +3,136 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VALUVENTUM® – Gruppen-Test · Startseite</title>
-<meta name="description" content="VALUVENTUM® Gruppen-Test: Grundeinkommen, 10-%-Gemeinschaftsbeitrag und transparente Verteilung auf Gemeinschaftsaufgaben.">
+<title>VALUVENTUM® DEZENTRAL – Das Instrument der Freiheit</title>
+<meta name="description" content="VALUVENTUM® Gruppen-Testversion – Original-Startbereich mit neuer Budget- und Verteilungsrechnung.">
 <style>
-:root{--green:#0f5a46;--green2:#0a6a4d;--gold:#c99624;--cream:#fffaf0;--ink:#263531;--muted:#73807c;--line:#dce6e0;--soft:#f5f8f6}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font-family:Inter,Arial,sans-serif}
-a{color:inherit}
-.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.topbar-inner{width:min(1180px,92%);min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:12px}.mark{width:42px;height:42px;border-radius:12px;background:var(--green);border:2px solid var(--gold);display:grid;place-items:center;color:#fff;font-size:25px;font-weight:900}.brand-copy strong{display:block;color:var(--green);letter-spacing:.04em}.brand-copy small{display:block;margin-top:3px;color:var(--gold);font-size:.68rem;font-weight:900;letter-spacing:.12em}.badge{margin-left:8px;padding:3px 8px;border:1px solid #e3c777;border-radius:999px;color:#9a6b00;font-size:.58rem;letter-spacing:.12em}
-.right{display:flex;align-items:center;gap:12px}.test{padding:9px 13px;border:1px solid #e8cf8a;border-radius:999px;background:#fff8e6;color:#8b640e;font-size:.72rem;font-weight:900;letter-spacing:.06em}.langs{display:flex;gap:5px;padding:4px;border:1px solid var(--line);border-radius:14px}.langs button{border:0;border-radius:10px;background:transparent;color:#63716d;padding:8px 10px;font-weight:900;cursor:pointer}.langs button.active{background:var(--green);color:#fff}
-.hero{width:min(1180px,92%);margin:0 auto;padding:76px 0 44px;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}.eyebrow{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.14em}.hero h1{margin:12px 0 18px;color:var(--green);font-size:clamp(3rem,6vw,5.6rem);line-height:.94;letter-spacing:-.045em}.hero h1 em{display:block;color:var(--gold);font-style:normal}.hero p{max-width:690px;margin:0;color:var(--muted);font-size:1.08rem;line-height:1.7}.notice{margin-top:20px;padding:15px 18px;border-left:4px solid var(--gold);border-radius:0 12px 12px 0;background:var(--cream);color:#66736f;font-size:.86rem;line-height:1.55}.notice strong{color:var(--green)}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:999px;text-decoration:none;font-weight:900}.btn.primary{background:var(--green);color:#fff;box-shadow:0 9px 22px rgba(15,90,70,.16)}.btn.secondary{border:1px solid var(--gold);color:var(--green);background:#fff}
-.orbit{position:relative;min-height:390px;display:grid;place-items:center}.ring{position:absolute;border:1px solid rgba(201,150,36,.28);border-radius:50%}.r1{width:160px;height:160px}.r2{width:230px;height:230px}.r3{width:310px;height:310px}.r4{width:380px;height:380px}.earth{width:112px;height:112px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#4da582,#0f5a46 70%);border:5px solid #fff;box-shadow:0 0 0 2px #e7cb78,0 14px 34px rgba(15,90,70,.2);display:grid;place-items:center;color:#fff;font-size:60px;font-weight:900;z-index:2}.planet{position:absolute;width:18px;height:18px;border-radius:50%;background:#d9a33a;box-shadow:0 3px 10px rgba(0,0,0,.15)}.p1{top:34px;right:112px}.p2{bottom:56px;right:74px;width:13px;height:13px}.p3{left:82px;top:86px;width:14px;height:14px}.p4{left:130px;bottom:42px;width:12px;height:12px}
-.stats{width:min(1180px,92%);margin:12px auto 58px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat{padding:22px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 10px 26px rgba(15,90,70,.05)}.stat b{display:block;color:var(--green);font-size:1.35rem}.stat span{display:block;margin-top:7px;color:#8a9591;font-size:.74rem}
-.bridge{border-top:1px solid #edf1ef;background:linear-gradient(180deg,#fbfdfc,#f5f8f6);padding:34px 0 12px}.bridge-inner{width:min(1180px,92%);margin:auto}.bridge h2{margin:0;color:var(--green);font-size:clamp(1.7rem,3vw,2.6rem)}.bridge p{max-width:900px;margin:10px 0 0;color:#71807b;line-height:1.65}
-#vv-budget-distribution{scroll-margin-top:95px}
-@media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:48px}.orbit{min-height:300px}.r4{width:300px;height:300px}.r3{width:250px;height:250px}.r2{width:200px;height:200px}.stats{grid-template-columns:1fr 1fr}.brand-copy small,.test{display:none}}
-@media(max-width:560px){.topbar-inner{width:min(94%,1180px);min-height:66px}.brand-copy strong{font-size:.86rem}.badge{display:none}.hero{gap:24px}.orbit{min-height:250px}.r4{width:240px;height:240px}.r3{width:200px;height:200px}.r2{width:165px;height:165px}.earth{width:92px;height:92px;font-size:48px}.stats{grid-template-columns:1fr}.right{gap:6px}.langs button{padding:7px 8px}}
+html,body{margin:0;background:#fff;font-family:Inter,Arial,sans-serif}
+#vv-loading{min-height:100vh;display:grid;place-items:center;color:#0f5a46;font-weight:850}
+#vv-budget-slot{background:#fff}
 </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="brand">
-      <div class="mark">V</div>
-      <div class="brand-copy"><strong>VALUVENTUM® <span class="badge">DEZENTRAL</span></strong><small>THE INSTRUMENT OF FREEDOM</small></div>
-    </div>
-    <div class="right">
-      <div class="test" data-t="test">GRUPPENTEST · NUR STARTSEITE</div>
-      <div class="langs"><button class="active" data-lang="de">DE</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
-    </div>
-  </div>
-</header>
-
-<main>
-<section class="hero">
-  <div>
-    <div class="eyebrow" data-t="eyebrow">VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft</div>
-    <h1><span data-t="hero1">Ein Instrument für</span><em data-t="hero2">Freiheit.</em></h1>
-    <p data-t="heroP">VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.</p>
-    <div class="notice"><strong data-t="noticeH">Gruppen-Testversion:</strong> <span data-t="noticeP">Diese Startseite dient zum Lernen, Rechnen und Prüfen. Die neue Berechnung ersetzt die alte Rechnerlogik.</span></div>
-    <div class="actions"><a class="btn primary" href="#vv-budget-distribution" data-t="model">Modell ansehen</a><a class="btn secondary" href="#vv-budget-distribution" data-t="testBtn">Selbst ausprobieren</a></div>
-  </div>
-  <div class="orbit" aria-hidden="true"><div class="ring r4"></div><div class="ring r3"></div><div class="ring r2"></div><div class="ring r1"></div><div class="earth">V</div><span class="planet p1"></span><span class="planet p2"></span><span class="planet p3"></span><span class="planet p4"></span></div>
-</section>
-
-<section class="stats">
-  <div class="stat"><b>8,22 Mrd.</b><span data-t="s1">Menschen weltweit</span></div>
-  <div class="stat"><b>1.500 Valu</b><span data-t="s2">pro Mensch und Monat</span></div>
-  <div class="stat"><b>147,96 Bio.</b><span data-t="s3">jährlicher Grundeinkommensbedarf</span></div>
-  <div class="stat"><b>10 %</b><span data-t="s4">Gemeinschaftsbeitrag im Modell</span></div>
-</section>
-
-<section class="bridge"><div class="bridge-inner"><h2 data-t="bridgeH">Die neue Berechnung auf einen Blick</h2><p data-t="bridgeP">Nach dem Grundeinkommen zeigt die Startseite direkt, welcher Gemeinschaftsbetrag verbleibt und wie er auf sieben Kontinente beziehungsweise globale Aufgaben, gesunde Landwirtschaft, Gesundheit, Bildung und öffentliche Aufgaben verteilt werden kann.</p></div></section>
-
-<script src="valuventum-budget.js?v=10"></script>
-</main>
+<div id="vv-loading">VALUVENTUM® wird geladen …</div>
+<div id="vv-page" hidden></div>
 
 <script>
-(function(){
- const c={
-  de:{test:'GRUPPENTEST · NUR STARTSEITE',eyebrow:'VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft',hero1:'Ein Instrument für',hero2:'Freiheit.',heroP:'VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.',noticeH:'Gruppen-Testversion:',noticeP:'Diese Startseite dient zum Lernen, Rechnen und Prüfen. Die neue Berechnung ersetzt die alte Rechnerlogik.',model:'Modell ansehen',testBtn:'Selbst ausprobieren',s1:'Menschen weltweit',s2:'pro Mensch und Monat',s3:'jährlicher Grundeinkommensbedarf',s4:'Gemeinschaftsbeitrag im Modell',bridgeH:'Die neue Berechnung auf einen Blick',bridgeP:'Nach dem Grundeinkommen zeigt die Startseite direkt, welcher Gemeinschaftsbetrag verbleibt und wie er auf sieben Kontinente beziehungsweise globale Aufgaben, gesunde Landwirtschaft, Gesundheit, Bildung und öffentliche Aufgaben verteilt werden kann.'},
-  en:{test:'GROUP TEST · HOME PAGE ONLY',eyebrow:'VALUVENTUM® DECENTRAL · People · Values · Community · Future',hero1:'An instrument for',hero2:'freedom.',heroP:'VALUVENTUM® is a globally conceived community model combining economic flow, transparency and an unconditional basic income.',noticeH:'Group test version:',noticeP:'This home page is for learning, calculating and testing. The new calculation replaces the old calculator logic.',model:'View model',testBtn:'Try it yourself',s1:'people worldwide',s2:'per person and month',s3:'annual basic-income requirement',s4:'community contribution in the model',bridgeH:'The new calculation at a glance',bridgeP:'After basic income, the home page directly shows the remaining community amount and how it can be distributed across seven continents or global tasks, healthy agriculture, health, education and public tasks.'},
-  es:{test:'PRUEBA DE GRUPO · SOLO INICIO',eyebrow:'VALUVENTUM® DESCENTRAL · Personas · Valores · Comunidad · Futuro',hero1:'Un instrumento para la',hero2:'libertad.',heroP:'VALUVENTUM® es un modelo comunitario de alcance global que une flujo económico, transparencia y una renta básica incondicional.',noticeH:'Versión de prueba grupal:',noticeP:'Esta página de inicio sirve para aprender, calcular y comprobar. El nuevo cálculo sustituye la lógica anterior.',model:'Ver el modelo',testBtn:'Probarlo',s1:'personas en el mundo',s2:'por persona y mes',s3:'necesidad anual de renta básica',s4:'aportación comunitaria en el modelo',bridgeH:'El nuevo cálculo de un vistazo',bridgeP:'Después de la renta básica, la página muestra directamente cuánto queda para la comunidad y cómo puede distribuirse entre siete continentes o tareas globales, agricultura saludable, salud, educación y tareas públicas.'}
- };
- function setLang(l){if(!c[l])l='de';document.documentElement.lang=l;document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t;if(c[l][k]!==undefined)el.textContent=c[l][k]});document.querySelectorAll('.langs button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));document.dispatchEvent(new CustomEvent('valuventum:language',{detail:{lang:l}}));}
- document.querySelectorAll('.langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
- setLang('de');
+(async function(){
+  const loading=document.getElementById('vv-loading');
+  const page=document.getElementById('vv-page');
+  try{
+    const r=await fetch('./startseite-original.html?v=original-top-1',{cache:'no-store'});
+    if(!r.ok) throw new Error('Original-Startseite konnte nicht geladen werden.');
+    const source=await r.text();
+    const doc=new DOMParser().parseFromString(source,'text/html');
+
+    /* Exakt die vorhandenen Styles der ursprünglichen Startseite übernehmen. */
+    doc.head.querySelectorAll('style').forEach(oldStyle=>{
+      const style=document.createElement('style');
+      if(oldStyle.id) style.id='vv-original-'+oldStyle.id;
+      style.textContent=oldStyle.textContent;
+      document.head.appendChild(style);
+    });
+
+    const originalHeader=doc.querySelector('header.vv-header');
+    const startRoute=doc.querySelector('.vv-route[data-route="startseite"]');
+    const originalHero=startRoute && startRoute.querySelector('section.hero');
+    const originalStats=startRoute && startRoute.querySelector('section.stats');
+
+    if(!originalHero || !originalStats) throw new Error('Der obere Originalbereich wurde nicht gefunden.');
+
+    /* Nur: Original-Kopf + Original-Hero + vier Original-Kennzahlen. */
+    if(originalHeader) page.appendChild(originalHeader.cloneNode(true));
+
+    const main=document.createElement('main');
+    const hero=originalHero.cloneNode(true);
+    const stats=originalStats.cloneNode(true);
+
+    /* Unterseiten gibt es im Gruppentest nicht: die beiden sichtbaren Tasten führen zur neuen Rechnung. */
+    hero.querySelectorAll('.cta-row a').forEach(a=>a.setAttribute('href','#vv-budget-distribution'));
+
+    main.appendChild(hero);
+    main.appendChild(stats);
+
+    const slot=document.createElement('div');
+    slot.id='vv-budget-slot';
+    main.appendChild(slot);
+    page.appendChild(main);
+
+    /* Kleine Sprachsteuerung nur für den übernommenen oberen Originalbereich. */
+    const text={
+      de:{
+        eyebrow:'VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft',
+        title:'Ein Instrument für <span>Freiheit</span>.',
+        lead:'VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.',
+        status:'<strong>Gruppen-Testversion:</strong> Nur die VALUVENTUM®-Startseite ist freigegeben. Die Rechner und Eingabefelder auf dieser Seite dienen zum Lernen, Prüfen und Ausprobieren.',
+        cta1:'Modell ansehen',cta2:'Projekt unterstützen',
+        s1:'Menschen weltweit',s2:'pro Mensch und Monat',s3:'jährlicher Modellbedarf',s4:'Gemeinschaftsbeitrag im Modell',
+        home:'Startseite',badge:'GRUPPENTEST · NUR STARTSEITE'
+      },
+      en:{
+        eyebrow:'VALUVENTUM® DECENTRALISED · People · Values · Community · Future',
+        title:'An instrument for <span>freedom</span>.',
+        lead:'VALUVENTUM® is a globally conceived community model combining economic flow, transparency and an unconditional basic income.',
+        status:'<strong>Group test version:</strong> Only the VALUVENTUM® home page is enabled. The calculators and input fields on this page are for learning, testing and understanding.',
+        cta1:'View model',cta2:'Support project',
+        s1:'people worldwide',s2:'per person and month',s3:'annual model requirement',s4:'community contribution in the model',
+        home:'Home',badge:'GROUP TEST · HOME PAGE ONLY'
+      },
+      es:{
+        eyebrow:'VALUVENTUM® DESCENTRAL · Personas · Valores · Comunidad · Futuro',
+        title:'Un instrumento para la <span>libertad</span>.',
+        lead:'VALUVENTUM® es un modelo comunitario de alcance global que combina flujo económico, transparencia y una renta básica incondicional.',
+        status:'<strong>Versión de prueba grupal:</strong> Solo está habilitada la página de inicio de VALUVENTUM®. Las calculadoras y los campos de entrada sirven para aprender, comprobar y comprender.',
+        cta1:'Ver modelo',cta2:'Apoyar proyecto',
+        s1:'personas en el mundo',s2:'por persona y mes',s3:'necesidad anual del modelo',s4:'aportación comunitaria en el modelo',
+        home:'Inicio',badge:'PRUEBA DE GRUPO · SOLO INICIO'
+      }
+    };
+
+    function setLang(lang){
+      if(!text[lang]) lang='de';
+      document.documentElement.lang=lang;
+      const t=text[lang];
+      const q=(sel)=>page.querySelector(sel);
+      const eyebrow=q('.hero [data-i18n="eyebrow"]'); if(eyebrow) eyebrow.textContent=t.eyebrow;
+      const title=q('.hero [data-i18n="title"]'); if(title) title.innerHTML=t.title;
+      const lead=q('.hero [data-i18n="lead"]'); if(lead) lead.textContent=t.lead;
+      const status=q('.hero .decentral-status'); if(status) status.innerHTML=t.status;
+      const cta1=q('.hero [data-i18n="cta1"]'); if(cta1) cta1.textContent=t.cta1;
+      const cta2=q('.hero [data-i18n="cta2"]'); if(cta2) cta2.textContent=t.cta2;
+      ['s1','s2','s3','s4'].forEach(k=>{const el=q('.stats [data-i18n="'+k+'"]');if(el)el.textContent=t[k];});
+      const home=q('.vv-nav .vv-link'); if(home) home.textContent=t.home;
+      const badge=q('.vv-group-badge'); if(badge) badge.textContent=t.badge;
+      page.querySelectorAll('.vv-lang button[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+      document.dispatchEvent(new CustomEvent('valuventum:language',{detail:{lang}}));
+    }
+
+    page.querySelectorAll('.vv-lang button[data-lang]').forEach(btn=>{
+      btn.addEventListener('click',e=>{e.preventDefault();setLang(btn.dataset.lang);});
+    });
+
+    /* Alte Navigation/Unterseiten bleiben im Gruppentest unsichtbar; nur Startseite, Badge und Sprache. */
+    const nav=page.querySelector('.vv-nav');
+    if(nav){
+      Array.from(nav.children).forEach(el=>{
+        if(!(el.classList.contains('vv-current') || el.classList.contains('vv-group-badge'))) el.remove();
+      });
+    }
+    const mobile=page.querySelector('.vv-mobile-btn'); if(mobile) mobile.remove();
+    const mobilePanel=page.querySelector('.vv-mobile-panel'); if(mobilePanel) mobilePanel.remove();
+    page.querySelectorAll('.vv-actions > :not(.vv-lang)').forEach(el=>el.remove());
+
+    loading.remove();
+    page.hidden=false;
+    setLang('de');
+
+    /* Direkt nach den vier Original-Kennzahlen beginnt die neue Budgetverteilung. */
+    const budgetScript=document.createElement('script');
+    budgetScript.src='./valuventum-budget.js?v=original-top-1';
+    slot.appendChild(budgetScript);
+  }catch(err){
+    loading.innerHTML='<div style="padding:32px;text-align:center"><h1 style="color:#0f5a46">VALUVENTUM®</h1><p>Die Startseite konnte nicht geladen werden.</p><small>'+String(err.message||err)+'</small></div>';
+  }
 })();
 </script>
 </body>
