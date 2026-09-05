@@ -11,18 +11,12 @@
 <script>
 (async function(){
   try{
-    const response=await fetch('./startseite-original.html?v=5',{cache:'no-store'});
+    const response=await fetch('./startseite-original.html?v=6',{cache:'no-store'});
     if(!response.ok) throw new Error('Startseite konnte nicht geladen werden.');
     let html=await response.text();
 
-    const calculatorMarker='<section class="section soft" id="rechner">';
-    const budgetScript='<script src="./valuventum-budget.js?v=5"><'+'/script>\n';
-
-    if(html.includes(calculatorMarker)){
-      html=html.replace(calculatorMarker,budgetScript+calculatorMarker);
-    }else{
-      html=html.replace(/<\/body\s*>/i,budgetScript+'</body>');
-    }
+    const adapter='<script src="./valuventum-old-structure.js?v=1"><'+'/script>\n';
+    html=html.replace(/<\/body\s*>/i,adapter+'</body>');
 
     document.open();
     document.write(html);
