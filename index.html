@@ -80,7 +80,7 @@ html,body{margin:0;background:#fff;font-family:Inter,Arial,sans-serif}
         <div class="vv-basic-card"><span data-vvb="people">Menschen im Basismodell</span><b>8,22 Mrd.</b></div>
         <div class="vv-basic-card"><span data-vvb="monthly">Grundeinkommen pro Mensch / Monat</span><b>1.500 Valu</b></div>
         <div class="vv-basic-card"><span data-vvb="yearly">Grundeinkommen pro Mensch / Jahr</span><b>18.000 Valu</b></div>
-        <div class="vv-basic-card total"><span data-vvb="total">Grundeinkommen weltweit / Jahr</span><b>147,96 Bio. Valu</b></div>
+        <div class="vv-basic-card total"><span data-vvb="total">Grundeinkommen weltweit / Jahr</span><b>147,96 Billionen Valu</b></div>
       </div>
       <div class="vv-basic-formula" data-vvb="formula">8,22 Mrd. Menschen × 1.500 Valu × 12 Monate = 147,96 Billionen Valu pro Jahr</div>
       <div class="vv-basic-note"><strong data-vvb="importantH">Wichtig:</strong> <span data-vvb="importantP">Die 147,96 Billionen Valu werden im Basismodell zuerst vom 200-Billionen-Gemeinschaftstopf abgezogen. Bei 10 % Gemeinschaftsbeitrag bleiben danach 52,04 Billionen Valu für Gemeinschaftsaufgaben. Der später angezeigte Pro-Kopf-Verteilungsschlüssel von rund 6.326 Valu ist keine zweite Auszahlung an die Menschen, sondern nur die Rechengröße, mit der dieses Restbudget fair nach Bevölkerung auf die Kontinente verteilt wird.</span></div>`;
@@ -111,6 +111,53 @@ html,body{margin:0;background:#fff;font-family:Inter,Arial,sans-serif}
       es:{eyebrow:'VALUVENTUM® DESCENTRAL · Personas · Valores · Comunidad · Futuro',title:'Un instrumento para la <span>libertad</span>.',lead:'VALUVENTUM® es un modelo comunitario de alcance global que combina flujo económico, transparencia y una renta básica incondicional.',status:'<strong>Versión de prueba grupal:</strong> Solo está habilitada la página de inicio de VALUVENTUM®. Esta página sirve para aprender, comprobar y experimentar.',cta1:'Ver modelo',cta2:'Apoyar proyecto',s1:'personas en el mundo',s2:'por persona y mes',s3:'necesidad anual del modelo',s4:'aportación comunitaria en el modelo',home:'Inicio',badge:'PRUEBA DE GRUPO · SOLO INICIO',kicker:'EL NUEVO CÁLCULO · CENTRADO EN LAS PERSONAS',title2:'¿Cómo se distribuyen ahora los 52,04 billones Valu?',lead2:'Los continentes ya no reciben la misma cantidad. Cada persona tiene el mismo peso. Sin embargo, antes de esta distribución siempre se calcula primero la renta básica.',step1:'El punto de partida es una base de cálculo VALUVENTUM® de 2,0 mil billones Valu al año. Con el 10 % se forma un fondo comunitario de 200 billones Valu.',step2:'La renta básica se calcula como primer gran bloque de gasto. En el modelo base son 1.500 Valu por persona y mes, es decir, 147,96 billones Valu al año en todo el mundo.',step3:'Solo el importe restante se distribuye después, tras un fondo global, entre los continentes según población y entre las tareas comunitarias.',resultH:'El orden es decisivo:',resultP:'Fondo comunitario → renta básica → presupuesto comunitario restante → distribución centrada en las personas → tareas públicas, agricultura, salud, educación y reserva.',basicKicker:'RENTA BÁSICA · PRIMER PASO',basicTitle:'La renta básica se calcula antes de distribuir el presupuesto restante.',basicLead:'En el modelo base VALUVENTUM®, primero se calcula completamente la renta básica para todas las personas incluidas en el modelo. Es una prestación directa a las personas y no debe confundirse con la posterior clave per cápita para tareas comunitarias.',people:'Personas en el modelo base',monthly:'Renta básica por persona / mes',yearly:'Renta básica por persona / año',total:'Renta básica mundial / año',formula:'8,22 mil millones de personas × 1.500 Valu × 12 meses = 147,96 billones Valu al año',importantH:'Importante:',importantP:'Los 147,96 billones Valu se descuentan primero del fondo comunitario de 200 billones Valu. Con una aportación del 10 %, quedan después 52,04 billones Valu para tareas comunitarias. La posterior clave per cápita de unos 6.326 Valu no es un segundo pago a las personas; es solo el valor de cálculo utilizado para distribuir este presupuesto restante de forma justa entre continentes según población.',activeKicker:'PERSONAS ACTIVAS · SUPUESTO DEL MODELO',activeTitle:'La renta básica no significa que nadie deba seguir activo.',activeLead:'Una sociedad funcional sigue necesitando personas que produzcan, abastezcan, cuiden, construyan, investiguen, enseñen, transporten, organicen y operen sistemas técnicos. Por ello, el modelo base VALUVENTUM® supone que alrededor de 3,5 mil millones de personas continúan activas. La renta básica busca reducir la presión económica, no eliminar la actividad necesaria.',all:'Personas en el modelo base',active:'Personas que siguen activas',activeShare:'Proporción del modelo base',notRequired:'No necesariamente activas económicamente',activeFormula:'3,50 mil millones ÷ 8,22 mil millones = aproximadamente 42,6 % activas',activeImportantH:'Distinción clave:',activeImportantP:'Los 3,5 mil millones son un supuesto del modelo VALUVENTUM®, no un porcentaje de la aportación comunitaria. El control del 5–15 % describe la aportación financiera sobre el flujo del modelo. Los 3,5 mil millones describen en cambio el número supuesto de personas que siguen participando activamente en tareas de abastecimiento, economía y sociedad. La renta básica permanece independiente de ello y se aplica a todas las personas del modelo base.'}
     };
 
+    function numberLocale(lang){return lang==='en'?'en-US':lang==='es'?'es-ES':'de-DE';}
+    function parseLocalizedNumber(raw,lang){
+      const s=String(raw).trim();
+      if(lang==='en') return Number(s.replace(/,/g,''));
+      return Number(s.replace(/\./g,'').replace(',','.'));
+    }
+    function magnitudeText(value,lang){
+      if(!Number.isFinite(value)) return null;
+      const abs=Math.abs(value);
+      const sign=value<0?'- ':'';
+      const nf=(n,max=3)=>new Intl.NumberFormat(numberLocale(lang),{maximumFractionDigits:max}).format(n);
+      if(lang==='en'){
+        if(abs>=1000) return sign+nf(abs/1000,3)+' quadrillion Valu';
+        if(abs>=1) return sign+nf(abs,3)+' trillion Valu';
+        return sign+nf(abs*1000,3)+' billion Valu';
+      }
+      if(lang==='es'){
+        if(abs>=1000) return sign+nf(abs/1000,3)+' mil billones Valu';
+        if(abs>=1) return sign+nf(abs,3)+' billones Valu';
+        return sign+nf(abs*1000,3)+' mil millones Valu';
+      }
+      if(abs>=1000) return sign+nf(abs/1000,3)+' Billiarden Valu';
+      if(abs>=1) return sign+nf(abs,3)+' Billionen Valu';
+      return sign+nf(abs*1000,3)+' Milliarden Valu';
+    }
+    function normalizeMagnitudeUnits(rootNode){
+      if(!rootNode) return;
+      const lang=(document.documentElement.lang||'de').slice(0,2).toLowerCase();
+      const flow=rootNode.querySelector && rootNode.querySelector('.flow');
+      if(flow){
+        const cards=flow.querySelectorAll('article b');
+        if(cards[0]) cards[0].textContent=lang==='en'?'2 quadrillion Valu':lang==='es'?'2 mil billones Valu':'2 Billiarden Valu';
+        if(cards[1]) cards[1].textContent=lang==='en'?'147.96 trillion Valu':lang==='es'?'147,96 billones Valu':'147,96 Billionen Valu';
+      }
+      const nodes=rootNode.querySelectorAll?rootNode.querySelectorAll('*'):[];
+      nodes.forEach(el=>{
+        if(el.children && el.children.length) return;
+        const txt=(el.textContent||'').trim();
+        const m=txt.match(/^(-\s*)?([0-9.,]+)\s+Bio\.\s+Valu$/i);
+        if(!m) return;
+        const n=parseLocalizedNumber(m[2],lang);
+        const value=m[1]?-n:n;
+        const replacement=magnitudeText(value,lang);
+        if(replacement) el.textContent=replacement;
+      });
+    }
+
     function setLang(lang){
       if(!text[lang])lang='de';
       document.documentElement.lang=lang;
@@ -131,6 +178,9 @@ html,body{margin:0;background:#fff;font-family:Inter,Arial,sans-serif}
       const activeMap={kicker:'activeKicker',title:'activeTitle',lead:'activeLead',all:'all',active:'active',activeShare:'activeShare',notRequired:'notRequired',formula:'activeFormula',importantH:'activeImportantH',importantP:'activeImportantP'};
       Object.entries(activeMap).forEach(([key,val])=>{const el=q('[data-vva="'+key+'"]');if(el)el.textContent=t[val];});
       page.querySelectorAll('.vv-lang button[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+      normalizeMagnitudeUnits(page);
+      const budgetHost=document.getElementById('vv-budget-distribution');
+      if(budgetHost && budgetHost.shadowRoot) normalizeMagnitudeUnits(budgetHost.shadowRoot);
       document.dispatchEvent(new CustomEvent('valuventum:language',{detail:{lang}}));
     }
 
@@ -138,7 +188,19 @@ html,body{margin:0;background:#fff;font-family:Inter,Arial,sans-serif}
     const nav=page.querySelector('.vv-nav');if(nav){Array.from(nav.children).forEach(el=>{if(!(el.classList.contains('vv-current')||el.classList.contains('vv-group-badge')))el.remove();});}
     const mobile=page.querySelector('.vv-mobile-btn');if(mobile)mobile.remove();const mobilePanel=page.querySelector('.vv-mobile-panel');if(mobilePanel)mobilePanel.remove();page.querySelectorAll('.vv-actions > :not(.vv-lang)').forEach(el=>el.remove());
     loading.remove();page.hidden=false;setLang('de');
-    const budgetScript=document.createElement('script');budgetScript.src='./valuventum-budget.js?v=population-v4-active';slot.appendChild(budgetScript);
+    const budgetScript=document.createElement('script');
+    budgetScript.src='./valuventum-budget.js?v=population-v4-clear-units';
+    budgetScript.onload=()=>{
+      const budgetHost=document.getElementById('vv-budget-distribution');
+      if(budgetHost && budgetHost.shadowRoot){
+        const sr=budgetHost.shadowRoot;
+        normalizeMagnitudeUnits(sr);
+        const unitObserver=new MutationObserver(()=>normalizeMagnitudeUnits(sr));
+        unitObserver.observe(sr,{subtree:true,childList:true,characterData:true});
+      }
+      normalizeMagnitudeUnits(page);
+    };
+    slot.appendChild(budgetScript);
   }catch(err){loading.innerHTML='<div style="padding:32px;text-align:center"><h1 style="color:#0f5a46">VALUVENTUM®</h1><p>Die Startseite konnte nicht geladen werden.</p><small>'+String(err.message||err)+'</small></div>';}
 })();
 </script>
