@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VALUVENTUM® Budgetverteilung</title>
+  <style>
+    html,body{margin:0;padding:0;background:#f4f7f5;color:#24302d;font-family:Inter,Arial,sans-serif}
+    .top{position:sticky;top:0;z-index:5;display:flex;gap:10px;align-items:center;justify-content:space-between;padding:14px 18px;background:#0f5a46;color:#fff;box-shadow:0 3px 14px rgba(0,0,0,.12)}
+    .brand{font-weight:900;letter-spacing:.04em}.langs{display:flex;gap:8px}.langs button{border:1px solid rgba(255,255,255,.45);border-radius:999px;background:transparent;color:#fff;padding:7px 11px;font-weight:800;cursor:pointer}.langs button:hover{background:rgba(255,255,255,.12)}
+    .back{color:#fff;text-decoration:none;font-weight:800}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <a class="back" href="./">← VALUVENTUM® Gruppe</a>
+    <div class="brand">Budget · 52,04 Billionen Valu</div>
+    <div class="langs vv-lang"><button data-lang="de" onclick="setLang('de')">DE</button><button data-lang="en" onclick="setLang('en')">EN</button><button data-lang="es" onclick="setLang('es')">ES</button></div>
+  </div>
+  <script>function setLang(l){document.documentElement.lang=l;document.dispatchEvent(new CustomEvent('valuventum:language',{detail:{lang:l}}));}</script>
+  <script src="valuventum-budget.js"></script>
+</body>
+</html>
