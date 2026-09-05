@@ -4,7 +4,7 @@
 
   const host = document.createElement('section');
   host.id = 'vv-budget-distribution';
-  host.setAttribute('data-valuventum-budget','population-v4');
+  host.setAttribute('data-valuventum-budget','population-v5-global-budget');
   const script = document.currentScript;
   if (script && script.parentNode) script.parentNode.insertBefore(host, script);
   else document.body.appendChild(host);
@@ -27,9 +27,9 @@
       lead:'Der verbleibende Gemeinschaftsbetrag wird nicht mehr einfach durch sieben geteilt. Stattdessen erhält jeder bewohnte Kontinent genau den Anteil, der seinem Anteil an der Weltbevölkerung entspricht. So folgt die Verteilung den Menschen und nicht der Größe eines Kontinents.',
       modelFlow:'Modellfluss pro Jahr', basic:'Grundeinkommen pro Jahr', pool:'Gemeinschaftstopf', rest:'Verbleibend für Gemeinschaftsaufgaben',
       rateTitle:'Gemeinschaftsbeitrag selbst testen',
-      rateLead:'Der Ausgangswert ist 10 %. Mit dem Schieberegler kann die Gruppe prüfen, wie sich ein höherer oder niedrigerer Prozentsatz auf Gemeinschaftstopf, Restbudget und Kontinentbudgets auswirkt.',
+      rateLead:'10 % ist der Ausgangswert des VALUVENTUM®-Basismodells. Wird der Prozentsatz verändert, wird nicht nur eine einzelne Zahl geändert: Der gesamte globale Haushalt wird neu berechnet – Gemeinschaftstopf, Restbudget, Puffer, Kontinentbudgets, Aufgabenbudgets, Reserve und Pro-Kopf-Schlüssel. Das Grundeinkommen bleibt dabei als fester Ausgabeblock gleich, solange Bevölkerung und 1.500 Valu pro Monat unverändert bleiben.',
       rateLabel:'Gemeinschaftsbeitrag',
-      rateHint:'Modellannahme: Der Prozentsatz wird auf die Rechengröße von 2,0 Billiarden Valu angewendet. 10 % ergeben 200 Billionen Valu.',
+      rateHint:'10 % = Basismodell. Andere Werte dienen zum Prüfen und Rechnen; der Rechner passt die gesamte globale Budgetrechnung automatisch an.',
       taxIncome:'Einkommensteuer – Modellziel bei vollständiger Deckung', taxProduct:'Produkt-/Mehrwertsteuer – Modellziel bei vollständiger Deckung',
       distributionTitle:'Verteilung nach Bevölkerungsanteil',
       distributionLead:'Die Prozentanteile unten bilden die relative Verteilung der Weltbevölkerung im Jahr 2026 näherungsweise ab. Antarktika hat keine dauerhafte Bevölkerung und erhält deshalb keinen Bevölkerungsanteil. Für globale Aufgaben gibt es stattdessen einen separat einstellbaren Puffer.',
@@ -47,7 +47,7 @@
       agri:'Gesunde Landwirtschaft', agriHint:'Bodenaufbau, mikrobiologische Regeneration, schadstoffärmere Produktion, natürliches Saatgut sowie mechanische und solare Agrartechnik.',
       health:'Gesundheitssystem', healthHint:'Prävention, medizinische Versorgung, Pflege, Personal, Medikamente und notwendige Gesundheitsinfrastruktur.',
       education:'Bildung & Forschung', educationHint:'Kindergärten, Schulen, Ausbildung, Weiterbildung, Hochschulen, Forschung und frei zugängliches Wissen.',
-      globalAllocated:'Global verplant', europeExample:'Davon in Europa', reserveLabel:'Verbleibende Reserve',
+      globalAllocated:'Global verplant – nach Puffer', europeExample:'Davon in Europa', reserveLabel:'Verbleibende Reserve – nach Puffer',
       ampelMeaning:'Die Ampel bewertet nur die interne Budgetverteilung: Grün = mindestens 5 % Reserve, Gelb = weniger als 5 % Reserve, Rot = mehr als 100 % verplant.',
       impactTitle:'Mögliche Wirkung des Modells', impactLead:'Die folgenden Punkte beschreiben gesellschaftliche und gesundheitliche Zielwirkungen des Modells. Sie sind keine medizinische Heilzusage und keine Garantie realer wirtschaftlicher Ergebnisse.',
       impactHumanH:'👤 Mensch', impactHumanP:'Wenn öffentliche Aufgaben vollständig anderweitig gedeckt sind, ist das Modellziel 0 % Einkommensteuer. Der verdiente Arbeitslohn bleibt dann beim Menschen; das Grundeinkommen wird separat betrachtet.',
@@ -64,7 +64,7 @@
       eye:'PEOPLE-CENTRED MODEL DISTRIBUTION', title:'Not every continent equally – every person equally weighted.',
       lead:'The remaining community amount is no longer divided by seven. Each inhabited continent receives the share corresponding to its share of world population.',
       modelFlow:'Model flow per year', basic:'Basic income per year', pool:'Community pool', rest:'Remaining for community tasks',
-      rateTitle:'Test the community contribution', rateLead:'The starting value is 10%. Use the slider to see how a higher or lower rate changes the pool, remainder and continent budgets.', rateLabel:'Community contribution', rateHint:'Model assumption: the percentage is applied to a calculation base of 2.0 quadrillion Valu.',
+      rateTitle:'Test the community contribution', rateLead:'10% is the starting value of the VALUVENTUM® base model. Changing the rate does not change just one number: the entire global budget is recalculated – community pool, remaining budget, buffer, continent budgets, task budgets, reserve and per-capita allocation key. Basic income remains a fixed expenditure block as long as the population and 1,500 Valu per month stay unchanged.', rateLabel:'Community contribution', rateHint:'10% = base model. Other values are for testing and calculation; the calculator automatically updates the entire global budget.',
       taxIncome:'Income tax – model target with full coverage', taxProduct:'Product/VAT tax – model target with full coverage',
       distributionTitle:'Distribution by population share', distributionLead:'The percentages approximately reflect the 2026 distribution of world population. Antarctica has no permanent population, so global tasks use a separate adjustable buffer.',
       pop:'Population approx.', share:'Population share', budget:'Annual budget', globalTasks:'❄️ Antarctica / global tasks', globalTasksPop:'no permanent population', globalTasksHint:'Separate buffer for research, global infrastructure, crisis response and joint tasks.',
@@ -75,7 +75,7 @@
       agri:'Healthy agriculture', agriHint:'Soil restoration, microbiological regeneration, lower-pollutant production, natural seed and mechanical/solar agricultural technology.',
       health:'Health system', healthHint:'Prevention, medical care, nursing, staff, medicines and necessary health infrastructure.',
       education:'Education & research', educationHint:'Early education, schools, training, universities, research and accessible knowledge.',
-      globalAllocated:'Allocated globally', europeExample:'Of this in Europe', reserveLabel:'Remaining reserve', ampelMeaning:'Traffic light: green = at least 5% reserve, yellow = below 5%, red = over 100% allocated.',
+      globalAllocated:'Allocated globally – after buffer', europeExample:'Of this in Europe', reserveLabel:'Remaining reserve – after buffer', ampelMeaning:'Traffic light: green = at least 5% reserve, yellow = below 5%, red = over 100% allocated.',
       impactTitle:'Possible model effects', impactLead:'These are intended social and health-related effects, not medical promises or guarantees of real economic outcomes.',
       impactHumanH:'👤 People', impactHumanP:'If public tasks are fully funded elsewhere, the model target is 0% income tax.', impactAgriH:'🌱 Soil & food', impactAgriP:'Dedicated funding can support soil fertility, lower-pollutant production and resilient food supply.', impactHealthH:'❤️ Health', impactHealthP:'Stable budgets can make prevention, treatment, nursing and access to care more predictable.', impactEduH:'🎓 Education', impactEduP:'Long-term education and research funding can strengthen independence, innovation and participation.',
       sourceH:'Transparency & sources:', sourceP:'McKinsey’s USD 2.0 quadrillion is an external source anchor for global payment “value flows”. The 2.0 quadrillion Valu calculation base used here is a VALUVENTUM® model assumption, not the same as the USD figure. Population shares are approximate 2026 values based on UN World Population Prospects 2024. Zero-tax figures are model targets conditional on full and durable coverage of defined community tasks.',
@@ -85,7 +85,7 @@
       eye:'DISTRIBUCIÓN DEL MODELO CENTRADA EN LAS PERSONAS', title:'No todos los continentes por igual: cada persona con el mismo peso.',
       lead:'El importe comunitario restante ya no se divide simplemente entre siete. Cada continente habitado recibe la proporción correspondiente a su parte de la población mundial.',
       modelFlow:'Flujo modelo anual', basic:'Renta básica anual', pool:'Fondo comunitario', rest:'Resto para tareas comunitarias',
-      rateTitle:'Probar la aportación comunitaria', rateLead:'El valor inicial es 10 %. Con el control puede comprobar cómo cambia el fondo, el resto y los presupuestos continentales.', rateLabel:'Aportación comunitaria', rateHint:'Supuesto del modelo: el porcentaje se aplica a una base de cálculo de 2,0 mil billones Valu.',
+      rateTitle:'Probar la aportación comunitaria', rateLead:'El 10 % es el valor inicial del modelo base VALUVENTUM®. Al cambiar el porcentaje no cambia solo una cifra: se recalcula todo el presupuesto global – fondo comunitario, presupuesto restante, fondo global, presupuestos continentales, tareas, reserva y clave per cápita. La renta básica permanece como un bloque fijo mientras no cambien la población ni los 1.500 Valu mensuales.', rateLabel:'Aportación comunitaria', rateHint:'10 % = modelo base. Los demás valores sirven para probar y calcular; el sistema ajusta automáticamente todo el presupuesto global.',
       taxIncome:'Impuesto sobre la renta – objetivo con cobertura total', taxProduct:'IVA/impuesto sobre productos – objetivo con cobertura total',
       distributionTitle:'Distribución por población', distributionLead:'Los porcentajes reflejan aproximadamente la distribución mundial de 2026. La Antártida no tiene población permanente; para tareas globales existe un fondo separado ajustable.',
       pop:'Población aprox.', share:'Cuota de población', budget:'Presupuesto anual', globalTasks:'❄️ Antártida / tareas globales', globalTasksPop:'sin población permanente', globalTasksHint:'Fondo separado para investigación, infraestructura global, ayuda en crisis y tareas comunes.',
@@ -96,7 +96,7 @@
       agri:'Agricultura saludable', agriHint:'Regeneración del suelo, producción con menos contaminantes, semillas naturales y tecnología agrícola mecánica y solar.',
       health:'Sistema de salud', healthHint:'Prevención, atención médica, cuidados, personal, medicamentos e infraestructura sanitaria necesaria.',
       education:'Educación e investigación', educationHint:'Educación infantil, escuelas, formación, universidades, investigación y conocimiento accesible.',
-      globalAllocated:'Asignado globalmente', europeExample:'De ello en Europa', reserveLabel:'Reserva restante', ampelMeaning:'Semáforo: verde = al menos 5 % de reserva, amarillo = menos de 5 %, rojo = más del 100 % asignado.',
+      globalAllocated:'Asignado globalmente – después del fondo', europeExample:'De ello en Europa', reserveLabel:'Reserva restante – después del fondo', ampelMeaning:'Semáforo: verde = al menos 5 % de reserva, amarillo = menos de 5 %, rojo = más del 100 % asignado.',
       impactTitle:'Posibles efectos del modelo', impactLead:'Son objetivos sociales y sanitarios del modelo, no promesas médicas ni garantías de resultados económicos reales.',
       impactHumanH:'👤 Personas', impactHumanP:'Si las tareas públicas están completamente financiadas, el objetivo del modelo es 0 % de impuesto sobre la renta.', impactAgriH:'🌱 Suelo y alimentos', impactAgriP:'Una financiación específica puede apoyar la fertilidad del suelo y una producción más resiliente.', impactHealthH:'❤️ Salud', impactHealthP:'Presupuestos estables pueden mejorar la planificación de prevención, tratamiento y cuidados.', impactEduH:'🎓 Educación', impactEduP:'La financiación a largo plazo de educación e investigación puede fortalecer autonomía, innovación y participación.',
       sourceH:'Transparencia y fuentes:', sourceP:'Los 2,0 mil billones USD de McKinsey son una referencia externa para los “flujos de valor” globales de pagos. La base de 2,0 mil billones Valu utilizada aquí es un supuesto del modelo VALUVENTUM®, no la misma cifra en USD. Las cuotas de población son aproximaciones para 2026 basadas en UN World Population Prospects 2024. Los valores fiscales de 0 % son objetivos del modelo condicionados a la cobertura completa y sostenible de las tareas comunitarias definidas.',
@@ -232,9 +232,9 @@
     const sum=values.reduce((a,b)=>a+b,0);
     const reserve=100-sum;
     const europeBudget = humanBudget * 0.0896;
-    $('#vvbd-global').textContent = remaining>0 ? bio(remaining*sum/100,3) : '—';
+    $('#vvbd-global').textContent = remaining>0 ? bio(humanBudget*sum/100,3) : '—';
     $('#vvbd-europe').textContent = remaining>0 ? bio(europeBudget*sum/100,3) : '—';
-    $('#vvbd-reserve').textContent = remaining>0 && reserve>=0 ? bio(remaining*reserve/100,3)+' · '+pct(reserve,0) : (reserve<0 ? '- '+pct(Math.abs(reserve),0) : '—');
+    $('#vvbd-reserve').textContent = remaining>0 && reserve>=0 ? bio(humanBudget*reserve/100,3)+' · '+pct(reserve,0) : (reserve<0 ? '- '+pct(Math.abs(reserve),0) : '—');
 
     const light=$('#vvbd-light');
     light.classList.remove('yellow','red');
