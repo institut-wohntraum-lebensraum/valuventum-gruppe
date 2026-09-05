@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>VALUVENTUM® DEZENTRAL – Das Instrument der Freiheit</title>
-<meta name="description" content="VALUVENTUM® Gruppen-Testversion – Original-Startbereich mit neuer Budget- und Verteilungsrechnung.">
+<meta name="description" content="VALUVENTUM® Gruppen-Testversion – Original-Startbereich mit neuer menschenzentrierter Budget- und Verteilungsrechnung.">
 <style>
 html,body{margin:0;background:#fff;font-family:Inter,Arial,sans-serif}
 #vv-loading{min-height:100vh;display:grid;place-items:center;color:#0f5a46;font-weight:850}
@@ -12,141 +12,60 @@ html,body{margin:0;background:#fff;font-family:Inter,Arial,sans-serif}
 .vv-explain{width:min(1180px,92%);margin:22px auto 8px;padding:30px;border:1px solid #dce6e0;border-radius:24px;background:linear-gradient(145deg,#f7fbf8,#fffaf0);box-shadow:0 14px 36px rgba(15,90,70,.06)}
 .vv-explain .vv-kicker{color:#b47c08;font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
 .vv-explain h2{margin:8px 0 10px;color:#0f5a46;font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.08}
-.vv-explain>p{max-width:920px;margin:0;color:#66746f;line-height:1.65;font-size:1rem}
+.vv-explain>p{max-width:940px;margin:0;color:#66746f;line-height:1.68;font-size:1rem}
 .vv-explain-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}
 .vv-explain-card{padding:17px;border:1px solid #dce6e0;border-radius:16px;background:#fff}
 .vv-explain-card b{display:block;color:#0f5a46;font-size:1.12rem;margin-bottom:5px}.vv-explain-card span{color:#66746f;font-size:.88rem;line-height:1.5}
-.vv-explain-result{margin-top:16px;padding:16px 18px;border-left:5px solid #c99a2e;border-radius:0 14px 14px 0;background:#fff;color:#4e5c57;line-height:1.55}.vv-explain-result strong{color:#0f5a46}
+.vv-explain-result{margin-top:16px;padding:16px 18px;border-left:5px solid #c99a2e;border-radius:0 14px 14px 0;background:#fff;color:#4e5c57;line-height:1.58}.vv-explain-result strong{color:#0f5a46}
 @media(max-width:760px){.vv-explain{padding:22px}.vv-explain-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div id="vv-loading">VALUVENTUM® wird geladen …</div>
 <div id="vv-page" hidden></div>
-
 <script>
 (async function(){
   const loading=document.getElementById('vv-loading');
   const page=document.getElementById('vv-page');
   try{
-    const r=await fetch('./startseite-original.html?v=original-top-2',{cache:'no-store'});
+    const r=await fetch('./startseite-original.html?v=original-top-3',{cache:'no-store'});
     if(!r.ok) throw new Error('Original-Startseite konnte nicht geladen werden.');
     const source=await r.text();
     const doc=new DOMParser().parseFromString(source,'text/html');
-
-    doc.head.querySelectorAll('style').forEach(oldStyle=>{
-      const style=document.createElement('style');
-      if(oldStyle.id) style.id='vv-original-'+oldStyle.id;
-      style.textContent=oldStyle.textContent;
-      document.head.appendChild(style);
-    });
-
+    doc.head.querySelectorAll('style').forEach(oldStyle=>{const style=document.createElement('style');if(oldStyle.id) style.id='vv-original-'+oldStyle.id;style.textContent=oldStyle.textContent;document.head.appendChild(style);});
     const originalHeader=doc.querySelector('header.vv-header');
     const startRoute=doc.querySelector('.vv-route[data-route="startseite"]');
     const originalHero=startRoute && startRoute.querySelector('section.hero');
     const originalStats=startRoute && startRoute.querySelector('section.stats');
-
     if(!originalHero || !originalStats) throw new Error('Der obere Originalbereich wurde nicht gefunden.');
-
     if(originalHeader) page.appendChild(originalHeader.cloneNode(true));
-
     const main=document.createElement('main');
     const hero=originalHero.cloneNode(true);
     const stats=originalStats.cloneNode(true);
-
     hero.querySelectorAll('.cta-row a').forEach(a=>a.setAttribute('href','#vv-budget-distribution'));
-
-    main.appendChild(hero);
-    main.appendChild(stats);
-
+    main.appendChild(hero);main.appendChild(stats);
     const explain=document.createElement('section');
     explain.className='vv-explain';
     explain.innerHTML=`
-      <div class="vv-kicker" data-vvx="kicker">DIE NEUE RECHNUNG · EINFACH ERKLÄRT</div>
-      <h2 data-vvx="title">Was passiert mit den 10 %?</h2>
-      <p data-vvx="lead">Die Rechnung trennt zuerst das Grundeinkommen von den Gemeinschaftsaufgaben. Danach sieht man klar, wie viel für die sieben Kontinente beziehungsweise globale Aufgaben übrig bleibt und wie dieser Betrag verteilt werden kann.</p>
+      <div class="vv-kicker" data-vvx="kicker">DIE NEUE RECHNUNG · MENSCHENZENTRIERT</div>
+      <h2 data-vvx="title">Wie werden die 52,04 Billionen Valu jetzt verteilt?</h2>
+      <p data-vvx="lead">Nicht mehr jeder Kontinent erhält denselben Betrag. Stattdessen wird jeder Mensch im Modell gleich gewichtet. Der Anteil eines Kontinents am verfügbaren Gemeinschaftsbudget richtet sich deshalb nach seinem Anteil an der Weltbevölkerung. Zusätzlich können der 10-%-Gemeinschaftsbeitrag, ein globaler Puffer sowie die Verwendung des Budgets mit Schiebereglern getestet werden.</p>
       <div class="vv-explain-grid">
-        <div class="vv-explain-card"><b>1 · 200,00 Bio. Valu</b><span data-vvx="step1">Im VALUVENTUM®-Szenario ergeben 10 % eines Modellflusses von 2,0 Billiarden Valu den jährlichen Gemeinschaftstopf.</span></div>
-        <div class="vv-explain-card"><b>2 · 147,96 Bio. Valu</b><span data-vvx="step2">Davon wird zuerst das Grundeinkommen gerechnet: 8,22 Milliarden Menschen × 1.500 Valu × 12 Monate.</span></div>
-        <div class="vv-explain-card"><b>3 · 52,04 Bio. Valu</b><span data-vvx="step3">Dieser Rest steht im Modell für öffentliche Aufgaben, gesunde Landwirtschaft, Gesundheit, Bildung und eine Reserve zur Verfügung.</span></div>
+        <div class="vv-explain-card"><b>1 · Gemeinschaftstopf</b><span data-vvx="step1">Ausgangspunkt ist eine VALUVENTUM®-Rechengröße von 2,0 Billiarden Valu pro Jahr. Bei 10 % entstehen 200 Billionen Valu Gemeinschaftstopf. Der Prozentsatz kann unten verändert werden.</span></div>
+        <div class="vv-explain-card"><b>2 · Grundeinkommen zuerst</b><span data-vvx="step2">Vom Gemeinschaftstopf wird zuerst der bestehende Grundeinkommensbedarf von 147,96 Billionen Valu abgezogen. Bei 10 % bleiben 52,04 Billionen Valu für Gemeinschaftsaufgaben.</span></div>
+        <div class="vv-explain-card"><b>3 · Nach Menschen verteilen</b><span data-vvx="step3">Der verbleibende Betrag wird – nach Abzug eines separat einstellbaren globalen Puffers – proportional zur Bevölkerungsverteilung auf die bewohnten Kontinente aufgeteilt.</span></div>
       </div>
-      <div class="vv-explain-result"><strong data-vvx="resultH">Danach selbst prüfen:</strong> <span data-vvx="resultP">Mit den Reglern unten kann die Gruppe die 52,04 Billionen Valu selbst verteilen. Die Ampel zeigt sofort, ob die gewählte Verteilung innerhalb des verfügbaren Modellbudgets bleibt.</span></div>
-    `;
+      <div class="vv-explain-result"><strong data-vvx="resultH">So kann die Gruppe prüfen:</strong> <span data-vvx="resultP">Ändert den Gemeinschaftsbeitrag, den globalen Puffer oder die Anteile für öffentliche Aufgaben, Landwirtschaft, Gesundheit und Bildung. Alle Beträge werden sofort neu berechnet; die Ampel zeigt, ob die gewählte Verwendung innerhalb des verfügbaren Modellbudgets bleibt.</span></div>`;
     main.appendChild(explain);
-
-    const slot=document.createElement('div');
-    slot.id='vv-budget-slot';
-    main.appendChild(slot);
-    page.appendChild(main);
-
-    const text={
-      de:{
-        eyebrow:'VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft',
-        title:'Ein Instrument für <span>Freiheit</span>.',
-        lead:'VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.',
-        status:'<strong>Gruppen-Testversion:</strong> Nur die VALUVENTUM®-Startseite ist freigegeben. Diese Seite dient zum Lernen, Prüfen und Ausprobieren.',
-        cta1:'Modell ansehen',cta2:'Projekt unterstützen',
-        s1:'Menschen weltweit',s2:'pro Mensch und Monat',s3:'jährlicher Modellbedarf',s4:'Gemeinschaftsbeitrag im Modell',
-        home:'Startseite',badge:'GRUPPENTEST · NUR STARTSEITE',
-        kicker:'DIE NEUE RECHNUNG · EINFACH ERKLÄRT',title2:'Was passiert mit den 10 %?',lead2:'Die Rechnung trennt zuerst das Grundeinkommen von den Gemeinschaftsaufgaben. Danach sieht man klar, wie viel für die sieben Kontinente beziehungsweise globale Aufgaben übrig bleibt und wie dieser Betrag verteilt werden kann.',
-        step1:'Im VALUVENTUM®-Szenario ergeben 10 % eines Modellflusses von 2,0 Billiarden Valu den jährlichen Gemeinschaftstopf.',
-        step2:'Davon wird zuerst das Grundeinkommen gerechnet: 8,22 Milliarden Menschen × 1.500 Valu × 12 Monate.',
-        step3:'Dieser Rest steht im Modell für öffentliche Aufgaben, gesunde Landwirtschaft, Gesundheit, Bildung und eine Reserve zur Verfügung.',
-        resultH:'Danach selbst prüfen:',resultP:'Mit den Reglern unten kann die Gruppe die 52,04 Billionen Valu selbst verteilen. Die Ampel zeigt sofort, ob die gewählte Verteilung innerhalb des verfügbaren Modellbudgets bleibt.'
-      },
-      en:{
-        eyebrow:'VALUVENTUM® DECENTRALISED · People · Values · Community · Future',
-        title:'An instrument for <span>freedom</span>.',
-        lead:'VALUVENTUM® is a globally conceived community model combining economic flow, transparency and an unconditional basic income.',
-        status:'<strong>Group test version:</strong> Only the VALUVENTUM® home page is enabled. This page is for learning, testing and understanding.',
-        cta1:'View model',cta2:'Support project',s1:'people worldwide',s2:'per person and month',s3:'annual model requirement',s4:'community contribution in the model',home:'Home',badge:'GROUP TEST · HOME PAGE ONLY',
-        kicker:'THE NEW CALCULATION · SIMPLY EXPLAINED',title2:'What happens to the 10%?',lead2:'The calculation first separates basic income from community tasks. It then clearly shows how much remains for seven continents or global tasks and how that amount can be allocated.',
-        step1:'In the VALUVENTUM® scenario, 10% of a model flow of 2.0 quadrillion Valu creates the annual community pool.',step2:'Basic income is deducted first: 8.22 billion people × 1,500 Valu × 12 months.',step3:'The remainder is available in the model for public tasks, healthy agriculture, health, education and a reserve.',resultH:'Then test it yourself:',resultP:'Using the sliders below, the group can allocate the 52.04 trillion Valu. The traffic light immediately shows whether the selected allocation stays within the available model budget.'
-      },
-      es:{
-        eyebrow:'VALUVENTUM® DESCENTRAL · Personas · Valores · Comunidad · Futuro',title:'Un instrumento para la <span>libertad</span>.',lead:'VALUVENTUM® es un modelo comunitario de alcance global que combina flujo económico, transparencia y una renta básica incondicional.',status:'<strong>Versión de prueba grupal:</strong> Solo está habilitada la página de inicio de VALUVENTUM®. Esta página sirve para aprender, comprobar y experimentar.',cta1:'Ver modelo',cta2:'Apoyar proyecto',s1:'personas en el mundo',s2:'por persona y mes',s3:'necesidad anual del modelo',s4:'aportación comunitaria en el modelo',home:'Inicio',badge:'PRUEBA DE GRUPO · SOLO INICIO',
-        kicker:'EL NUEVO CÁLCULO · EXPLICADO DE FORMA SENCILLA',title2:'¿Qué ocurre con el 10 %?',lead2:'El cálculo separa primero la renta básica de las tareas comunitarias. Después muestra claramente cuánto queda para siete continentes o tareas globales y cómo puede distribuirse.',step1:'En el escenario VALUVENTUM®, el 10 % de un flujo modelo de 2,0 mil billones Valu forma el fondo comunitario anual.',step2:'Primero se descuenta la renta básica: 8,22 mil millones de personas × 1.500 Valu × 12 meses.',step3:'El resto queda disponible en el modelo para tareas públicas, agricultura saludable, salud, educación y una reserva.',resultH:'Después, comprobarlo:',resultP:'Con los controles inferiores, el grupo puede distribuir los 52,04 billones Valu. El semáforo muestra de inmediato si la distribución elegida permanece dentro del presupuesto disponible.'
-      }
-    };
-
-    function setLang(lang){
-      if(!text[lang]) lang='de';
-      document.documentElement.lang=lang;
-      const t=text[lang];
-      const q=(sel)=>page.querySelector(sel);
-      const eyebrow=q('.hero [data-i18n="eyebrow"]'); if(eyebrow) eyebrow.textContent=t.eyebrow;
-      const title=q('.hero [data-i18n="title"]'); if(title) title.innerHTML=t.title;
-      const lead=q('.hero [data-i18n="lead"]'); if(lead) lead.textContent=t.lead;
-      const status=q('.hero .decentral-status'); if(status) status.innerHTML=t.status;
-      const cta1=q('.hero [data-i18n="cta1"]'); if(cta1) cta1.textContent=t.cta1;
-      const cta2=q('.hero [data-i18n="cta2"]'); if(cta2) cta2.textContent=t.cta2;
-      ['s1','s2','s3','s4'].forEach(k=>{const el=q('.stats [data-i18n="'+k+'"]');if(el)el.textContent=t[k];});
-      const home=q('.vv-nav .vv-link'); if(home) home.textContent=t.home;
-      const badge=q('.vv-group-badge'); if(badge) badge.textContent=t.badge;
-      const map={kicker:'kicker',title:'title2',lead:'lead2',step1:'step1',step2:'step2',step3:'step3',resultH:'resultH',resultP:'resultP'};
-      Object.entries(map).forEach(([key,val])=>{const el=q('[data-vvx="'+key+'"]');if(el)el.textContent=t[val];});
-      page.querySelectorAll('.vv-lang button[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
-      document.dispatchEvent(new CustomEvent('valuventum:language',{detail:{lang}}));
-    }
-
+    const slot=document.createElement('div');slot.id='vv-budget-slot';main.appendChild(slot);page.appendChild(main);
+    const text={de:{eyebrow:'VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft',title:'Ein Instrument für <span>Freiheit</span>.',lead:'VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.',status:'<strong>Gruppen-Testversion:</strong> Nur die VALUVENTUM®-Startseite ist freigegeben. Diese Seite dient zum Lernen, Prüfen und Ausprobieren.',cta1:'Modell ansehen',cta2:'Projekt unterstützen',s1:'Menschen weltweit',s2:'pro Mensch und Monat',s3:'jährlicher Modellbedarf',s4:'Gemeinschaftsbeitrag im Modell',home:'Startseite',badge:'GRUPPENTEST · NUR STARTSEITE',kicker:'DIE NEUE RECHNUNG · MENSCHENZENTRIERT',title2:'Wie werden die 52,04 Billionen Valu jetzt verteilt?',lead2:'Nicht mehr jeder Kontinent erhält denselben Betrag. Stattdessen wird jeder Mensch im Modell gleich gewichtet. Der Anteil eines Kontinents am verfügbaren Gemeinschaftsbudget richtet sich deshalb nach seinem Anteil an der Weltbevölkerung. Zusätzlich können der 10-%-Gemeinschaftsbeitrag, ein globaler Puffer sowie die Verwendung des Budgets mit Schiebereglern getestet werden.',step1:'Ausgangspunkt ist eine VALUVENTUM®-Rechengröße von 2,0 Billiarden Valu pro Jahr. Bei 10 % entstehen 200 Billionen Valu Gemeinschaftstopf. Der Prozentsatz kann unten verändert werden.',step2:'Vom Gemeinschaftstopf wird zuerst der bestehende Grundeinkommensbedarf von 147,96 Billionen Valu abgezogen. Bei 10 % bleiben 52,04 Billionen Valu für Gemeinschaftsaufgaben.',step3:'Der verbleibende Betrag wird – nach Abzug eines separat einstellbaren globalen Puffers – proportional zur Bevölkerungsverteilung auf die bewohnten Kontinente aufgeteilt.',resultH:'So kann die Gruppe prüfen:',resultP:'Ändert den Gemeinschaftsbeitrag, den globalen Puffer oder die Anteile für öffentliche Aufgaben, Landwirtschaft, Gesundheit und Bildung. Alle Beträge werden sofort neu berechnet; die Ampel zeigt, ob die gewählte Verwendung innerhalb des verfügbaren Modellbudgets bleibt.'},en:{eyebrow:'VALUVENTUM® DECENTRALISED · People · Values · Community · Future',title:'An instrument for <span>freedom</span>.',lead:'VALUVENTUM® is a globally conceived community model combining economic flow, transparency and an unconditional basic income.',status:'<strong>Group test version:</strong> Only the VALUVENTUM® home page is enabled. This page is for learning, testing and understanding.',cta1:'View model',cta2:'Support project',s1:'people worldwide',s2:'per person and month',s3:'annual model requirement',s4:'community contribution in the model',home:'Home',badge:'GROUP TEST · HOME PAGE ONLY',kicker:'THE NEW CALCULATION · PEOPLE-CENTRED',title2:'How are the 52.04 trillion Valu distributed now?',lead2:'Continents no longer receive equal amounts. Every person is weighted equally, so each continent receives the share matching its share of world population. The community contribution, a global buffer and the use of the budget can all be tested with sliders.',step1:'The starting point is a VALUVENTUM® calculation base of 2.0 quadrillion Valu per year. At 10%, the community pool is 200 trillion Valu.',step2:'The existing basic-income requirement of 147.96 trillion Valu is deducted first. At 10%, 52.04 trillion Valu remain for community tasks.',step3:'After an adjustable global buffer, the remaining amount is distributed across inhabited continents in proportion to population.',resultH:'The group can then test:',resultP:'Change the community contribution, global buffer or the shares for public tasks, agriculture, health and education. All amounts update immediately and the traffic light shows whether the allocation remains within the model budget.'},es:{eyebrow:'VALUVENTUM® DESCENTRAL · Personas · Valores · Comunidad · Futuro',title:'Un instrumento para la <span>libertad</span>.',lead:'VALUVENTUM® es un modelo comunitario de alcance global que combina flujo económico, transparencia y una renta básica incondicional.',status:'<strong>Versión de prueba grupal:</strong> Solo está habilitada la página de inicio de VALUVENTUM®. Esta página sirve para aprender, comprobar y experimentar.',cta1:'Ver modelo',cta2:'Apoyar proyecto',s1:'personas en el mundo',s2:'por persona y mes',s3:'necesidad anual del modelo',s4:'aportación comunitaria en el modelo',home:'Inicio',badge:'PRUEBA DE GRUPO · SOLO INICIO',kicker:'EL NUEVO CÁLCULO · CENTRADO EN LAS PERSONAS',title2:'¿Cómo se distribuyen ahora los 52,04 billones Valu?',lead2:'Los continentes ya no reciben la misma cantidad. Cada persona tiene el mismo peso y cada continente recibe la parte correspondiente a su proporción de la población mundial. También se pueden probar con controles la aportación comunitaria, un fondo global y el uso del presupuesto.',step1:'El punto de partida es una base de cálculo VALUVENTUM® de 2,0 mil billones Valu al año. Con el 10 % se forma un fondo comunitario de 200 billones Valu.',step2:'Primero se descuenta la necesidad existente de renta básica de 147,96 billones Valu. Con el 10 % quedan 52,04 billones Valu para tareas comunitarias.',step3:'Tras un fondo global ajustable, el importe restante se distribuye entre los continentes habitados según la proporción de población.',resultH:'Después, el grupo puede probar:',resultP:'Cambie la aportación comunitaria, el fondo global o las partes para tareas públicas, agricultura, salud y educación. Todos los importes se recalculan de inmediato y el semáforo muestra si la distribución permanece dentro del presupuesto del modelo.'}};
+    function setLang(lang){if(!text[lang])lang='de';document.documentElement.lang=lang;const t=text[lang],q=s=>page.querySelector(s);const eyebrow=q('.hero [data-i18n="eyebrow"]');if(eyebrow)eyebrow.textContent=t.eyebrow;const title=q('.hero [data-i18n="title"]');if(title)title.innerHTML=t.title;const lead=q('.hero [data-i18n="lead"]');if(lead)lead.textContent=t.lead;const status=q('.hero .decentral-status');if(status)status.innerHTML=t.status;const cta1=q('.hero [data-i18n="cta1"]');if(cta1)cta1.textContent=t.cta1;const cta2=q('.hero [data-i18n="cta2"]');if(cta2)cta2.textContent=t.cta2;['s1','s2','s3','s4'].forEach(k=>{const el=q('.stats [data-i18n="'+k+'"]');if(el)el.textContent=t[k];});const home=q('.vv-nav .vv-link');if(home)home.textContent=t.home;const badge=q('.vv-group-badge');if(badge)badge.textContent=t.badge;const map={kicker:'kicker',title:'title2',lead:'lead2',step1:'step1',step2:'step2',step3:'step3',resultH:'resultH',resultP:'resultP'};Object.entries(map).forEach(([key,val])=>{const el=q('[data-vvx="'+key+'"]');if(el)el.textContent=t[val];});page.querySelectorAll('.vv-lang button[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));document.dispatchEvent(new CustomEvent('valuventum:language',{detail:{lang}}));}
     page.querySelectorAll('.vv-lang button[data-lang]').forEach(btn=>btn.addEventListener('click',e=>{e.preventDefault();setLang(btn.dataset.lang);}));
-
-    const nav=page.querySelector('.vv-nav');
-    if(nav){Array.from(nav.children).forEach(el=>{if(!(el.classList.contains('vv-current') || el.classList.contains('vv-group-badge'))) el.remove();});}
-    const mobile=page.querySelector('.vv-mobile-btn'); if(mobile) mobile.remove();
-    const mobilePanel=page.querySelector('.vv-mobile-panel'); if(mobilePanel) mobilePanel.remove();
-    page.querySelectorAll('.vv-actions > :not(.vv-lang)').forEach(el=>el.remove());
-
-    loading.remove();
-    page.hidden=false;
-    setLang('de');
-
-    const budgetScript=document.createElement('script');
-    budgetScript.src='./valuventum-budget.js?v=original-top-2';
-    slot.appendChild(budgetScript);
-  }catch(err){
-    loading.innerHTML='<div style="padding:32px;text-align:center"><h1 style="color:#0f5a46">VALUVENTUM®</h1><p>Die Startseite konnte nicht geladen werden.</p><small>'+String(err.message||err)+'</small></div>';
-  }
+    const nav=page.querySelector('.vv-nav');if(nav){Array.from(nav.children).forEach(el=>{if(!(el.classList.contains('vv-current')||el.classList.contains('vv-group-badge')))el.remove();});}
+    const mobile=page.querySelector('.vv-mobile-btn');if(mobile)mobile.remove();const mobilePanel=page.querySelector('.vv-mobile-panel');if(mobilePanel)mobilePanel.remove();page.querySelectorAll('.vv-actions > :not(.vv-lang)').forEach(el=>el.remove());
+    loading.remove();page.hidden=false;setLang('de');
+    const budgetScript=document.createElement('script');budgetScript.src='./valuventum-budget.js?v=population-v3';slot.appendChild(budgetScript);
+  }catch(err){loading.innerHTML='<div style="padding:32px;text-align:center"><h1 style="color:#0f5a46">VALUVENTUM®</h1><p>Die Startseite konnte nicht geladen werden.</p><small>'+String(err.message||err)+'</small></div>';}
 })();
 </script>
 </body>
