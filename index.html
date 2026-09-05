@@ -11,13 +11,19 @@
 <script>
 (async function(){
   try{
-    const response=await fetch('./startseite-original.html?v=4',{cache:'no-store'});
+    const response=await fetch('./startseite-original.html?v=5',{cache:'no-store'});
     if(!response.ok) throw new Error('Startseite konnte nicht geladen werden.');
     let html=await response.text();
-    const addition='\n<script src="valuventum-budget.js?v=4"><'+'/script>\n' +
-      '<script>(function(){function place(){var host=document.getElementById("vv-budget-distribution");var target=document.getElementById("rechner");if(host&&target&&target.parentNode){target.insertAdjacentElement("afterend",host);host.style.display="block";return true;}return false;}if(!place()){var tries=0;var timer=setInterval(function(){tries++;if(place()||tries>40)clearInterval(timer);},100);}if(location.hash==="#startseite/vv-budget-distribution"){setTimeout(function(){var host=document.getElementById("vv-budget-distribution");if(host)host.scrollIntoView({behavior:"smooth",block:"start"});},300);}})();<'+'/script>\n';
-    if(/<\/body\s*>/i.test(html)) html=html.replace(/<\/body\s*>/i,addition+'</body>');
-    else html+=addition;
+
+    const calculatorMarker='<section class="section soft" id="rechner">';
+    const budgetScript='<script src="./valuventum-budget.js?v=5"><'+'/script>\n';
+
+    if(html.includes(calculatorMarker)){
+      html=html.replace(calculatorMarker,budgetScript+calculatorMarker);
+    }else{
+      html=html.replace(/<\/body\s*>/i,budgetScript+'</body>');
+    }
+
     document.open();
     document.write(html);
     document.close();
