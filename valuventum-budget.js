@@ -2,266 +2,133 @@
   'use strict';
   if (document.getElementById('vv-budget-distribution')) return;
 
-  const host = document.createElement('section');
-  host.id = 'vv-budget-distribution';
-  host.setAttribute('data-valuventum-budget','population-v5-global-budget');
-  const script = document.currentScript;
-  if (script && script.parentNode) script.parentNode.insertBefore(host, script);
-  else document.body.appendChild(host);
+  const host=document.createElement('section');
+  host.id='vv-budget-distribution';
+  host.setAttribute('data-valuventum-budget','population-v6-austria-structure');
+  const script=document.currentScript;
+  if(script&&script.parentNode) script.parentNode.insertBefore(host,script); else document.body.appendChild(host);
+  const root=host.attachShadow?host.attachShadow({mode:'open'}):host;
 
-  const root = host.attachShadow ? host.attachShadow({mode:'open'}) : host;
+  const modelFlow=2000;
+  const basicIncome=147.96;
+  const worldModelPeople=8.22e9;
 
-  const regions = [
-    {id:'asia', icon:'🌏', de:'Asien', en:'Asia', es:'Asia', pop:'4,86 Mrd.', share:58.59},
-    {id:'africa', icon:'🌍', de:'Afrika', en:'Africa', es:'África', pop:'1,59 Mrd.', share:19.09},
-    {id:'europe', icon:'🇪🇺', de:'Europa', en:'Europe', es:'Europa', pop:'0,74 Mrd.', share:8.96},
-    {id:'northamerica', icon:'🌎', de:'Nordamerika', en:'North America', es:'Norteamérica', pop:'0,62 Mrd.', share:7.48},
-    {id:'southamerica', icon:'🌎', de:'Südamerika', en:'South America', es:'Sudamérica', pop:'0,44 Mrd.', share:5.31},
-    {id:'oceania', icon:'🦘', de:'Australien/Ozeanien', en:'Australia/Oceania', es:'Australia/Oceanía', pop:'0,05 Mrd.', share:0.57}
+  const regions=[
+    {id:'asia',icon:'🌏',de:'Asien',en:'Asia',es:'Asia',pop:'4,82 Mrd.',share:58.59},
+    {id:'africa',icon:'🌍',de:'Afrika',en:'Africa',es:'África',pop:'1,57 Mrd.',share:19.09},
+    {id:'europe',icon:'🇪🇺',de:'Europa',en:'Europe',es:'Europa',pop:'0,74 Mrd.',share:8.96},
+    {id:'northamerica',icon:'🌎',de:'Nordamerika',en:'North America',es:'Norteamérica',pop:'0,61 Mrd.',share:7.48},
+    {id:'southamerica',icon:'🌎',de:'Südamerika',en:'South America',es:'Sudamérica',pop:'0,44 Mrd.',share:5.31},
+    {id:'oceania',icon:'🦘',de:'Australien/Ozeanien',en:'Australia/Oceania',es:'Australia/Oceanía',pop:'0,05 Mrd.',share:0.57}
   ];
 
-  const copy = {
+  const categories=[
+    {id:'social',value:20,de:'Pension, Pflege & soziale Aufstockung',en:'Pensions, care & social top-ups',es:'Pensiones, cuidados y complementos sociales',deHint:'Zusätzlich zum Grundeinkommen: erworbene Pensionen, Pflege, Behinderung und besondere soziale Bedarfe.',enHint:'In addition to basic income: earned pension top-ups, care, disability and special social needs.',esHint:'Además de la renta básica: complementos de pensión, cuidados, discapacidad y necesidades sociales especiales.'},
+    {id:'health',value:20,de:'Gesundheitssystem',en:'Health system',es:'Sistema de salud',deHint:'Prävention, Behandlung, Pflegepersonal, Medikamente, Kliniken und regionale Gesundheitsversorgung.',enHint:'Prevention, treatment, care staff, medicines, hospitals and regional health services.',esHint:'Prevención, tratamiento, personal sanitario, medicamentos, hospitales y atención regional.'},
+    {id:'education',value:12,de:'Bildung, Forschung & Wissen',en:'Education, research & knowledge',es:'Educación, investigación y conocimiento',deHint:'Kindergärten, Schulen, Ausbildung, Hochschulen, Forschung und frei zugängliches Wissen.',enHint:'Early education, schools, training, universities, research and accessible knowledge.',esHint:'Educación infantil, escuelas, formación, universidades, investigación y conocimiento accesible.'},
+    {id:'infrastructure',value:15,de:'Infrastruktur, Mobilität & Wirtschaft',en:'Infrastructure, mobility & economy',es:'Infraestructura, movilidad y economía',deHint:'Straßen, Bahn, Energie, Netze, Logistik, Reparatur, regionale Wirtschaft und technische Systeme.',enHint:'Roads, rail, energy, networks, logistics, repairs, regional economy and technical systems.',esHint:'Carreteras, ferrocarril, energía, redes, logística, reparaciones, economía regional y sistemas técnicos.'},
+    {id:'public',value:10,de:'Verwaltung, Recht, Sicherheit & Katastrophenschutz',en:'Administration, law, safety & disaster response',es:'Administración, justicia, seguridad y protección civil',deHint:'Verwaltung, Gerichte, Polizei, Feuerwehr, Rettung, Katastrophenschutz und zivile Schutzaufgaben.',enHint:'Administration, courts, police, fire services, rescue, disaster response and civil protection.',esHint:'Administración, tribunales, policía, bomberos, rescate, emergencias y protección civil.'},
+    {id:'agri',value:10,de:'Landwirtschaft, Wasser & Umwelt',en:'Agriculture, water & environment',es:'Agricultura, agua y medio ambiente',deHint:'Bodenaufbau, Saatgut, Wasser, Lebensmittelversorgung, Umwelt- und Ressourcenschutz.',enHint:'Soil restoration, seed, water, food supply, environmental and resource protection.',esHint:'Regeneración del suelo, semillas, agua, alimentos y protección ambiental y de recursos.'},
+    {id:'housing',value:5,de:'Wohnen & Gemeinschaftsdienste',en:'Housing & community services',es:'Vivienda y servicios comunitarios',deHint:'Wohnraum, kommunale Versorgung, regionale Dienste und grundlegende Gemeinschaftsinfrastruktur.',enHint:'Housing, municipal supply, regional services and basic community infrastructure.',esHint:'Vivienda, servicios municipales, servicios regionales e infraestructura comunitaria básica.'},
+    {id:'culture',value:3,de:'Kultur, Sport & gesellschaftliche Teilhabe',en:'Culture, sport & social participation',es:'Cultura, deporte y participación social',deHint:'Kultur, Sport, Begegnung, soziale Teilhabe und gemeinschaftliches Leben.',enHint:'Culture, sport, community life and social participation.',esHint:'Cultura, deporte, vida comunitaria y participación social.'}
+  ];
+
+  const copy={
     de:{
-      eye:'MENSCHENZENTRIERTE MODELLVERTEILUNG',
-      title:'Nicht jeder Kontinent gleich – jeder Mensch gleich gewichtet.',
-      lead:'Der verbleibende Gemeinschaftsbetrag wird nicht mehr einfach durch sieben geteilt. Stattdessen erhält jeder bewohnte Kontinent genau den Anteil, der seinem Anteil an der Weltbevölkerung entspricht. So folgt die Verteilung den Menschen und nicht der Größe eines Kontinents.',
-      modelFlow:'Modellfluss pro Jahr', basic:'Grundeinkommen pro Jahr', pool:'Gemeinschaftstopf', rest:'Verbleibend für Gemeinschaftsaufgaben',
-      rateTitle:'Gemeinschaftsbeitrag selbst testen',
-      rateLead:'10 % ist der Ausgangswert des VALUVENTUM®-Basismodells. Wird der Prozentsatz verändert, wird nicht nur eine einzelne Zahl geändert: Der gesamte globale Haushalt wird neu berechnet – Gemeinschaftstopf, Restbudget, Puffer, Kontinentbudgets, Aufgabenbudgets, Reserve und Pro-Kopf-Schlüssel. Das Grundeinkommen bleibt dabei als fester Ausgabeblock gleich, solange Bevölkerung und 1.500 Valu pro Monat unverändert bleiben.',
-      rateLabel:'Gemeinschaftsbeitrag',
-      rateHint:'10 % = Basismodell. Andere Werte dienen zum Prüfen und Rechnen; der Rechner passt die gesamte globale Budgetrechnung automatisch an.',
-      taxIncome:'Einkommensteuer – Modellziel bei vollständiger Deckung', taxProduct:'Produkt-/Mehrwertsteuer – Modellziel bei vollständiger Deckung',
-      distributionTitle:'Verteilung nach Bevölkerungsanteil',
-      distributionLead:'Die Prozentanteile unten bilden die relative Verteilung der Weltbevölkerung im Jahr 2026 näherungsweise ab. Antarktika hat keine dauerhafte Bevölkerung und erhält deshalb keinen Bevölkerungsanteil. Für globale Aufgaben gibt es stattdessen einen separat einstellbaren Puffer.',
-      pop:'Einwohner ca.', share:'Anteil Menschen', budget:'Jahresbudget',
-      globalTasks:'❄️ Antarktika / globale Aufgaben', globalTasksPop:'keine dauerhafte Bevölkerung', globalTasksHint:'Separater Puffer für Forschung, globale Infrastruktur, Krisenhilfe und gemeinsame Aufgaben.',
-      bufferTitle:'Globalen Puffer anpassen', bufferLead:'Dieser Anteil wird vor der Verteilung auf die bewohnten Kontinente abgezogen. Der Rest wird danach vollständig nach Bevölkerungsanteilen verteilt.', bufferLabel:'Globaler Puffer',
-      perPerson:'Pro-Kopf-Verteilungsschlüssel',
-      perPersonTitle:'Was bedeutet dieser Wert?',
-      perPersonExplain:'Dieser Betrag ist keine zusätzliche Auszahlung an jeden Menschen. Er ist ein Rechen- und Verteilungsschlüssel: Das nach Grundeinkommen und globalem Puffer verbleibende Gemeinschaftsbudget wird durch die im aktuellen VALUVENTUM®-Basismodell verwendeten 8,22 Milliarden Menschen geteilt. So erhält rechnerisch jeder Mensch dasselbe Gewicht. Ein Kontinent mit mehr Einwohnern bekommt dadurch ein größeres Budget; ein Kontinent mit weniger Einwohnern ein entsprechend kleineres. Der Pro-Kopf-Wert verändert sich automatisch, sobald Gemeinschaftsbeitrag oder globaler Puffer verändert werden.',
-      perPersonFormula:'Aktuelle Rechnung',
-      perPersonCaveat:'Wichtig: Die 8,22 Milliarden sind die derzeitige Modellbasis, auf der auch die 147,96 Billionen Valu Grundeinkommen beruhen. Wird die Weltbevölkerung im Modell aktualisiert, müssen Grundeinkommensbedarf, Restbudget und dieser Pro-Kopf-Wert gemeinsam neu berechnet werden.',
-      categoryTitle:'Wofür das Budget eingesetzt werden kann',
-      categoryLead:'Die folgenden Regler verteilen das verfügbare Gemeinschaftsbudget auf vier große Aufgabenfelder. Sie verändern nicht die Bevölkerungsanteile der Kontinente, sondern nur die Verwendung innerhalb der jeweiligen Budgets.',
-      public:'Öffentliche Aufgaben / Steuerersatz', publicHint:'Infrastruktur, Verwaltung, Sicherheit, Feuerwehr, öffentlicher Verkehr und weitere gemeinsame Aufgaben.',
-      agri:'Gesunde Landwirtschaft', agriHint:'Bodenaufbau, mikrobiologische Regeneration, schadstoffärmere Produktion, natürliches Saatgut sowie mechanische und solare Agrartechnik.',
-      health:'Gesundheitssystem', healthHint:'Prävention, medizinische Versorgung, Pflege, Personal, Medikamente und notwendige Gesundheitsinfrastruktur.',
-      education:'Bildung & Forschung', educationHint:'Kindergärten, Schulen, Ausbildung, Weiterbildung, Hochschulen, Forschung und frei zugängliches Wissen.',
-      globalAllocated:'Global verplant – nach Puffer', europeExample:'Davon in Europa', reserveLabel:'Verbleibende Reserve – nach Puffer',
-      ampelMeaning:'Die Ampel bewertet nur die interne Budgetverteilung: Grün = mindestens 5 % Reserve, Gelb = weniger als 5 % Reserve, Rot = mehr als 100 % verplant.',
-      impactTitle:'Mögliche Wirkung des Modells', impactLead:'Die folgenden Punkte beschreiben gesellschaftliche und gesundheitliche Zielwirkungen des Modells. Sie sind keine medizinische Heilzusage und keine Garantie realer wirtschaftlicher Ergebnisse.',
-      impactHumanH:'👤 Mensch', impactHumanP:'Wenn öffentliche Aufgaben vollständig anderweitig gedeckt sind, ist das Modellziel 0 % Einkommensteuer. Der verdiente Arbeitslohn bleibt dann beim Menschen; das Grundeinkommen wird separat betrachtet.',
-      impactAgriH:'🌱 Boden & Ernährung', impactAgriP:'Ein eigener Finanzierungsanteil kann langfristige Bodenfruchtbarkeit, schadstoffärmere Produktion und eine resilientere Lebensmittelversorgung unterstützen.',
-      impactHealthH:'❤️ Gesundheit', impactHealthP:'Stabile Budgets können Prävention, Behandlung, Pflege und erreichbare Gesundheitsleistungen besser planbar machen.',
-      impactEduH:'🎓 Bildung', impactEduP:'Langfristig finanzierte Bildung und Forschung stärken Selbstständigkeit, Innovation und gesellschaftliche Teilhabe.',
-      sourceH:'Transparenz & Quellen:',
-      sourceP:'Die 2,0 Billiarden USD von McKinsey sind ein externer Quellenanker für globale Zahlungs-„value flows“. Die hier verwendete Rechengröße von 2,0 Billiarden Valu ist eine VALUVENTUM®-Modellannahme und nicht mit dem USD-Wert gleichzusetzen. Die Bevölkerungsanteile sind Näherungswerte für 2026 auf Basis der UN World Population Prospects 2024. Die Steuerziele 0 % sind Modellziele und gelten nur, wenn die tatsächlich definierten Gemeinschaftsaufgaben vollständig und dauerhaft gedeckt werden.',
-      green:'GRÜN · Verteilung mit Reserve', greenCopy:'Die gewählten Aufgabenfelder bleiben innerhalb des verfügbaren Gemeinschaftsbudgets und lassen mindestens 5 % Reserve.',
-      yellow:'GELB · Kaum Reserve', yellowCopy:'Die Verteilung bleibt noch im Budget, lässt aber weniger als 5 % Reserve.',
-      red:'ROT · Budget überschritten', redCopy:'Die gewählten Aufgabenfelder überschreiten zusammen 100 % des verfügbaren Gemeinschaftsbudgets.'
+      eye:'GLOBALER HAUSHALT · ÖSTERREICH ALS STRUKTURVORBILD',
+      title:'Ein Haushalt für alle – weltweit nach Menschen verteilt.',
+      lead:'VALUVENTUM® übernimmt nicht einfach den österreichischen Bundeshaushalt. Österreich dient als Strukturvorbild für starke soziale Sicherung, Gesundheit, Bildung, Infrastruktur und öffentliche Dienste. Weil das Grundeinkommen bereits vor diesem Resthaushalt vollständig finanziert wird, wird die österreichische Aufgabenstruktur für VALUVENTUM® angepasst und nicht 1:1 kopiert.',
+      modelFlow:'Modellfluss pro Jahr',basic:'Grundeinkommen pro Jahr',pool:'Gemeinschaftstopf',rest:'Resthaushalt für alle weiteren Aufgaben',
+      rateTitle:'Gemeinschaftsbeitrag selbst testen',rateLead:'10 % ist das VALUVENTUM®-Basismodell. Jede Änderung berechnet den gesamten globalen Haushalt neu – Gemeinschaftstopf, Resthaushalt, Puffer, Kontinentbudgets, Aufgabenbudgets, Reserve und Pro-Kopf-Schlüssel.',rateLabel:'Gemeinschaftsbeitrag',rateHint:'10 % = Basismodell. Andere Werte dienen zum Prüfen. Das Grundeinkommen bleibt bei 1.500 Valu pro Mensch und Monat, solange diese Modellannahme nicht geändert wird.',
+      taxIncome:'Einkommensteuer – Modellziel bei vollständiger Deckung',taxProduct:'Produkt-/Mehrwertsteuer – Modellziel bei vollständiger Deckung',
+      distributionTitle:'Zuerst nach Menschen auf die Welt verteilen',distributionLead:'Die sechs bewohnten Regionen werden auf die gemeinsame Modellbevölkerung von 8,22 Milliarden Menschen abgestimmt. Jeder Mensch trägt rechnerisch dasselbe Gewicht. Antarktika hat keine dauerhafte Bevölkerung und wird über einen separaten globalen Puffer berücksichtigt.',pop:'Einwohner ca.',share:'Anteil Menschen',budget:'Jahresbudget',globalTasks:'❄️ Globale Aufgaben / Antarktika',globalTasksPop:'keine dauerhafte Bevölkerung',globalTasksHint:'Forschung, internationale Krisenhilfe, globale Infrastruktur und Aufgaben, die keinem einzelnen Kontinent zugeordnet werden können.',
+      bufferTitle:'Globalen Puffer anpassen',bufferLead:'Dieser Anteil wird vor der Verteilung auf die bewohnten Kontinente abgezogen. Danach wird der verbleibende Resthaushalt vollständig nach Bevölkerungsanteilen verteilt.',bufferLabel:'Globaler Puffer',
+      perPerson:'Pro-Kopf-Verteilungsschlüssel',perPersonTitle:'Was bedeutet dieser Wert?',perPersonExplain:'Das ist keine zweite Auszahlung. Es ist der rechnerische Anteil des verfügbaren Gemeinschaftshaushalts pro Mensch. Er sorgt dafür, dass ein Kontinent mit mehr Menschen entsprechend mehr Budget erhält.',perPersonFormula:'Aktuelle Rechnung',perPersonCaveat:'Die 8,22 Milliarden bilden die gemeinsame Modellbasis. Wird diese Zahl geändert, müssen Grundeinkommen und Haushalt gemeinsam neu berechnet werden.',
+      categoryTitle:'Österreichische Aufgabenstruktur – für VALUVENTUM® angepasst',categoryLead:'Der Standardplan verteilt 95 % des nach dem globalen Puffer verfügbaren Haushalts auf alle wesentlichen Versorgungsbereiche und lässt 5 % Reserve. Das Grundeinkommen ist bereits vorher vollständig bezahlt. Pensionen und Pflege sind deshalb zusätzliche Leistungen und keine Doppelzählung des Grundeinkommens.',
+      globalAllocated:'Für Aufgaben verplant',europeExample:'Davon in Europa',reserveLabel:'Verbleibende Reserve',
+      ampelMeaning:'Grün = mindestens 5 % Reserve. Gelb = weniger als 5 % Reserve. Rot = mehr als 100 % verplant oder das Grundeinkommen ist nicht vollständig gedeckt.',
+      impactTitle:'Was dieser Haushalt abdecken soll',impactLead:'Der Haushalt bildet ein Versorgungsmodell ab. Er zeigt rechnerisch, wie der Restbetrag verteilt werden kann; er beweist noch nicht, dass reale weltweite Kosten in jedem Land damit vollständig gedeckt sind.',
+      impactHumanH:'👴 Pension & Pflege',impactHumanP:'Jeder Mensch behält das Grundeinkommen. Wer durch Arbeit zusätzliche Pensionsansprüche erworben hat oder Pflege benötigt, kann aus dem Sozialbudget zusätzliche Leistungen erhalten.',
+      impactAgriH:'🌱 Versorgung',impactAgriP:'Landwirtschaft, Wasser und Umwelt werden als eigene Grundversorgung behandelt und nicht nur als Wirtschaftsförderung.',
+      impactHealthH:'❤️ Gesundheit',impactHealthP:'Ein großer eigener Anteil bleibt für medizinische Versorgung, Pflege, Personal und Infrastruktur reserviert.',
+      impactEduH:'🎓 Zukunft',impactEduP:'Bildung, Forschung, Infrastruktur und Wissen bleiben dauerhaft finanzierte Gemeinschaftsaufgaben.',
+      sourceH:'Transparenz:',sourceP:'Österreich dient hier als Strukturvorbild, nicht als 1:1-Kopie. Statistik Austria weist für 2024 hohe Anteile insbesondere für soziale Sicherung, Gesundheit, Bildung, wirtschaftliche Aufgaben und allgemeine öffentliche Dienste aus. VALUVENTUM® passt diese Struktur an, weil das Grundeinkommen bereits als eigener großer Ausgabeblock vor dem Resthaushalt steht. Die Valu-Beträge bleiben Modellrechnungen.',
+      green:'GRÜN · Haushalt mit Reserve',greenCopy:'Alle eingestellten Aufgaben bleiben innerhalb des verfügbaren Haushalts und es bleiben mindestens 5 % Reserve.',yellow:'GELB · Reserve zu klein',yellowCopy:'Der Haushalt bleibt noch innerhalb des verfügbaren Betrags, aber die Reserve liegt unter 5 %.',red:'ROT · Haushalt passt nicht',redCopy:'Die Aufgaben überschreiten zusammen den verfügbaren Haushalt oder der Gemeinschaftstopf reicht nicht für das Grundeinkommen.'
     },
     en:{
-      eye:'PEOPLE-CENTRED MODEL DISTRIBUTION', title:'Not every continent equally – every person equally weighted.',
-      lead:'The remaining community amount is no longer divided by seven. Each inhabited continent receives the share corresponding to its share of world population.',
-      modelFlow:'Model flow per year', basic:'Basic income per year', pool:'Community pool', rest:'Remaining for community tasks',
-      rateTitle:'Test the community contribution', rateLead:'10% is the starting value of the VALUVENTUM® base model. Changing the rate does not change just one number: the entire global budget is recalculated – community pool, remaining budget, buffer, continent budgets, task budgets, reserve and per-capita allocation key. Basic income remains a fixed expenditure block as long as the population and 1,500 Valu per month stay unchanged.', rateLabel:'Community contribution', rateHint:'10% = base model. Other values are for testing and calculation; the calculator automatically updates the entire global budget.',
-      taxIncome:'Income tax – model target with full coverage', taxProduct:'Product/VAT tax – model target with full coverage',
-      distributionTitle:'Distribution by population share', distributionLead:'The percentages approximately reflect the 2026 distribution of world population. Antarctica has no permanent population, so global tasks use a separate adjustable buffer.',
-      pop:'Population approx.', share:'Population share', budget:'Annual budget', globalTasks:'❄️ Antarctica / global tasks', globalTasksPop:'no permanent population', globalTasksHint:'Separate buffer for research, global infrastructure, crisis response and joint tasks.',
-      bufferTitle:'Adjust global buffer', bufferLead:'This share is deducted before distribution to inhabited continents. The remainder is then distributed fully by population share.', bufferLabel:'Global buffer',
-      perPerson:'Per-capita allocation key', perPersonTitle:'What does this value mean?', perPersonExplain:'This amount is not an additional payment to every person. It is a calculation and allocation key: the community budget remaining after basic income and the global buffer is divided by the 8.22 billion people currently used in the VALUVENTUM® base model. Each person therefore carries the same mathematical weight. A continent with more people receives a larger budget and a continent with fewer people a smaller one. The value updates automatically when the community contribution or global buffer changes.', perPersonFormula:'Current calculation', perPersonCaveat:'Important: 8.22 billion is the current model base and is also used for the 147.96 trillion Valu basic-income requirement. If the model population is updated, basic-income requirement, remainder and this per-capita value must be recalculated together.',
-      categoryTitle:'How the budget can be used', categoryLead:'These sliders allocate the available community budget across four major areas. They do not change continent population shares.',
-      public:'Public tasks / tax replacement', publicHint:'Infrastructure, administration, security, fire services, public transport and other common tasks.',
-      agri:'Healthy agriculture', agriHint:'Soil restoration, microbiological regeneration, lower-pollutant production, natural seed and mechanical/solar agricultural technology.',
-      health:'Health system', healthHint:'Prevention, medical care, nursing, staff, medicines and necessary health infrastructure.',
-      education:'Education & research', educationHint:'Early education, schools, training, universities, research and accessible knowledge.',
-      globalAllocated:'Allocated globally – after buffer', europeExample:'Of this in Europe', reserveLabel:'Remaining reserve – after buffer', ampelMeaning:'Traffic light: green = at least 5% reserve, yellow = below 5%, red = over 100% allocated.',
-      impactTitle:'Possible model effects', impactLead:'These are intended social and health-related effects, not medical promises or guarantees of real economic outcomes.',
-      impactHumanH:'👤 People', impactHumanP:'If public tasks are fully funded elsewhere, the model target is 0% income tax.', impactAgriH:'🌱 Soil & food', impactAgriP:'Dedicated funding can support soil fertility, lower-pollutant production and resilient food supply.', impactHealthH:'❤️ Health', impactHealthP:'Stable budgets can make prevention, treatment, nursing and access to care more predictable.', impactEduH:'🎓 Education', impactEduP:'Long-term education and research funding can strengthen independence, innovation and participation.',
-      sourceH:'Transparency & sources:', sourceP:'McKinsey’s USD 2.0 quadrillion is an external source anchor for global payment “value flows”. The 2.0 quadrillion Valu calculation base used here is a VALUVENTUM® model assumption, not the same as the USD figure. Population shares are approximate 2026 values based on UN World Population Prospects 2024. Zero-tax figures are model targets conditional on full and durable coverage of defined community tasks.',
-      green:'GREEN · Allocation with reserve', greenCopy:'The selected areas stay within the available community budget and leave at least 5% reserve.', yellow:'YELLOW · Little reserve', yellowCopy:'The allocation remains within budget but leaves less than 5% reserve.', red:'RED · Budget exceeded', redCopy:'The selected areas together exceed 100% of the available community budget.'
+      eye:'GLOBAL HOUSEHOLD · AUSTRIA AS A STRUCTURAL REFERENCE',title:'One household for everyone – distributed worldwide by people.',lead:'VALUVENTUM® does not copy Austria’s federal budget one-to-one. Austria is used as a structural reference for strong social protection, health, education, infrastructure and public services. Because basic income is fully funded before this remaining budget, the structure is adapted for VALUVENTUM®.',modelFlow:'Model flow per year',basic:'Basic income per year',pool:'Community pool',rest:'Remaining household for all other tasks',rateTitle:'Test the community contribution',rateLead:'10% is the VALUVENTUM® base model. Any change recalculates the entire global household.',rateLabel:'Community contribution',rateHint:'10% = base model. Other values are for testing. Basic income remains 1,500 Valu per person per month unless that assumption is changed.',taxIncome:'Income tax – model target with full coverage',taxProduct:'Product/VAT tax – model target with full coverage',distributionTitle:'First distribute worldwide by people',distributionLead:'The six inhabited regions are aligned to the common model population of 8.22 billion people. Antarctica is handled through a separate global buffer.',pop:'Population approx.',share:'Population share',budget:'Annual budget',globalTasks:'❄️ Global tasks / Antarctica',globalTasksPop:'no permanent population',globalTasksHint:'Research, international crisis support, global infrastructure and tasks not attributable to a single continent.',bufferTitle:'Adjust global buffer',bufferLead:'This share is deducted before distribution to inhabited continents. The remainder is then distributed by population.',bufferLabel:'Global buffer',perPerson:'Per-capita allocation key',perPersonTitle:'What does this mean?',perPersonExplain:'This is not a second payment. It is the mathematical share of the available community household per person.',perPersonFormula:'Current calculation',perPersonCaveat:'8.22 billion is the common model base. If it changes, basic income and the household must be recalculated together.',categoryTitle:'Austrian task structure – adapted for VALUVENTUM®',categoryLead:'The standard plan allocates 95% of the available household after the global buffer and keeps 5% reserve. Basic income is already fully funded first. Pensions and care are therefore additional benefits, not a duplicate of basic income.',globalAllocated:'Allocated to tasks',europeExample:'Of this in Europe',reserveLabel:'Remaining reserve',ampelMeaning:'Green = at least 5% reserve. Yellow = below 5%. Red = over 100% allocated or basic income is not fully covered.',impactTitle:'What this household is meant to cover',impactLead:'This is a model of provision. It shows how the remainder can be allocated; it does not yet prove that real costs in every country are fully covered.',impactHumanH:'👴 Pensions & care',impactHumanP:'Everyone keeps basic income. Earned pension claims and care needs can receive additional support from the social budget.',impactAgriH:'🌱 Supply',impactAgriP:'Agriculture, water and the environment are treated as basic provision.',impactHealthH:'❤️ Health',impactHealthP:'A large dedicated share remains reserved for medical care, staff and infrastructure.',impactEduH:'🎓 Future',impactEduP:'Education, research, infrastructure and knowledge remain permanently funded community tasks.',sourceH:'Transparency:',sourceP:'Austria is used as a structural reference, not a one-to-one copy. VALUVENTUM® adapts the structure because basic income already comes before the remaining household. Valu figures remain model calculations.',green:'GREEN · Household with reserve',greenCopy:'All selected tasks stay within the available household and at least 5% reserve remains.',yellow:'YELLOW · Reserve too small',yellowCopy:'The household is still within the available amount, but reserve is below 5%.',red:'RED · Household does not fit',redCopy:'The selected tasks exceed the available household or the community pool does not fully cover basic income.'
     },
     es:{
-      eye:'DISTRIBUCIÓN DEL MODELO CENTRADA EN LAS PERSONAS', title:'No todos los continentes por igual: cada persona con el mismo peso.',
-      lead:'El importe comunitario restante ya no se divide simplemente entre siete. Cada continente habitado recibe la proporción correspondiente a su parte de la población mundial.',
-      modelFlow:'Flujo modelo anual', basic:'Renta básica anual', pool:'Fondo comunitario', rest:'Resto para tareas comunitarias',
-      rateTitle:'Probar la aportación comunitaria', rateLead:'El 10 % es el valor inicial del modelo base VALUVENTUM®. Al cambiar el porcentaje no cambia solo una cifra: se recalcula todo el presupuesto global – fondo comunitario, presupuesto restante, fondo global, presupuestos continentales, tareas, reserva y clave per cápita. La renta básica permanece como un bloque fijo mientras no cambien la población ni los 1.500 Valu mensuales.', rateLabel:'Aportación comunitaria', rateHint:'10 % = modelo base. Los demás valores sirven para probar y calcular; el sistema ajusta automáticamente todo el presupuesto global.',
-      taxIncome:'Impuesto sobre la renta – objetivo con cobertura total', taxProduct:'IVA/impuesto sobre productos – objetivo con cobertura total',
-      distributionTitle:'Distribución por población', distributionLead:'Los porcentajes reflejan aproximadamente la distribución mundial de 2026. La Antártida no tiene población permanente; para tareas globales existe un fondo separado ajustable.',
-      pop:'Población aprox.', share:'Cuota de población', budget:'Presupuesto anual', globalTasks:'❄️ Antártida / tareas globales', globalTasksPop:'sin población permanente', globalTasksHint:'Fondo separado para investigación, infraestructura global, ayuda en crisis y tareas comunes.',
-      bufferTitle:'Ajustar fondo global', bufferLead:'Esta parte se deduce antes de distribuir a los continentes habitados. El resto se reparte completamente según población.', bufferLabel:'Fondo global',
-      perPerson:'Clave de distribución per cápita', perPersonTitle:'¿Qué significa este valor?', perPersonExplain:'Esta cantidad no es un pago adicional para cada persona. Es una clave de cálculo y distribución: el presupuesto comunitario que queda después de la renta básica y del fondo global se divide entre los 8,22 mil millones de personas utilizados actualmente en el modelo base VALUVENTUM®. Así, cada persona tiene el mismo peso matemático. Un continente con más habitantes recibe un presupuesto mayor y uno con menos habitantes, uno menor. El valor cambia automáticamente cuando se modifica la aportación comunitaria o el fondo global.', perPersonFormula:'Cálculo actual', perPersonCaveat:'Importante: 8,22 mil millones es la base actual del modelo y también se utiliza para la necesidad de renta básica de 147,96 billones Valu. Si se actualiza la población del modelo, deben recalcularse conjuntamente la renta básica, el resto y este valor per cápita.',
-      categoryTitle:'Para qué puede utilizarse el presupuesto', categoryLead:'Estos controles distribuyen el presupuesto comunitario disponible entre cuatro áreas. No cambian la cuota de población de los continentes.',
-      public:'Tareas públicas / sustitución fiscal', publicHint:'Infraestructura, administración, seguridad, bomberos, transporte público y otras tareas comunes.',
-      agri:'Agricultura saludable', agriHint:'Regeneración del suelo, producción con menos contaminantes, semillas naturales y tecnología agrícola mecánica y solar.',
-      health:'Sistema de salud', healthHint:'Prevención, atención médica, cuidados, personal, medicamentos e infraestructura sanitaria necesaria.',
-      education:'Educación e investigación', educationHint:'Educación infantil, escuelas, formación, universidades, investigación y conocimiento accesible.',
-      globalAllocated:'Asignado globalmente – después del fondo', europeExample:'De ello en Europa', reserveLabel:'Reserva restante – después del fondo', ampelMeaning:'Semáforo: verde = al menos 5 % de reserva, amarillo = menos de 5 %, rojo = más del 100 % asignado.',
-      impactTitle:'Posibles efectos del modelo', impactLead:'Son objetivos sociales y sanitarios del modelo, no promesas médicas ni garantías de resultados económicos reales.',
-      impactHumanH:'👤 Personas', impactHumanP:'Si las tareas públicas están completamente financiadas, el objetivo del modelo es 0 % de impuesto sobre la renta.', impactAgriH:'🌱 Suelo y alimentos', impactAgriP:'Una financiación específica puede apoyar la fertilidad del suelo y una producción más resiliente.', impactHealthH:'❤️ Salud', impactHealthP:'Presupuestos estables pueden mejorar la planificación de prevención, tratamiento y cuidados.', impactEduH:'🎓 Educación', impactEduP:'La financiación a largo plazo de educación e investigación puede fortalecer autonomía, innovación y participación.',
-      sourceH:'Transparencia y fuentes:', sourceP:'Los 2,0 mil billones USD de McKinsey son una referencia externa para los “flujos de valor” globales de pagos. La base de 2,0 mil billones Valu utilizada aquí es un supuesto del modelo VALUVENTUM®, no la misma cifra en USD. Las cuotas de población son aproximaciones para 2026 basadas en UN World Population Prospects 2024. Los valores fiscales de 0 % son objetivos del modelo condicionados a la cobertura completa y sostenible de las tareas comunitarias definidas.',
-      green:'VERDE · Distribución con reserva', greenCopy:'Las áreas elegidas permanecen dentro del presupuesto disponible y dejan al menos un 5 % de reserva.', yellow:'AMARILLO · Poca reserva', yellowCopy:'La distribución sigue dentro del presupuesto, pero deja menos del 5 % de reserva.', red:'ROJO · Presupuesto excedido', redCopy:'Las áreas elegidas superan conjuntamente el 100 % del presupuesto disponible.'
+      eye:'PRESUPUESTO GLOBAL · AUSTRIA COMO REFERENCIA ESTRUCTURAL',title:'Un presupuesto para todos, distribuido mundialmente por personas.',lead:'VALUVENTUM® no copia el presupuesto federal austríaco uno a uno. Austria sirve como referencia estructural para una fuerte protección social, salud, educación, infraestructura y servicios públicos. Como la renta básica se financia antes del presupuesto restante, la estructura se adapta para VALUVENTUM®.',modelFlow:'Flujo modelo anual',basic:'Renta básica anual',pool:'Fondo comunitario',rest:'Presupuesto restante para todas las demás tareas',rateTitle:'Probar la aportación comunitaria',rateLead:'El 10 % es el modelo base VALUVENTUM®. Cada cambio recalcula todo el presupuesto global.',rateLabel:'Aportación comunitaria',rateHint:'10 % = modelo base. Los demás valores sirven para probar. La renta básica permanece en 1.500 Valu por persona y mes mientras no cambie esta suposición.',taxIncome:'Impuesto sobre la renta – objetivo con cobertura total',taxProduct:'IVA/impuesto sobre productos – objetivo con cobertura total',distributionTitle:'Primero distribuir por personas en todo el mundo',distributionLead:'Las seis regiones habitadas se ajustan a la población modelo común de 8,22 mil millones de personas. La Antártida se cubre mediante un fondo global separado.',pop:'Población aprox.',share:'Cuota de población',budget:'Presupuesto anual',globalTasks:'❄️ Tareas globales / Antártida',globalTasksPop:'sin población permanente',globalTasksHint:'Investigación, ayuda internacional en crisis, infraestructura global y tareas no atribuibles a un continente.',bufferTitle:'Ajustar fondo global',bufferLead:'Esta parte se deduce antes de repartir entre los continentes habitados. El resto se distribuye por población.',bufferLabel:'Fondo global',perPerson:'Clave de distribución per cápita',perPersonTitle:'¿Qué significa?',perPersonExplain:'No es un segundo pago. Es la parte matemática del presupuesto comunitario disponible por persona.',perPersonFormula:'Cálculo actual',perPersonCaveat:'8,22 mil millones es la base común del modelo. Si cambia, deben recalcularse juntos la renta básica y el presupuesto.',categoryTitle:'Estructura de tareas austríaca – adaptada a VALUVENTUM®',categoryLead:'El plan estándar distribuye el 95 % del presupuesto disponible después del fondo global y mantiene un 5 % de reserva. La renta básica ya está financiada antes. Pensiones y cuidados son prestaciones adicionales.',globalAllocated:'Asignado a tareas',europeExample:'De ello en Europa',reserveLabel:'Reserva restante',ampelMeaning:'Verde = al menos 5 % de reserva. Amarillo = menos del 5 %. Rojo = más del 100 % asignado o renta básica no cubierta.',impactTitle:'Qué debe cubrir este presupuesto',impactLead:'Es un modelo de provisión. Muestra cómo puede distribuirse el resto; todavía no demuestra que los costes reales de todos los países estén completamente cubiertos.',impactHumanH:'👴 Pensiones y cuidados',impactHumanP:'Todos conservan la renta básica. Los derechos de pensión adquiridos y las necesidades de cuidados pueden recibir prestaciones adicionales.',impactAgriH:'🌱 Abastecimiento',impactAgriP:'Agricultura, agua y medio ambiente se tratan como provisión básica.',impactHealthH:'❤️ Salud',impactHealthP:'Una parte importante queda reservada para atención médica, personal e infraestructura.',impactEduH:'🎓 Futuro',impactEduP:'Educación, investigación, infraestructura y conocimiento siguen siendo tareas comunitarias permanentes.',sourceH:'Transparencia:',sourceP:'Austria sirve como referencia estructural, no como copia exacta. VALUVENTUM® adapta la estructura porque la renta básica ya se financia antes del presupuesto restante. Las cifras Valu siguen siendo cálculos de modelo.',green:'VERDE · Presupuesto con reserva',greenCopy:'Todas las tareas seleccionadas permanecen dentro del presupuesto y queda al menos un 5 % de reserva.',yellow:'AMARILLO · Reserva demasiado pequeña',yellowCopy:'El presupuesto sigue dentro del límite, pero la reserva es inferior al 5 %.',red:'ROJO · El presupuesto no encaja',redCopy:'Las tareas superan el presupuesto disponible o el fondo comunitario no cubre completamente la renta básica.'
     }
   };
 
-  root.innerHTML = `
+  root.innerHTML=`
   <style>
-    :host{display:block;font-family:Inter,Arial,sans-serif;color:#24302d}
-    *{box-sizing:border-box}.shell{width:min(1180px,92%);margin:34px auto 50px;padding:clamp(22px,4vw,42px);border:1px solid #dce6e0;border-radius:28px;background:linear-gradient(145deg,#f7fbf8,#fffaf0);box-shadow:0 18px 48px rgba(15,90,70,.08)}
-    .eye{color:#b47c08;font-size:.76rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}h2{margin:8px 0 12px;color:#0f5a46;font-size:clamp(1.85rem,3.5vw,3.15rem);line-height:1.08}h3{margin:0;color:#0f5a46;font-size:1.35rem}.lead{max-width:950px;margin:0;color:#65736f;line-height:1.65}
-    .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:24px}.flow article{padding:18px;border:1px solid #dce6e0;border-radius:18px;background:#fff}.flow span{display:block;color:#6b7773;font-size:.78rem;font-weight:800}.flow b{display:block;margin-top:7px;color:#0f5a46;font-size:1.18rem;font-variant-numeric:tabular-nums}.flow .rest{background:#0f5a46;border-color:#0f5a46}.flow .rest span{color:#d7ece4}.flow .rest b{color:#ffd56c}
+    :host{display:block;font-family:Inter,Arial,sans-serif;color:#24302d}*{box-sizing:border-box}
+    .shell{width:min(1180px,92%);margin:34px auto 50px;padding:clamp(22px,4vw,42px);border:1px solid #dce6e0;border-radius:28px;background:linear-gradient(145deg,#f7fbf8,#fffaf0);box-shadow:0 18px 48px rgba(15,90,70,.08)}
+    .eye{color:#b47c08;font-size:.76rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}h2{margin:8px 0 12px;color:#0f5a46;font-size:clamp(1.85rem,3.5vw,3.15rem);line-height:1.08}h3{margin:0;color:#0f5a46;font-size:1.35rem}.lead{max-width:980px;margin:0;color:#65736f;line-height:1.65}
+    .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:24px}.flow article{padding:18px;border:1px solid #dce6e0;border-radius:18px;background:#fff}.flow span{display:block;color:#6b7773;font-size:.78rem;font-weight:800}.flow b{display:block;margin-top:7px;color:#0f5a46;font-size:1.18rem}.flow .rest{background:#0f5a46;border-color:#0f5a46}.flow .rest span{color:#d7ece4}.flow .rest b{color:#ffd56c}
     .sliderbox{margin-top:18px;padding:20px;border:1px solid #dce6e0;border-radius:18px;background:#fff}.slider-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px}.slider-head p{margin:6px 0 0;color:#687670;line-height:1.5;font-size:.9rem}.bigpct{min-width:100px;text-align:center;padding:10px 12px;border-radius:14px;background:#0f5a46;color:#fff;font-size:1.35rem;font-weight:900}.sliderline{display:grid;grid-template-columns:1fr 110px;gap:14px;align-items:center;margin-top:16px}.sliderline input[type=range]{width:100%;accent-color:#0f5a46}.hint{margin-top:8px;color:#74817d;font-size:.82rem;line-height:1.45}
     .taxrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.tax{padding:16px;border-radius:16px;background:#fff;border:1px solid #dce6e0;text-align:center}.tax b{display:block;color:#0f5a46;font-size:1.45rem}.tax span{display:block;margin-top:4px;color:#66746f;font-size:.82rem}
-    .sectiontitle{margin-top:30px}.sectiontitle p{margin:8px 0 0;color:#687670;line-height:1.58}.continents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}.continent{padding:17px;border:1px solid #dce6e0;border-radius:17px;background:#fff}.continent strong{display:block;color:#0f5a46;font-size:1rem}.meta{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.meta span{font-size:.78rem;color:#74817d}.meta b{display:block;margin-top:2px;color:#24302d;font-size:.93rem}.budget{margin-top:11px;padding-top:10px;border-top:1px solid #edf1ef}.budget small{display:block;color:#74817d}.budget b{display:block;margin-top:4px;color:#0f5a46;font-size:1.16rem;font-variant-numeric:tabular-nums}.globalcard{background:#fff8e7;border-color:#ead9a7}
-    .perperson{margin-top:14px;padding:16px;border-radius:14px;background:#eef7f2;color:#0f5a46;font-weight:850}.perperson span{color:#62706b;font-weight:600}.perperson-note{margin-top:8px;padding:16px 18px;border:1px solid #dce6e0;border-radius:14px;background:#fff;color:#5f6e69;line-height:1.58;font-size:.88rem}.perperson-note strong{color:#0f5a46}.perperson-formula{margin-top:10px;padding:10px 12px;border-radius:10px;background:#f6f9f7;color:#24302d;font-weight:800;font-variant-numeric:tabular-nums}.perperson-caveat{display:block;margin-top:9px;color:#7a6843;font-size:.82rem}
-    .planner{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:20px;margin-top:18px}.panel{padding:22px;border:1px solid #dce6e0;border-radius:20px;background:#fff}.row{display:grid;grid-template-columns:minmax(0,1fr) 84px;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #edf1ef}.row:last-child{border-bottom:0}.row label{display:grid;gap:6px;color:#0f5a46;font-weight:850}.row small{color:#6b7773;font-weight:500;line-height:1.4}.row input[type=range]{width:100%;accent-color:#0f5a46}.pct{padding:8px;border:1px solid #dce6e0;border-radius:10px;text-align:center;color:#0f5a46;font-weight:900;background:#f8fbf9}.amounts{display:grid;gap:9px;margin-top:18px}.amount{display:grid;grid-template-columns:1fr auto;gap:12px;padding:11px 12px;border-radius:12px;background:#f6f9f7}.amount span{color:#596862}.amount b{color:#0f5a46;font-variant-numeric:tabular-nums}
-    .lightbox{display:grid;place-items:center;text-align:center;min-height:100%}.light{width:90px;height:90px;border-radius:50%;box-shadow:0 0 0 10px #edf1ef,0 12px 28px rgba(0,0,0,.12);background:#1b9e55}.light.yellow{background:#d9a20d}.light.red{background:#c7473d}.status{margin-top:18px;color:#0f5a46;font-size:1.18rem;font-weight:900}.statuscopy{margin:7px 0 0;color:#66746f;line-height:1.55}.reservebox{margin-top:15px;padding:13px;border-radius:13px;background:#fff8e7;border:1px solid #ead9a7;color:#5d5131;font-size:.86rem;line-height:1.45}
+    .sectiontitle{margin-top:30px}.sectiontitle p{margin:8px 0 0;color:#687670;line-height:1.58}.continents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}.continent{padding:17px;border:1px solid #dce6e0;border-radius:17px;background:#fff}.continent strong{display:block;color:#0f5a46}.meta{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.meta span{font-size:.78rem;color:#74817d}.meta b{display:block;margin-top:2px;color:#24302d;font-size:.93rem}.budget{margin-top:11px;padding-top:10px;border-top:1px solid #edf1ef}.budget small{display:block;color:#74817d}.budget b{display:block;margin-top:4px;color:#0f5a46;font-size:1.16rem}.globalcard{background:#fff8e7;border-color:#ead9a7}
+    .perperson{margin-top:14px;padding:16px;border-radius:14px;background:#eef7f2;color:#0f5a46;font-weight:850}.perperson span{color:#62706b;font-weight:600}.perperson-note{margin-top:8px;padding:16px 18px;border:1px solid #dce6e0;border-radius:14px;background:#fff;color:#5f6e69;line-height:1.58;font-size:.88rem}.perperson-note strong{color:#0f5a46}.perperson-formula{margin-top:10px;padding:10px 12px;border-radius:10px;background:#f6f9f7;color:#24302d;font-weight:800}.perperson-caveat{display:block;margin-top:9px;color:#7a6843;font-size:.82rem}
+    .planner{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr);gap:20px;margin-top:18px}.panel{padding:22px;border:1px solid #dce6e0;border-radius:20px;background:#fff}.row{display:grid;grid-template-columns:minmax(0,1fr) 116px;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #edf1ef}.row:last-child{border-bottom:0}.row label{display:grid;gap:6px;color:#0f5a46;font-weight:850}.row small{color:#6b7773;font-weight:500;line-height:1.4}.row input[type=range]{width:100%;accent-color:#0f5a46}.valuebox{padding:8px;border:1px solid #dce6e0;border-radius:10px;text-align:center;background:#f8fbf9}.valuebox b{display:block;color:#0f5a46}.valuebox small{display:block;margin-top:3px;color:#6b7773;font-size:.72rem}.amounts{display:grid;gap:9px;margin-top:18px}.amount{display:grid;grid-template-columns:1fr auto;gap:12px;padding:11px 12px;border-radius:12px;background:#f6f9f7}.amount span{color:#596862}.amount b{color:#0f5a46}.lightbox{display:grid;place-items:center;text-align:center;min-height:100%}.light{width:90px;height:90px;border-radius:50%;box-shadow:0 0 0 10px #edf1ef,0 12px 28px rgba(0,0,0,.12);background:#1b9e55}.light.yellow{background:#d9a20d}.light.red{background:#c7473d}.status{margin-top:18px;color:#0f5a46;font-size:1.18rem;font-weight:900}.statuscopy{margin:7px 0 0;color:#66746f;line-height:1.55}.reservebox{margin-top:15px;padding:13px;border-radius:13px;background:#fff8e7;border:1px solid #ead9a7;color:#5d5131;font-size:.86rem;line-height:1.45}
     .impact{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.impact article{padding:18px;border:1px solid #dce6e0;border-radius:18px;background:#fff}.impact strong{display:block;color:#0f5a46}.impact p{margin:7px 0 0;color:#65736f;font-size:.88rem;line-height:1.5}.note{margin-top:20px;padding:18px 20px;border-left:5px solid #c99a2e;border-radius:0 16px 16px 0;background:#fffaf0;color:#5d655f;line-height:1.55;font-size:.88rem}.note strong{color:#0f5a46}.sources a{color:#0f5a46;font-weight:850}
     @media(max-width:940px){.flow,.impact{grid-template-columns:1fr 1fr}.continents{grid-template-columns:1fr 1fr}.planner{grid-template-columns:1fr}}
-    @media(max-width:620px){.shell{width:min(100% - 22px,1180px);padding:20px;border-radius:20px}.flow,.continents,.impact,.taxrow{grid-template-columns:1fr}.slider-head{display:block}.bigpct{margin-top:12px;width:max-content}.sliderline{grid-template-columns:1fr 90px}.row{grid-template-columns:1fr 72px}}
+    @media(max-width:620px){.shell{width:min(100% - 22px,1180px);padding:20px;border-radius:20px}.flow,.continents,.impact,.taxrow{grid-template-columns:1fr}.slider-head{display:block}.bigpct{margin-top:12px;width:max-content}.sliderline{grid-template-columns:1fr 90px}.row{grid-template-columns:1fr 102px}}
   </style>
   <div class="shell">
-    <div class="eye" data-t="eye"></div>
-    <h2 data-t="title"></h2>
-    <p class="lead" data-t="lead"></p>
-
-    <div class="flow">
-      <article><span data-t="modelFlow"></span><b>2,000 Bio. Valu</b></article>
-      <article><span data-t="basic"></span><b>147,960 Bio. Valu</b></article>
-      <article><span data-t="pool"></span><b id="vvbd-pool">200,000 Bio. Valu</b></article>
-      <article class="rest"><span data-t="rest"></span><b id="vvbd-rest">52,040 Bio. Valu</b></article>
-    </div>
-
-    <div class="sliderbox">
-      <div class="slider-head"><div><h3 data-t="rateTitle"></h3><p data-t="rateLead"></p></div><div class="bigpct" id="vvbd-rate-big">10,0 %</div></div>
-      <div class="sliderline"><input id="vvbd-rate" type="range" min="5" max="15" step="0.1" value="10"><input id="vvbd-rate-num" type="number" min="5" max="15" step="0.1" value="10" aria-label="Gemeinschaftsbeitrag in Prozent"></div>
-      <div class="hint"><strong data-t="rateLabel"></strong> · <span data-t="rateHint"></span></div>
-    </div>
-
-    <div class="taxrow">
-      <div class="tax"><b>0 %</b><span data-t="taxIncome"></span></div>
-      <div class="tax"><b>0 %</b><span data-t="taxProduct"></span></div>
-    </div>
-
-    <div class="sectiontitle"><h3 data-t="distributionTitle"></h3><p data-t="distributionLead"></p></div>
-    <div class="continents" id="vvbd-regions"></div>
-
-    <div class="sliderbox">
-      <div class="slider-head"><div><h3 data-t="bufferTitle"></h3><p data-t="bufferLead"></p></div><div class="bigpct" id="vvbd-buffer-big">0,07 %</div></div>
-      <div class="sliderline"><input id="vvbd-buffer" type="range" min="0" max="2" step="0.01" value="0.07"><input id="vvbd-buffer-num" type="number" min="0" max="2" step="0.01" value="0.07" aria-label="Globaler Puffer in Prozent"></div>
-      <div class="hint"><strong data-t="bufferLabel"></strong></div>
-    </div>
-
-    <div class="perperson"><span data-t="perPerson"></span>: <b id="vvbd-perperson"></b></div>
-    <div class="perperson-note">
-      <strong data-t="perPersonTitle"></strong>
-      <div data-t="perPersonExplain"></div>
-      <div class="perperson-formula" id="vvbd-perperson-formula"></div>
-      <span class="perperson-caveat" data-t="perPersonCaveat"></span>
-    </div>
-
+    <div class="eye" data-t="eye"></div><h2 data-t="title"></h2><p class="lead" data-t="lead"></p>
+    <div class="flow"><article><span data-t="modelFlow"></span><b>2,000 Bio. Valu</b></article><article><span data-t="basic"></span><b>147,960 Bio. Valu</b></article><article><span data-t="pool"></span><b id="vvbd-pool">200,000 Bio. Valu</b></article><article class="rest"><span data-t="rest"></span><b id="vvbd-rest">52,040 Bio. Valu</b></article></div>
+    <div class="sliderbox"><div class="slider-head"><div><h3 data-t="rateTitle"></h3><p data-t="rateLead"></p></div><div class="bigpct" id="vvbd-rate-big">10,0 %</div></div><div class="sliderline"><input id="vvbd-rate" type="range" min="5" max="15" step="0.1" value="10"><input id="vvbd-rate-num" type="number" min="5" max="15" step="0.1" value="10"></div><div class="hint"><strong data-t="rateLabel"></strong> · <span data-t="rateHint"></span></div></div>
+    <div class="taxrow"><div class="tax"><b>0 %</b><span data-t="taxIncome"></span></div><div class="tax"><b>0 %</b><span data-t="taxProduct"></span></div></div>
+    <div class="sectiontitle"><h3 data-t="distributionTitle"></h3><p data-t="distributionLead"></p></div><div class="continents" id="vvbd-regions"></div>
+    <div class="sliderbox"><div class="slider-head"><div><h3 data-t="bufferTitle"></h3><p data-t="bufferLead"></p></div><div class="bigpct" id="vvbd-buffer-big">0,07 %</div></div><div class="sliderline"><input id="vvbd-buffer" type="range" min="0" max="2" step="0.01" value="0.07"><input id="vvbd-buffer-num" type="number" min="0" max="2" step="0.01" value="0.07"></div><div class="hint"><strong data-t="bufferLabel"></strong></div></div>
+    <div class="perperson"><span data-t="perPerson"></span>: <b id="vvbd-perperson"></b></div><div class="perperson-note"><strong data-t="perPersonTitle"></strong><div data-t="perPersonExplain"></div><div class="perperson-formula" id="vvbd-perperson-formula"></div><span class="perperson-caveat" data-t="perPersonCaveat"></span></div>
     <div class="sectiontitle"><h3 data-t="categoryTitle"></h3><p data-t="categoryLead"></p></div>
-    <div class="planner">
-      <div class="panel">
-        <div class="row"><label><span data-t="public"></span><input id="vvbd-public" type="range" min="0" max="80" step="1" value="40"><small data-t="publicHint"></small></label><div class="pct"><span id="vvbd-public-pct">40</span> %</div></div>
-        <div class="row"><label><span data-t="agri"></span><input id="vvbd-agri" type="range" min="0" max="80" step="1" value="25"><small data-t="agriHint"></small></label><div class="pct"><span id="vvbd-agri-pct">25</span> %</div></div>
-        <div class="row"><label><span data-t="health"></span><input id="vvbd-health" type="range" min="0" max="80" step="1" value="20"><small data-t="healthHint"></small></label><div class="pct"><span id="vvbd-health-pct">20</span> %</div></div>
-        <div class="row"><label><span data-t="education"></span><input id="vvbd-education" type="range" min="0" max="80" step="1" value="10"><small data-t="educationHint"></small></label><div class="pct"><span id="vvbd-education-pct">10</span> %</div></div>
-        <div class="amounts" aria-live="polite">
-          <div class="amount"><span data-t="globalAllocated"></span><b id="vvbd-global"></b></div>
-          <div class="amount"><span data-t="europeExample"></span><b id="vvbd-europe"></b></div>
-          <div class="amount"><span data-t="reserveLabel"></span><b id="vvbd-reserve"></b></div>
-        </div>
-      </div>
-      <div class="panel lightbox"><div><div id="vvbd-light" class="light" aria-label="Budgetampel"></div><div id="vvbd-status" class="status"></div><p id="vvbd-status-copy" class="statuscopy"></p><div class="reservebox" data-t="ampelMeaning"></div></div></div>
-    </div>
-
-    <div class="sectiontitle"><h3 data-t="impactTitle"></h3><p data-t="impactLead"></p></div>
-    <div class="impact"><article><strong data-t="impactHumanH"></strong><p data-t="impactHumanP"></p></article><article><strong data-t="impactAgriH"></strong><p data-t="impactAgriP"></p></article><article><strong data-t="impactHealthH"></strong><p data-t="impactHealthP"></p></article><article><strong data-t="impactEduH"></strong><p data-t="impactEduP"></p></article></div>
-    <div class="note sources"><strong data-t="sourceH"></strong> <span data-t="sourceP"></span><br><br><a href="https://www.un.org/development/desa/pd/content/World-Population-Prospects-2024" target="_blank" rel="noopener">UN World Population Prospects 2024</a> · <a href="https://www.mckinsey.com/industries/financial-services/our-insights/global-payments-report" target="_blank" rel="noopener">McKinsey Global Payments Report</a></div>
+    <div class="planner"><div class="panel"><div id="vvbd-category-rows"></div><div class="amounts"><div class="amount"><span data-t="globalAllocated"></span><b id="vvbd-global"></b></div><div class="amount"><span data-t="europeExample"></span><b id="vvbd-europe"></b></div><div class="amount"><span data-t="reserveLabel"></span><b id="vvbd-reserve"></b></div></div></div><div class="panel lightbox"><div><div id="vvbd-light" class="light"></div><div id="vvbd-status" class="status"></div><p id="vvbd-status-copy" class="statuscopy"></p><div class="reservebox" data-t="ampelMeaning"></div></div></div></div>
+    <div class="sectiontitle"><h3 data-t="impactTitle"></h3><p data-t="impactLead"></p></div><div class="impact"><article><strong data-t="impactHumanH"></strong><p data-t="impactHumanP"></p></article><article><strong data-t="impactAgriH"></strong><p data-t="impactAgriP"></p></article><article><strong data-t="impactHealthH"></strong><p data-t="impactHealthP"></p></article><article><strong data-t="impactEduH"></strong><p data-t="impactEduP"></p></article></div>
+    <div class="note sources"><strong data-t="sourceH"></strong> <span data-t="sourceP"></span><br><br><a href="https://www.statistik.at/statistiken/volkswirtschaft-und-oeffentliche-finanzen/oeffentliche-finanzen/oeffentliche-finanzen/staatsausgaben-nach-aufgabenbereichen" target="_blank" rel="noopener">Statistik Austria · Staatsausgaben nach Aufgabenbereichen</a> · <a href="https://www.un.org/development/desa/pd/content/World-Population-Prospects-2024" target="_blank" rel="noopener">UN World Population Prospects 2024</a> · <a href="https://www.mckinsey.com/industries/financial-services/our-insights/global-payments-report" target="_blank" rel="noopener">McKinsey Global Payments Report</a></div>
   </div>`;
 
-  const $ = s => root.querySelector(s);
-  const all = s => Array.from(root.querySelectorAll(s));
-  const modelFlow = 2000;
-  const basicIncome = 147.96;
-  const worldModelPeople = 8.22e9;
-  let lang = 'de';
+  const $=s=>root.querySelector(s); const all=s=>Array.from(root.querySelectorAll(s)); let lang='de';
+  function locale(){return lang==='en'?'en-US':lang==='es'?'es-ES':'de-DE';}
+  function fmt(n,d=3){return new Intl.NumberFormat(locale(),{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
+  function pct(n,d=1){return new Intl.NumberFormat(locale(),{minimumFractionDigits:d,maximumFractionDigits:d}).format(n)+' %';}
+  function bio(n,d=3){return fmt(n,d)+' Bio. Valu';}
+  function currentCopy(){return copy[lang]||copy.de;}
 
-  function locale(){ return lang==='en' ? 'en-US' : lang==='es' ? 'es-ES' : 'de-DE'; }
-  function fmt(n,d=3){ return new Intl.NumberFormat(locale(),{minimumFractionDigits:d,maximumFractionDigits:d}).format(n); }
-  function pct(n,d=2){ return new Intl.NumberFormat(locale(),{minimumFractionDigits:d,maximumFractionDigits:d}).format(n)+' %'; }
-  function bio(n,d=3){ return fmt(n,d)+' Bio. Valu'; }
-  function currentCopy(){ return copy[lang] || copy.de; }
+  function renderCategoryRows(){
+    const container=$('#vvbd-category-rows');
+    container.innerHTML=categories.map(cat=>`<div class="row"><label><span>${cat[lang]||cat.de}</span><input id="vvbd-${cat.id}" type="range" min="0" max="50" step="0.5" value="${cat.value}"><small>${cat[lang+'Hint']||cat.deHint}</small></label><div class="valuebox"><b><span id="vvbd-${cat.id}-pct">${cat.value.toFixed(1)}</span> %</b><small id="vvbd-${cat.id}-amount"></small></div></div>`).join('');
+    categories.forEach(cat=>$('#vvbd-'+cat.id).addEventListener('input',calculate));
+  }
 
-  function renderRegions(remaining, bufferRate){
-    const c = currentCopy();
-    const container = $('#vvbd-regions');
-    const humanBudget = Math.max(0, remaining) * (1-bufferRate/100);
-    container.innerHTML = regions.map(r=>{
-      const amount = humanBudget * (r.share/100);
-      return `<div class="continent"><strong>${r.icon} ${r[lang] || r.de}</strong><div class="meta"><div><span>${c.pop}</span><b>${r.pop}</b></div><div><span>${c.share}</span><b>${pct(r.share,2)}</b></div></div><div class="budget"><small>${c.budget}</small><b>${bio(amount,3)}</b></div></div>`;
-    }).join('') + `<div class="continent globalcard"><strong>${c.globalTasks}</strong><div class="meta"><div><span>${c.pop}</span><b>${c.globalTasksPop}</b></div><div><span>${c.share}</span><b>${pct(bufferRate,2)}</b></div></div><div class="budget"><small>${c.budget}</small><b>${bio(Math.max(0,remaining)*(bufferRate/100),3)}</b></div><div class="hint">${c.globalTasksHint}</div></div>`;
+  function renderRegions(remaining,bufferRate){
+    const c=currentCopy(),container=$('#vvbd-regions'),humanBudget=Math.max(0,remaining)*(1-bufferRate/100);
+    container.innerHTML=regions.map(r=>{const amount=humanBudget*(r.share/100);return `<div class="continent"><strong>${r.icon} ${r[lang]||r.de}</strong><div class="meta"><div><span>${c.pop}</span><b>${r.pop}</b></div><div><span>${c.share}</span><b>${pct(r.share,2)}</b></div></div><div class="budget"><small>${c.budget}</small><b>${bio(amount,3)}</b></div></div>`;}).join('')+`<div class="continent globalcard"><strong>${c.globalTasks}</strong><div class="meta"><div><span>${c.pop}</span><b>${c.globalTasksPop}</b></div><div><span>${c.share}</span><b>${pct(bufferRate,2)}</b></div></div><div class="budget"><small>${c.budget}</small><b>${bio(Math.max(0,remaining)*(bufferRate/100),3)}</b></div><div class="hint">${c.globalTasksHint}</div></div>`;
   }
 
   function calculate(){
-    const rate = Number($('#vvbd-rate').value);
-    const bufferRate = Number($('#vvbd-buffer').value);
-    $('#vvbd-rate-num').value = rate.toFixed(1);
-    $('#vvbd-buffer-num').value = bufferRate.toFixed(2);
-    $('#vvbd-rate-big').textContent = pct(rate,1);
-    $('#vvbd-buffer-big').textContent = pct(bufferRate,2);
-
-    const pool = modelFlow * rate/100;
-    const remaining = pool - basicIncome;
-    $('#vvbd-pool').textContent = bio(pool,3);
-    $('#vvbd-rest').textContent = remaining >= 0 ? bio(remaining,3) : '- '+bio(Math.abs(remaining),3);
-
-    renderRegions(remaining, bufferRate);
-
-    const humanBudget = Math.max(0, remaining) * (1-bufferRate/100);
-    const perPerson = humanBudget * 1e12 / worldModelPeople;
-    const perPersonText = new Intl.NumberFormat(locale(),{maximumFractionDigits:0}).format(perPerson)+' Valu';
-    $('#vvbd-perperson').textContent = perPersonText;
-    const c=currentCopy();
-    $('#vvbd-perperson-formula').textContent = c.perPersonFormula+': '+bio(humanBudget,3)+' ÷ '+new Intl.NumberFormat(locale(),{minimumFractionDigits:2,maximumFractionDigits:2}).format(worldModelPeople/1e9)+' Mrd. Menschen = '+perPersonText;
-
-    const ids=['public','agri','health','education'];
-    const values=ids.map(id=>Number($('#vvbd-'+id).value));
-    ids.forEach((id,i)=>$('#vvbd-'+id+'-pct').textContent=values[i]);
-    const sum=values.reduce((a,b)=>a+b,0);
-    const reserve=100-sum;
-    const europeBudget = humanBudget * 0.0896;
-    $('#vvbd-global').textContent = remaining>0 ? bio(humanBudget*sum/100,3) : '—';
-    $('#vvbd-europe').textContent = remaining>0 ? bio(europeBudget*sum/100,3) : '—';
-    $('#vvbd-reserve').textContent = remaining>0 && reserve>=0 ? bio(humanBudget*reserve/100,3)+' · '+pct(reserve,0) : (reserve<0 ? '- '+pct(Math.abs(reserve),0) : '—');
-
-    const light=$('#vvbd-light');
-    light.classList.remove('yellow','red');
-    if(remaining<0 || reserve<0){ light.classList.add('red'); $('#vvbd-status').textContent=c.red; $('#vvbd-status-copy').textContent=c.redCopy; }
-    else if(reserve<5){ light.classList.add('yellow'); $('#vvbd-status').textContent=c.yellow; $('#vvbd-status-copy').textContent=c.yellowCopy; }
-    else { $('#vvbd-status').textContent=c.green; $('#vvbd-status-copy').textContent=c.greenCopy; }
+    const rate=Number($('#vvbd-rate').value),bufferRate=Number($('#vvbd-buffer').value);
+    $('#vvbd-rate-num').value=rate.toFixed(1); $('#vvbd-buffer-num').value=bufferRate.toFixed(2); $('#vvbd-rate-big').textContent=pct(rate,1); $('#vvbd-buffer-big').textContent=pct(bufferRate,2);
+    const pool=modelFlow*rate/100,remaining=pool-basicIncome,humanBudget=Math.max(0,remaining)*(1-bufferRate/100);
+    $('#vvbd-pool').textContent=bio(pool,3); $('#vvbd-rest').textContent=remaining>=0?bio(remaining,3):'- '+bio(Math.abs(remaining),3); renderRegions(remaining,bufferRate);
+    const perPerson=humanBudget*1e12/worldModelPeople,perPersonText=new Intl.NumberFormat(locale(),{maximumFractionDigits:0}).format(perPerson)+' Valu',c=currentCopy();
+    $('#vvbd-perperson').textContent=perPersonText; $('#vvbd-perperson-formula').textContent=c.perPersonFormula+': '+bio(humanBudget,3)+' ÷ '+new Intl.NumberFormat(locale(),{minimumFractionDigits:2,maximumFractionDigits:2}).format(worldModelPeople/1e9)+' Mrd. Menschen = '+perPersonText;
+    const values=categories.map(cat=>Number($('#vvbd-'+cat.id).value));
+    categories.forEach((cat,i)=>{cat.value=values[i]; $('#vvbd-'+cat.id+'-pct').textContent=new Intl.NumberFormat(locale(),{minimumFractionDigits:1,maximumFractionDigits:1}).format(values[i]); $('#vvbd-'+cat.id+'-amount').textContent=remaining>0?bio(humanBudget*values[i]/100,3):'—';});
+    const sum=values.reduce((a,b)=>a+b,0),reserve=100-sum,europeBudget=humanBudget*0.0896;
+    $('#vvbd-global').textContent=remaining>0?bio(humanBudget*sum/100,3):'—'; $('#vvbd-europe').textContent=remaining>0?bio(europeBudget*sum/100,3):'—'; $('#vvbd-reserve').textContent=remaining>0&&reserve>=0?bio(humanBudget*reserve/100,3)+' · '+pct(reserve,1):(reserve<0?'- '+pct(Math.abs(reserve),1):'—');
+    const light=$('#vvbd-light'); light.classList.remove('yellow','red');
+    if(remaining<0||reserve<0){light.classList.add('red');$('#vvbd-status').textContent=c.red;$('#vvbd-status-copy').textContent=c.redCopy;} else if(reserve<5){light.classList.add('yellow');$('#vvbd-status').textContent=c.yellow;$('#vvbd-status-copy').textContent=c.yellowCopy;} else {$('#vvbd-status').textContent=c.green;$('#vvbd-status-copy').textContent=c.greenCopy;}
   }
 
-  function applyLanguage(next){
-    lang = copy[next] ? next : 'de';
-    const c=currentCopy();
-    all('[data-t]').forEach(el=>{ const key=el.getAttribute('data-t'); if(c[key]!==undefined) el.textContent=c[key]; });
-    calculate();
-  }
-
-  function syncRangeNumber(rangeId, numberId){
-    const range=$(rangeId), num=$(numberId);
-    range.addEventListener('input',calculate);
-    num.addEventListener('change',()=>{ let v=Number(num.value); const min=Number(range.min), max=Number(range.max); if(!Number.isFinite(v)) v=Number(range.value); v=Math.max(min,Math.min(max,v)); range.value=v; calculate(); });
-  }
-
-  syncRangeNumber('#vvbd-rate','#vvbd-rate-num');
-  syncRangeNumber('#vvbd-buffer','#vvbd-buffer-num');
-  ['public','agri','health','education'].forEach(id=>$('#vvbd-'+id).addEventListener('input',calculate));
-
-  document.addEventListener('valuventum:language',e=>applyLanguage(e.detail && e.detail.lang));
-  new MutationObserver(()=>{ const l=(document.documentElement.lang||'de').slice(0,2).toLowerCase(); if(copy[l] && l!==lang) applyLanguage(l); }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
-
+  function applyLanguage(next){lang=copy[next]?next:'de';const c=currentCopy();all('[data-t]').forEach(el=>{const key=el.getAttribute('data-t');if(c[key]!==undefined)el.textContent=c[key];});renderCategoryRows();calculate();}
+  function sync(rangeId,numberId){const range=$(rangeId),num=$(numberId);range.addEventListener('input',calculate);num.addEventListener('change',()=>{let v=Number(num.value);if(!Number.isFinite(v))v=Number(range.value);v=Math.max(Number(range.min),Math.min(Number(range.max),v));range.value=v;calculate();});}
+  sync('#vvbd-rate','#vvbd-rate-num'); sync('#vvbd-buffer','#vvbd-buffer-num');
+  document.addEventListener('valuventum:language',e=>applyLanguage(e.detail&&e.detail.lang));
+  new MutationObserver(()=>{const l=(document.documentElement.lang||'de').slice(0,2).toLowerCase();if(copy[l]&&l!==lang)applyLanguage(l);}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   applyLanguage((document.documentElement.lang||'de').slice(0,2).toLowerCase());
 })();
