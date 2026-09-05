@@ -1,0 +1,109 @@
+(function(){
+  'use strict';
+  if(document.getElementById('vv-budget-distribution')) return;
+  const script=document.currentScript;
+  const host=document.createElement('section');
+  host.id='vv-budget-distribution';
+  host.setAttribute('data-valuventum-budget','52-04-v2');
+  if(script&&script.parentNode) script.parentNode.insertBefore(host,script); else document.body.appendChild(host);
+  const root=host.attachShadow?host.attachShadow({mode:'open'}):host;
+
+  root.innerHTML=`
+  <style>
+    :host{display:block;font-family:Inter,Arial,sans-serif;color:#24302d}
+    *{box-sizing:border-box}
+    .shell{width:min(1180px,92%);margin:48px auto;padding:clamp(22px,4vw,42px);border:1px solid #dce6e0;border-radius:28px;background:linear-gradient(145deg,#f7fbf8,#fffaf0);box-shadow:0 18px 48px rgba(15,90,70,.08)}
+    .eye{color:#b47c08;font-size:.76rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+    h2{margin:8px 0 12px;color:#0f5a46;font-size:clamp(1.85rem,3.5vw,3.15rem);line-height:1.08}
+    h3{margin:0 0 10px;color:#0f5a46}
+    .lead{max-width:940px;margin:0;color:#65736f;font-size:1rem;line-height:1.65}
+    .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:24px}
+    .flow article{padding:18px;border:1px solid #dce6e0;border-radius:18px;background:#fff}
+    .flow span{display:block;color:#6b7773;font-size:.78rem;font-weight:800}
+    .flow b{display:block;margin-top:7px;color:#0f5a46;font-size:1.22rem;font-variant-numeric:tabular-nums}
+    .flow .rest{background:#0f5a46;border-color:#0f5a46}.flow .rest span{color:#d7ece4}.flow .rest b{color:#ffd56c}
+    .taxrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+    .tax{padding:16px;border-radius:16px;background:#fff;border:1px solid #dce6e0;text-align:center}
+    .tax b{display:block;color:#0f5a46;font-size:1.45rem}.tax span{display:block;margin-top:3px;color:#66746f;font-size:.82rem}
+    .continents{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+    .continent{padding:14px;border:1px solid #dce6e0;border-radius:14px;background:#fff}.continent strong{display:block;color:#0f5a46}.continent small{color:#687670}
+    .planner{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:20px;margin-top:28px}
+    .panel{padding:22px;border:1px solid #dce6e0;border-radius:20px;background:#fff}
+    .row{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #edf1ef}.row:last-child{border-bottom:0}
+    .row label{display:grid;gap:7px;color:#0f5a46;font-weight:850}.row small{color:#6b7773;font-weight:500;line-height:1.4}
+    input[type=range]{width:100%;accent-color:#0f5a46}.pct{padding:8px 9px;border:1px solid #dce6e0;border-radius:10px;text-align:center;color:#0f5a46;font-weight:900;background:#f8fbf9}
+    .amounts{display:grid;gap:9px;margin-top:18px}.amount{display:grid;grid-template-columns:1fr auto;gap:12px;padding:11px 12px;border-radius:12px;background:#f6f9f7}.amount span{color:#596862}.amount b{color:#0f5a46;font-variant-numeric:tabular-nums}
+    .lightbox{display:grid;place-items:center;text-align:center;min-height:100%}.light{width:90px;height:90px;border-radius:50%;box-shadow:0 0 0 10px #edf1ef,0 12px 28px rgba(0,0,0,.12);background:#1b9e55}.light.yellow{background:#d9a20d}.light.red{background:#c7473d}
+    .status{margin-top:18px;color:#0f5a46;font-size:1.18rem;font-weight:900}.statuscopy{margin:7px 0 0;color:#66746f;line-height:1.55}.reserve{margin-top:16px;padding:14px;border-radius:14px;background:#fff8e7;border:1px solid #ead9a7;color:#5d5131}
+    .impact-title{margin-top:32px}.impact-note{margin:0 0 16px;color:#6b7773;font-size:.9rem}.impact{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.impact article{padding:18px;border:1px solid #dce6e0;border-radius:18px;background:#fff}.impact strong{display:block;color:#0f5a46}.impact p{margin:7px 0 0;color:#65736f;font-size:.88rem;line-height:1.5}
+    .note{margin-top:20px;padding:18px 20px;border-left:5px solid #c99a2e;border-radius:0 16px 16px 0;background:#fffaf0;color:#5d655f;line-height:1.55;font-size:.88rem}.note strong{color:#0f5a46}
+    @media(max-width:940px){.flow,.continents,.impact{grid-template-columns:1fr 1fr}.planner{grid-template-columns:1fr}.taxrow{grid-template-columns:1fr 1fr}}
+    @media(max-width:620px){.shell{width:min(100% - 22px,1180px);margin:30px auto;padding:20px;border-radius:20px}.flow,.continents,.impact,.taxrow{grid-template-columns:1fr}.row{grid-template-columns:1fr 76px}.light{width:76px;height:76px}}
+  </style>
+  <div class="shell">
+    <div class="eye" data-t="eye"></div>
+    <h2 data-t="title"></h2>
+    <p class="lead" data-t="lead"></p>
+    <div class="flow">
+      <article><span data-t="flow"></span><b>200,00 Bio. Valu</b></article>
+      <article><span data-t="basic"></span><b>- 147,96 Bio. Valu</b></article>
+      <article class="rest"><span data-t="rest"></span><b>= 52,04 Bio. Valu</b></article>
+      <article><span data-t="perContinent"></span><b>7,434 Bio. Valu</b></article>
+    </div>
+    <div class="taxrow">
+      <div class="tax"><b>10 %</b><span data-t="transaction"></span></div>
+      <div class="tax"><b>0 %</b><span data-t="incomeTax"></span></div>
+      <div class="tax"><b>0 %</b><span data-t="productTax"></span></div>
+    </div>
+    <h3 style="margin-top:28px" data-t="continentsTitle"></h3>
+    <div class="continents">
+      <div class="continent"><strong>🌏 Asien</strong><small>7,434 Bio. Valu / Jahr</small></div><div class="continent"><strong>🌍 Afrika</strong><small>7,434 Bio. Valu / Jahr</small></div><div class="continent"><strong>🌍 Europa</strong><small>7,434 Bio. Valu / Jahr</small></div><div class="continent"><strong>🌎 Nordamerika</strong><small>7,434 Bio. Valu / Jahr</small></div><div class="continent"><strong>🌎 Südamerika</strong><small>7,434 Bio. Valu / Jahr</small></div><div class="continent"><strong>🌏 Australien/Ozeanien</strong><small>7,434 Bio. Valu / Jahr</small></div><div class="continent"><strong>❄️ Antarktika / globale Aufgaben</strong><small>7,434 Bio. Valu / Jahr</small></div>
+    </div>
+    <div class="planner">
+      <div class="panel">
+        <h3 data-t="plannerTitle"></h3><p class="impact-note" data-t="plannerLead"></p>
+        <div class="row"><label><span data-t="public"></span><input id="vvbd-public" type="range" min="0" max="80" step="1" value="40"><small data-t="publicHint"></small></label><div class="pct"><span id="vvbd-public-pct">40</span> %</div></div>
+        <div class="row"><label><span data-t="agri"></span><input id="vvbd-agri" type="range" min="0" max="80" step="1" value="25"><small data-t="agriHint"></small></label><div class="pct"><span id="vvbd-agri-pct">25</span> %</div></div>
+        <div class="row"><label><span data-t="health"></span><input id="vvbd-health" type="range" min="0" max="80" step="1" value="20"><small data-t="healthHint"></small></label><div class="pct"><span id="vvbd-health-pct">20</span> %</div></div>
+        <div class="row"><label><span data-t="education"></span><input id="vvbd-education" type="range" min="0" max="80" step="1" value="10"><small data-t="educationHint"></small></label><div class="pct"><span id="vvbd-education-pct">10</span> %</div></div>
+        <div class="amounts" aria-live="polite"><div class="amount"><span data-t="globalAllocated"></span><b id="vvbd-global"></b></div><div class="amount"><span data-t="continentAllocated"></span><b id="vvbd-continent"></b></div><div class="amount"><span data-t="reserveLabel"></span><b id="vvbd-reserve"></b></div></div>
+      </div>
+      <div class="panel lightbox"><div><div id="vvbd-light" class="light" aria-label="Budgetampel"></div><div id="vvbd-status" class="status"></div><p id="vvbd-status-copy" class="statuscopy"></p><div class="reserve"><span data-t="ampelMeaning"></span></div></div></div>
+    </div>
+    <h3 class="impact-title" data-t="impactTitle"></h3><p class="impact-note" data-t="impactLead"></p>
+    <div class="impact"><article><strong data-t="impactHumanH"></strong><p data-t="impactHumanP"></p></article><article><strong data-t="impactAgriH"></strong><p data-t="impactAgriP"></p></article><article><strong data-t="impactHealthH"></strong><p data-t="impactHealthP"></p></article><article><strong data-t="impactEduH"></strong><p data-t="impactEduP"></p></article></div>
+    <div class="note"><strong data-t="importantH"></strong> <span data-t="importantP"></span></div>
+  </div>`;
+
+  const copy={
+    de:{eye:'MODELLVERTEILUNG · 52,04 BILLIONEN VALU · 7 KONTINENTE',title:'Was nach dem Grundeinkommen für die Gemeinschaft bleibt.',lead:'In dieser VALUVENTUM®-Szenariorechnung bleiben nach 147,96 Billionen Valu Grundeinkommen 52,04 Billionen Valu pro Jahr. Diese werden gleichmäßig auf sieben Kontinente beziehungsweise globale Aufgaben verteilt. Die Verwendung darunter ist eine veränderbare Beispielverteilung.',flow:'10-%-Gemeinschaftstopf',basic:'Grundeinkommen weltweit',rest:'Rest für Gemeinschaftsaufgaben',perContinent:'Bei 7 gleichen Anteilen',transaction:'einheitlicher Transaktionsbeitrag im Modell',incomeTax:'Einkommensteuer im Basismodell',productTax:'Produkt-/Mehrwertsteuer im Basismodell',continentsTitle:'Sieben gleiche Jahresbudgets',plannerTitle:'Verteilung selbst einstellen',plannerLead:'Die vier Bereiche sind ein Startvorschlag. Verschiebe die Regler und beobachte sofort Budget, Reserve und Ampel.',public:'Öffentliche Aufgaben / Steuerersatz',publicHint:'Infrastruktur, Sicherheit, Feuerwehr, Verwaltung und weitere Gemeinschaftsaufgaben.',agri:'Gesunde Landwirtschaft',agriHint:'Bodenaufbau, schadstoffärmere Produktion, Natursaatgut sowie mechanische und solare Agrartechnik.',health:'Gesundheitssystem',healthHint:'Versorgung, Prävention, Pflege, Personal und notwendige Gesundheitsinfrastruktur.',education:'Bildung & Forschung',educationHint:'Schulen, Ausbildung, Weiterbildung, Forschung und frei zugängliches Wissen.',globalAllocated:'Global verplant',continentAllocated:'Je Kontinent verplant',reserveLabel:'Verbleibende Reserve',ampelMeaning:'Die Ampel bewertet nur, ob die gewählte Modellverteilung innerhalb der 52,04 Billionen Valu bleibt.',impactTitle:'Heilwirkung im übertragenen Sinn · Modellziel',impactLead:'Gemeint ist die mögliche gesellschaftliche und gesundheitliche Wirkung der vorgesehenen Struktur – keine medizinische Heilzusage.',impactHumanH:'👤 Mensch',impactHumanP:'0 % Einkommensteuer im Basismodell lässt den verdienten Arbeitslohn beim Menschen; das Grundeinkommen bleibt davon getrennt.',impactAgriH:'🌱 Boden & Ernährung',impactAgriP:'Investitionen in gesündere Böden und schadstoffärmere Landwirtschaft sollen Lebensmittelqualität, Bodenleben und langfristige Versorgung stärken.',impactHealthH:'❤️ Gesundheit',impactHealthP:'Ein eigener Budgetanteil kann Prävention, medizinische Versorgung, Pflege und erreichbare Gesundheitsleistungen finanzieren.',impactEduH:'🎓 Bildung',impactEduP:'Bildung und Forschung sollen langfristig Selbstständigkeit, Innovation und gesellschaftliche Teilhabe stärken.',importantH:'Wichtige Abgrenzung:',importantP:'Die 52,04-Billionen-Verteilung ist eine VALUVENTUM®-Szenariorechnung. Für diese Darstellung wird ein Modellfluss von 2,0 Billiarden Valu als Rechengröße angesetzt. Der McKinsey-Quellenwert von 2,0 Billiarden USD bleibt davon als externe USD-Angabe getrennt. Die Ampel zeigt die interne Budgetlogik und beweist nicht automatisch, dass sämtliche realen Staatsausgaben vollständig gedeckt sind.',green:'GRÜN · Verteilung mit Reserve',greenCopy:'Die gewählten Bereiche bleiben innerhalb des Modellbudgets und lassen mindestens 5 % Reserve.',yellow:'GELB · Kaum Reserve',yellowCopy:'Die Verteilung bleibt noch im Modellbudget, lässt aber weniger als 5 % Reserve.',red:'ROT · Budget überschritten',redCopy:'Die gewählten Anteile überschreiten zusammen 100 % des verfügbaren Modellbudgets.'},
+    en:{eye:'MODEL DISTRIBUTION · 52.04 TRILLION VALU · 7 CONTINENTS',title:'What remains for the community after basic income.',lead:'In this VALUVENTUM® scenario calculation, 52.04 trillion Valu per year remain after 147.96 trillion Valu of basic income. They are divided equally among seven continents or global tasks. The allocation below is an adjustable example.',flow:'10% community pool',basic:'Worldwide basic income',rest:'Remainder for community tasks',perContinent:'With 7 equal shares',transaction:'uniform transaction contribution in the model',incomeTax:'income tax in the base model',productTax:'product/VAT tax in the base model',continentsTitle:'Seven equal annual budgets',plannerTitle:'Adjust the allocation yourself',plannerLead:'The four areas are a starting proposal. Move the sliders and immediately see budget, reserve and traffic light.',public:'Public tasks / tax replacement',publicHint:'Infrastructure, security, fire services, administration and other community tasks.',agri:'Healthy agriculture',agriHint:'Soil restoration, lower-pollutant production, natural seed and mechanical and solar agricultural technology.',health:'Health system',healthHint:'Care, prevention, nursing, staff and necessary health infrastructure.',education:'Education & research',educationHint:'Schools, training, continuing education, research and accessible knowledge.',globalAllocated:'Allocated globally',continentAllocated:'Allocated per continent',reserveLabel:'Remaining reserve',ampelMeaning:'The traffic light only assesses whether the chosen model allocation stays within the 52.04 trillion Valu pool.',impactTitle:'Healing effect in a broader sense · model objective',impactLead:'This means the possible social and health-related effect of the proposed structure, not a medical promise of healing.',impactHumanH:'👤 People',impactHumanP:'0% income tax in the base model leaves earned wages with the person; basic income remains separate.',impactAgriH:'🌱 Soil & food',impactAgriP:'Investment in healthier soils and lower-pollutant agriculture is intended to strengthen food quality, soil life and long-term supply.',impactHealthH:'❤️ Health',impactHealthP:'A dedicated budget share can finance prevention, medical care, nursing and accessible health services.',impactEduH:'🎓 Education',impactEduP:'Education and research are intended to strengthen independence, innovation and social participation over the long term.',importantH:'Important distinction:',importantP:'The 52.04-trillion distribution is a VALUVENTUM® scenario calculation. This display uses a model flow of 2.0 quadrillion Valu as the calculation quantity. McKinsey’s external source figure of USD 2.0 quadrillion remains separate. The traffic light shows internal budget logic and does not automatically prove that all real government spending is fully covered.',green:'GREEN · Allocation with reserve',greenCopy:'The selected areas remain within the model budget and leave at least 5% reserve.',yellow:'YELLOW · Little reserve',yellowCopy:'The allocation remains within the model budget but leaves less than 5% reserve.',red:'RED · Budget exceeded',redCopy:'The selected shares together exceed 100% of the available model budget.'},
+    es:{eye:'DISTRIBUCIÓN DEL MODELO · 52,04 BILLONES VALU · 7 CONTINENTES',title:'Lo que queda para la comunidad después de la renta básica.',lead:'En este cálculo de escenario VALUVENTUM®, después de 147,96 billones Valu de renta básica quedan 52,04 billones Valu al año. Se reparten por igual entre siete continentes o tareas globales. La distribución inferior es un ejemplo ajustable.',flow:'Fondo comunitario del 10 %',basic:'Renta básica mundial',rest:'Resto para tareas comunitarias',perContinent:'Con 7 partes iguales',transaction:'aportación uniforme por transacción en el modelo',incomeTax:'impuesto sobre la renta en el modelo base',productTax:'IVA/impuesto sobre productos en el modelo base',continentsTitle:'Siete presupuestos anuales iguales',plannerTitle:'Ajustar la distribución',plannerLead:'Las cuatro áreas son una propuesta inicial. Mueva los controles y observe inmediatamente el presupuesto, la reserva y el semáforo.',public:'Tareas públicas / sustitución fiscal',publicHint:'Infraestructura, seguridad, bomberos, administración y otras tareas comunitarias.',agri:'Agricultura saludable',agriHint:'Regeneración del suelo, producción con menos contaminantes, semillas naturales y tecnología agrícola mecánica y solar.',health:'Sistema de salud',healthHint:'Atención, prevención, cuidados, personal e infraestructura sanitaria necesaria.',education:'Educación e investigación',educationHint:'Escuelas, formación, educación continua, investigación y conocimiento accesible.',globalAllocated:'Asignado globalmente',continentAllocated:'Asignado por continente',reserveLabel:'Reserva restante',ampelMeaning:'El semáforo solo evalúa si la distribución elegida permanece dentro del fondo modelo de 52,04 billones Valu.',impactTitle:'Efecto reparador en sentido amplio · objetivo del modelo',impactLead:'Se refiere al posible efecto social y sanitario de la estructura propuesta, no a una promesa médica de curación.',impactHumanH:'👤 Personas',impactHumanP:'El 0 % de impuesto sobre la renta en el modelo base deja el salario ganado en manos de la persona; la renta básica permanece separada.',impactAgriH:'🌱 Suelo y alimentos',impactAgriP:'La inversión en suelos más sanos y agricultura con menos contaminantes busca fortalecer la calidad de los alimentos, la vida del suelo y el abastecimiento a largo plazo.',impactHealthH:'❤️ Salud',impactHealthP:'Una parte específica del presupuesto puede financiar prevención, atención médica, cuidados y servicios sanitarios accesibles.',impactEduH:'🎓 Educación',impactEduP:'La educación y la investigación buscan reforzar a largo plazo la autonomía, la innovación y la participación social.',importantH:'Distinción importante:',importantP:'La distribución de 52,04 billones es un cálculo de escenario VALUVENTUM®. Esta visualización usa un flujo modelo de 2,0 mil billones Valu como magnitud de cálculo. La cifra externa de McKinsey de 2,0 mil billones USD permanece separada. El semáforo muestra la lógica presupuestaria interna y no demuestra automáticamente que todos los gastos públicos reales queden cubiertos.',green:'VERDE · Distribución con reserva',greenCopy:'Las áreas elegidas permanecen dentro del presupuesto del modelo y dejan al menos un 5 % de reserva.',yellow:'AMARILLO · Poca reserva',yellowCopy:'La distribución sigue dentro del presupuesto, pero deja menos de un 5 % de reserva.',red:'ROJO · Presupuesto excedido',redCopy:'Las proporciones elegidas superan conjuntamente el 100 % del presupuesto disponible.'}
+  };
+
+  const $=s=>root.querySelector(s), all=s=>Array.from(root.querySelectorAll(s));
+  const total=52.04, continent=total/7;
+  let lang='de';
+  function pageLang(){const l=(document.documentElement.lang||'de').slice(0,2).toLowerCase();return copy[l]?l:'de'}
+  function fmt(n){return new Intl.NumberFormat(lang==='en'?'en-US':lang==='es'?'es-ES':'de-DE',{minimumFractionDigits:3,maximumFractionDigits:3}).format(n)+' Bio. Valu'}
+  function calculate(){
+    const ids=['public','agri','health','education'];
+    const values=ids.map(id=>Number($('#vvbd-'+id).value));
+    ids.forEach((id,i)=>$('#vvbd-'+id+'-pct').textContent=values[i]);
+    const sum=values.reduce((a,b)=>a+b,0), reserve=100-sum;
+    $('#vvbd-global').textContent=fmt(total*sum/100);
+    $('#vvbd-continent').textContent=fmt(continent*sum/100);
+    $('#vvbd-reserve').textContent=(reserve>=0?fmt(total*reserve/100):'- '+fmt(total*Math.abs(reserve)/100))+' · '+reserve+' %';
+    const light=$('#vvbd-light'); light.classList.remove('yellow','red');
+    if(reserve<0){light.classList.add('red');$('#vvbd-status').textContent=copy[lang].red;$('#vvbd-status-copy').textContent=copy[lang].redCopy}
+    else if(reserve<5){light.classList.add('yellow');$('#vvbd-status').textContent=copy[lang].yellow;$('#vvbd-status-copy').textContent=copy[lang].yellowCopy}
+    else{$('#vvbd-status').textContent=copy[lang].green;$('#vvbd-status-copy').textContent=copy[lang].greenCopy}
+  }
+  function applyLanguage(next){lang=copy[next]?next:pageLang();all('[data-t]').forEach(el=>{const k=el.getAttribute('data-t');if(copy[lang][k]!==undefined)el.textContent=copy[lang][k]});calculate()}
+  ['public','agri','health','education'].forEach(id=>$('#vvbd-'+id).addEventListener('input',calculate));
+  document.addEventListener('valuventum:language',e=>applyLanguage(e.detail&&e.detail.lang));
+  document.querySelectorAll('.vv-lang button[data-lang]').forEach(btn=>btn.addEventListener('click',()=>setTimeout(()=>applyLanguage(btn.dataset.lang),0)));
+  new MutationObserver(()=>applyLanguage(pageLang())).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  function visibility(){const raw=decodeURIComponent(location.hash.slice(1)).split('/')[0];host.hidden=!!raw&&raw!=='startseite'}
+  window.addEventListener('hashchange',visibility); visibility(); applyLanguage(pageLang());
+})();
