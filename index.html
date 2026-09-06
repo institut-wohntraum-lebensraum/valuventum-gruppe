@@ -3,110 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VALUVENTUM® – Haushaltsvergleich und Gesamtbild</title>
-<meta name="description" content="Österreich/Finnland als Referenz, danach VALUVENTUM®-Haushalt, Grundeinkommen und vollständige Startseite.">
+<title>VALUVENTUM® – Haushalt</title>
 <style>
-:root{--green:#0f5a46;--green-soft:#f4faf7;--gold:#c99a2e;--text:#24302d;--muted:#687670;--line:#dce6e0;--white:#fff}
+:root{--green:#0f5a46;--green2:#0a4738;--gold:#c99a2e;--text:#24302d;--muted:#687670;--line:#dce6e0;--soft:#f5faf7;--cream:#fffaf0}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background:#fff;color:var(--text)}
-body{padding:24px}
-.wrap{width:min(1180px,100%);margin:0 auto}
-.brand{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 4px 22px;border-bottom:1px solid var(--line)}
-.brand strong{color:var(--green);font-size:1.15rem;letter-spacing:.04em}
-.brand span{color:var(--gold);font-size:.78rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-.card{margin:34px auto 0;padding:clamp(24px,4vw,44px);border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fffdf7,var(--green-soft));box-shadow:0 18px 48px rgba(15,90,70,.08)}
-.kicker{color:var(--gold);font-size:.76rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-h1,h2{margin:8px 0 12px;color:var(--green);line-height:1.06}
-h1{font-size:clamp(2rem,4vw,3.5rem)}
-h2{font-size:clamp(1.7rem,3vw,2.6rem)}
-.lead{max-width:980px;margin:0;color:var(--muted);font-size:1.04rem;line-height:1.65}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:#fff;color:var(--text)}
+.wrap{width:min(1180px,92%);margin:auto}
 
-/* Referenzvergleich */
-.compare-card{background:linear-gradient(145deg,#f7fbf8,#fffaf0)}
-.compare-note{margin-top:14px;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);color:#63716c;line-height:1.55;font-size:.9rem}
+/* BLOCK 1 – NUR ERDKUGEL */
+.earth-entry{min-height:520px;display:grid;place-items:center;background:radial-gradient(circle at 50% 48%,#edf8f3 0,#fff 62%);border-bottom:1px solid var(--line)}
+.earth-wrap{display:grid;place-items:center;gap:18px}
+.earth{position:relative;width:min(360px,72vw);aspect-ratio:1;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 32% 25%,#bfeefa 0,#4ea7c1 48%,#1c6b83 75%,#0d465c 100%);border:4px solid #fff;box-shadow:0 0 0 3px var(--gold),0 30px 70px rgba(15,90,70,.22),inset -35px -22px 45px rgba(0,35,50,.35)}
+.earth:before{content:"";position:absolute;width:34%;height:22%;left:13%;top:18%;background:#73ad6e;border-radius:56% 42% 62% 38%;box-shadow:95px 42px 0 12px #6ba767,22px 112px 0 4px #83b979,117px 130px 0 -4px #77ae70,-18px 80px 0 -9px #82b779;transform:rotate(-12deg)}
+.earth:after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(120deg,rgba(255,255,255,.42),transparent 38% 65%,rgba(0,30,45,.28))}
+.earth-v{position:absolute;inset:0;z-index:2;display:grid;place-items:center;color:#fff;font-size:clamp(70px,12vw,125px);font-weight:950;text-shadow:0 5px 18px rgba(0,55,45,.7)}
+.earth-brand{color:var(--green);font-weight:950;letter-spacing:.08em;font-size:1.05rem}
+
+.section{padding:52px 0}
+.card{border:1px solid var(--line);border-radius:28px;padding:clamp(24px,4vw,44px);background:linear-gradient(145deg,#fffdf7,var(--soft));box-shadow:0 18px 48px rgba(15,90,70,.07)}
+.eyebrow{color:var(--gold);font-size:.77rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+h1,h2{color:var(--green);line-height:1.06;margin:8px 0 14px}
+h1{font-size:clamp(2rem,4vw,3.4rem)}
+h2{font-size:clamp(1.7rem,3vw,2.5rem)}
+.lead{color:var(--muted);font-size:1.02rem;line-height:1.6;margin:0;max-width:970px}
+.note{margin-top:15px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;color:#62716c;font-size:.91rem;line-height:1.55}
+
+/* TABELLEN */
 .table-wrap{margin-top:22px;overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:#fff}
 table{width:100%;border-collapse:collapse;min-width:860px}
 th,td{padding:14px 12px;border-bottom:1px solid #edf1ef;vertical-align:middle}
-th{background:#f6faf8;color:var(--green);font-size:.82rem;text-align:left}
-th.country{text-align:center}
+th{background:#f4f9f6;color:var(--green);font-size:.82rem;text-align:left}
+th.center{text-align:center}
 td.category{font-weight:800;color:#34433e;line-height:1.35}
 td.money,td.share{text-align:right;font-variant-numeric:tabular-nums}
 td.share{font-weight:900;color:var(--green);white-space:nowrap}
 .moneybox{display:flex;align-items:center;justify-content:flex-end;gap:7px}
-.moneybox input{width:94px;padding:9px 10px;border:1px solid #cfdcd5;border-radius:10px;background:#fff;color:#24302d;font:inherit;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
-.moneybox input:focus,.rate-input:focus{outline:3px solid rgba(15,90,70,.12);border-color:var(--green)}
-.unit{color:#73807c;font-size:.82rem;white-space:nowrap}
-tfoot td{background:var(--green);color:#fff;border-bottom:0;font-weight:900}
-tfoot td.total-label{font-size:1rem}
-tfoot td.total-money{text-align:right;color:#ffd56c;font-variant-numeric:tabular-nums}
-tfoot td.total-share{text-align:right;color:#fff}
-.compare-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:16px}
-.calc-rule{color:#5d6b66;font-size:.9rem;line-height:1.5}
-button,.public-link{appearance:none;border:0;border-radius:12px;background:var(--green);color:#fff;padding:11px 16px;font:inherit;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
-button:hover,.public-link:hover{filter:brightness(1.05)}
-.examples{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
-.example{padding:16px;border-radius:14px;background:#fff;border:1px solid var(--line)}
-.example strong{display:block;color:var(--green);margin-bottom:6px}
-.example span{color:#64726d;line-height:1.5;font-size:.9rem}
+.moneybox input{width:92px;padding:9px 10px;border:1px solid #cfdcd5;border-radius:10px;background:#fff;color:var(--text);font:inherit;font-weight:850;text-align:right}
+.moneybox input:focus{outline:3px solid rgba(15,90,70,.12);border-color:var(--green)}
+.unit{font-size:.8rem;color:#74817d;white-space:nowrap}
+tfoot td{background:var(--green);color:#fff;font-weight:900;border-bottom:0}
+tfoot td.money{color:#ffd56c}
+.compare-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:16px}
+.rule{color:#62716c;font-size:.9rem}
+button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);color:#fff;font:inherit;font-weight:900;cursor:pointer}
 
-/* Feste VALUVENTUM-Reihenfolge */
-.valu-heading{display:flex;align-items:center;gap:14px;margin:48px 4px 4px}
-.valu-heading::before{content:"V";display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--green);color:#fff;font-weight:900;font-size:1.3rem;box-shadow:0 0 0 2px var(--gold)}
-.valu-heading strong{display:block;color:var(--green);font-size:1.35rem}
-.valu-heading span{display:block;margin-top:3px;color:var(--gold);font-size:.75rem;font-weight:900;letter-spacing:.12em}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
-.item{padding:20px;border:1px solid var(--line);border-radius:18px;background:#fff}
-.item span{display:block;color:#73807c;font-size:.79rem;font-weight:800}
-.item b{display:block;margin-top:8px;color:var(--green);font-size:1.28rem;font-variant-numeric:tabular-nums}
-.item.total{background:var(--green);border-color:var(--green)}
-.item.total span{color:#d7ece4}
-.item.total b{color:#ffd56c}
-.formula{margin-top:18px;padding:17px 19px;border-radius:15px;background:#fff;border:1px solid var(--line);color:#35443f;font-size:1rem;font-weight:850;line-height:1.6;font-variant-numeric:tabular-nums}
-.exact{margin-top:14px;padding:17px 19px;border-left:5px solid var(--gold);border-radius:0 15px 15px 0;background:#fffaf0;color:#5e6b67;line-height:1.6}
+/* VALUVENTUM AT-ANPASSUNG */
+.valu-card{background:linear-gradient(145deg,#f6fbf8,#fffaf0)}
+.valu-table td:nth-child(2),.valu-table td:nth-child(3){text-align:right;font-variant-numeric:tabular-nums}
+.valu-table td:nth-child(2){font-weight:900;color:var(--green)}
+.valu-table td:nth-child(3){font-weight:900;color:var(--green)}
+.valu-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+.summary-box{padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.summary-box span{display:block;color:#74817d;font-size:.78rem;font-weight:800}
+.summary-box b{display:block;margin-top:7px;color:var(--green);font-size:1.25rem;font-variant-numeric:tabular-nums}
+.summary-box.total{background:var(--green);border-color:var(--green)}
+.summary-box.total span{color:#d4ebe2}.summary-box.total b{color:#ffd56c}
+
+/* GRUNDEINKOMMEN */
+.bi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:26px}
+.bi-box{padding:20px;border:1px solid var(--line);border-radius:17px;background:#fff}
+.bi-box span{display:block;color:#74817d;font-size:.78rem;font-weight:800}
+.bi-box b{display:block;margin-top:8px;color:var(--green);font-size:1.28rem}
+.bi-box.total{background:var(--green);border-color:var(--green)}
+.bi-box.total span{color:#d4ebe2}.bi-box.total b{color:#ffd56c}
+.formula{margin-top:17px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:#fff;font-weight:850;color:#35443f}
+.exact{margin-top:13px;padding:16px 18px;border-left:5px solid var(--gold);background:var(--cream);border-radius:0 14px 14px 0;color:#5d6b67}
 .exact strong{color:var(--green)}
-.house-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:26px}
-.house-cell{padding:20px;border:1px solid var(--line);border-radius:18px;background:#fff}
-.house-cell span{display:block;color:#73807c;font-size:.8rem;font-weight:800}
-.house-cell b{display:block;margin-top:8px;color:var(--green);font-size:1.3rem;font-variant-numeric:tabular-nums}
-.house-cell.total{background:var(--green);border-color:var(--green)}
-.house-cell.total span{color:#d7ece4}.house-cell.total b{color:#ffd56c}
-.rate-box{margin-top:18px;display:grid;grid-template-columns:1fr 130px;gap:14px;align-items:center;padding:16px 18px;border:1px solid var(--line);border-radius:15px;background:#fff}
-.rate-box label{color:#53615d;font-weight:800}
-.rate-input{width:100%;padding:11px 12px;border:1px solid #cfdcd5;border-radius:10px;background:#fff;color:var(--green);font:inherit;font-weight:900;text-align:right}
 
-/* Schritt 3: vollständige öffentliche Startseite */
-.overview-card{padding-bottom:24px}
-.overview-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px}
-.overview-copy{max-width:820px}
-.public-note{margin-top:16px;padding:15px 17px;border-left:5px solid var(--gold);border-radius:0 14px 14px 0;background:#fffaf0;color:#5f6d68;line-height:1.58}
-.public-note strong{color:var(--green)}
-.full-home-shell{margin-top:24px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 14px 32px rgba(15,90,70,.07)}
-#full-home{display:block;width:100%;height:1200px;border:0;background:#fff}
-
-@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.house-grid{grid-template-columns:1fr}.examples{grid-template-columns:1fr}.rate-box{grid-template-columns:1fr}}
-@media(max-width:560px){body{padding:14px}.brand{align-items:flex-start;flex-direction:column}.card{margin-top:20px;padding:22px;border-radius:22px}.grid{grid-template-columns:1fr}.valu-heading{margin-top:32px}}
+@media(max-width:820px){.valu-summary{grid-template-columns:1fr}.bi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.earth-entry{min-height:410px}.section{padding:30px 0}.card{border-radius:22px;padding:22px}.bi-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="brand">
-    <strong>HAUSHALTSVERGLEICH</strong>
-    <span>ÖSTERREICH · FINNLAND · VALUVENTUM®</span>
-  </header>
 
-  <main>
-    <!-- REFERENZ: bleibt immer oben -->
-    <section class="card compare-card" id="haushaltsvergleich">
-      <div class="kicker">REFERENZ · HAUSHALT ZUM SELBERRECHNEN</div>
-      <h1>Österreich und Finnland direkt gegenübergestellt</h1>
-      <p class="lead">Oben bleibt immer der Vergleich der beiden Haushalte. Die Beträge können direkt verändert werden. Gesamthaushalt und Prozentanteile werden automatisch neu berechnet.</p>
-      <div class="compare-note"><strong>Arbeitsgrundlage:</strong> Diese Werte dienen dem Strukturvergleich. Sie werden nicht automatisch als VALUVENTUM®-Haushalt übernommen.</div>
+<!-- BLOCK 1: ERDKUGEL -->
+<section class="earth-entry" aria-label="VALUVENTUM Start">
+  <div class="earth-wrap">
+    <div class="earth"><div class="earth-v">V</div></div>
+    <div class="earth-brand">VALUVENTUM®</div>
+  </div>
+</section>
+
+<!-- BLOCK 2: HAUSHALT AT / FI -->
+<section class="section" id="referenz">
+  <div class="wrap">
+    <div class="card">
+      <div class="eyebrow">HAUSHALT · REFERENZ</div>
+      <h1>Österreich und Finnland</h1>
+      <p class="lead">Die Haushaltsstruktur beider Länder im direkten Vergleich. Die Beträge können zum Nachrechnen verändert werden; die Prozentanteile werden automatisch neu berechnet.</p>
 
       <div class="table-wrap">
-        <table aria-label="Editierbarer Haushaltsvergleich Österreich Finnland">
+        <table aria-label="Haushaltsvergleich Österreich Finnland">
           <thead>
-            <tr><th rowspan="2">Haushaltsbereich</th><th class="country" colspan="2">Österreich (AT)</th><th class="country" colspan="2">Finnland (FI)</th></tr>
+            <tr><th rowspan="2">Haushaltsbereich</th><th class="center" colspan="2">Österreich (AT)</th><th class="center" colspan="2">Finnland (FI)</th></tr>
             <tr><th style="text-align:right">Mrd. €</th><th style="text-align:right">Anteil</th><th style="text-align:right">Mrd. €</th><th style="text-align:right">Anteil</th></tr>
           </thead>
           <tbody>
@@ -117,137 +107,116 @@ button:hover,.public-link:hover{filter:brightness(1.05)}
             <tr><td class="category">5. Recht, innere Sicherheit & Landesverteidigung</td><td class="money"><div class="moneybox"><input data-at value="13,7" inputmode="decimal"><span class="unit">Mrd. €</span></div></td><td class="share" data-at-share>–</td><td class="money"><div class="moneybox"><input data-fi value="12,5" inputmode="decimal"><span class="unit">Mrd. €</span></div></td><td class="share" data-fi-share>–</td></tr>
             <tr><td class="category">6. Zinszahlungen für Staatsschulden</td><td class="money"><div class="moneybox"><input data-at value="4,5" inputmode="decimal"><span class="unit">Mrd. €</span></div></td><td class="share" data-at-share>–</td><td class="money"><div class="moneybox"><input data-fi value="3,6" inputmode="decimal"><span class="unit">Mrd. €</span></div></td><td class="share" data-fi-share>–</td></tr>
           </tbody>
-          <tfoot><tr><td class="total-label">GESAMTHAUSHALT</td><td class="total-money" id="at-total">–</td><td class="total-share">100,0 %</td><td class="total-money" id="fi-total">–</td><td class="total-share">100,0 %</td></tr></tfoot>
+          <tfoot><tr><td>GESAMTHAUSHALT</td><td class="money" id="at-total">–</td><td style="text-align:right">100,0 %</td><td class="money" id="fi-total">–</td><td style="text-align:right">100,0 %</td></tr></tfoot>
+        </table>
+      </div>
+      <div class="compare-actions">
+        <div class="rule"><strong>Rechenregel:</strong> Bereich ÷ Gesamthaushalt × 100 = Anteil.</div>
+        <button id="reset" type="button">Ausgangswerte wiederherstellen</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: VALUVENTUM AN AT ANGEPASST -->
+<section class="section" id="valu-haushalt">
+  <div class="wrap">
+    <div class="card valu-card">
+      <div class="eyebrow">VALUVENTUM® · AN ÖSTERREICH ANGEPASST</div>
+      <h2>Globaler VALUVENTUM®-Haushalt nach AT-Struktur</h2>
+      <p class="lead">Das Grundeinkommen ersetzt im VALUVENTUM®-Modell den österreichischen Bereich „Soziales, Pensionen & Arbeitsmarkt“. Die übrigen Bereiche werden im gleichen Verhältnis wie der österreichische Referenzhaushalt hochgerechnet.</p>
+
+      <div class="table-wrap">
+        <table class="valu-table" aria-label="VALUVENTUM Haushalt nach österreichischer Struktur">
+          <thead><tr><th>VALUVENTUM®-Bereich</th><th style="text-align:right">AT-Anteil</th><th style="text-align:right">Global / Jahr</th></tr></thead>
+          <tbody id="valu-body"></tbody>
+          <tfoot><tr><td>GESAMTHAUSHALT VALUVENTUM®</td><td style="text-align:right">100,0 %</td><td class="money" id="valu-total">–</td></tr></tfoot>
         </table>
       </div>
 
-      <div class="compare-actions">
-        <div class="calc-rule"><strong>Rechenregel:</strong> Bereich ÷ Gesamthaushalt × 100 = Anteil in Prozent.</div>
-        <button type="button" id="reset-household">Ausgangswerte wiederherstellen</button>
+      <div class="valu-summary">
+        <div class="summary-box"><span>AT-Referenz Sozialbereich</span><b id="at-social-share">–</b></div>
+        <div class="summary-box"><span>Grundeinkommen weltweit</span><b>147,96 Billionen Valu</b></div>
+        <div class="summary-box total"><span>Daraus abgeleiteter Gesamt-Haushalt</span><b id="valu-total-box">–</b></div>
       </div>
-      <div class="examples">
-        <div class="example"><strong>Österreich – Beispiel</strong><span id="at-example">50,5 ÷ 125,9 × 100 = 40,1 %</span></div>
-        <div class="example"><strong>Finnland – Beispiel</strong><span id="fi-example">35,7 ÷ 91,7 × 100 = 38,9 %</span></div>
-      </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <div class="valu-heading"><div><strong>VALUVENTUM®</strong><span>THE INSTRUMENT OF FREEDOM</span></div></div>
-
-    <!-- SCHRITT 1 -->
-    <section class="card" id="valu-haushalt">
-      <div class="kicker">SCHRITT 1 · VALUVENTUM®-HAUSHALT</div>
-      <h2>Der gemeinsame VALUVENTUM®-Haushalt</h2>
-      <p class="lead">Hier beginnt die eigene VALUVENTUM®-Rechnung. Ausgangspunkt ist der Modellfluss von 2,0 Billiarden Valu pro Jahr. Der Gemeinschaftsbeitrag bestimmt die Größe des gemeinsamen Haushalts.</p>
-
-      <div class="house-grid">
-        <div class="house-cell"><span>Modellfluss / Jahr</span><b>2,0 Billiarden Valu</b></div>
-        <div class="house-cell"><span>Gemeinschaftsbeitrag</span><b id="rate-display">10,0 %</b></div>
-        <div class="house-cell total"><span>VALUVENTUM®-Haushalt / Jahr</span><b id="valu-household-total">200,00 Billionen Valu</b></div>
-      </div>
-      <div class="rate-box">
-        <label for="community-rate">Gemeinschaftsbeitrag zum Selberrechnen</label>
-        <input class="rate-input" id="community-rate" type="number" min="0" max="100" step="0.1" value="10,0" inputmode="decimal">
-      </div>
-      <div class="formula" id="household-formula">2,0 Billiarden Valu × 10,0 % = 200,00 Billionen Valu gemeinsamer Haushalt</div>
-    </section>
-
-    <!-- SCHRITT 2 -->
-    <section class="card" id="grundeinkommen">
-      <div class="kicker">SCHRITT 2 · VALUVENTUM® · GRUNDEINKOMMEN</div>
-      <h2>Grundeinkommen</h2>
-      <p class="lead">Das Grundeinkommen bleibt als eigener, klarer Schritt bestehen. Es wird für alle 8,22 Milliarden Menschen im Basismodell mit 1.500 Valu pro Monat gerechnet.</p>
-      <div class="grid">
-        <div class="item"><span>Menschen im Basismodell</span><b>8,22 Mrd.</b></div>
-        <div class="item"><span>Pro Mensch / Monat</span><b>1.500 Valu</b></div>
-        <div class="item"><span>Pro Mensch / Jahr</span><b>18.000 Valu</b></div>
-        <div class="item total"><span>Weltweit / Jahr</span><b>147,96 Billionen Valu</b></div>
+<!-- BLOCK 4: GRUNDEINKOMMEN -->
+<section class="section" id="grundeinkommen">
+  <div class="wrap">
+    <div class="card">
+      <div class="eyebrow">GRUNDEINKOMMEN</div>
+      <h2>1.500 Valu pro Mensch und Monat</h2>
+      <div class="bi-grid">
+        <div class="bi-box"><span>Menschen im Basismodell</span><b>8,22 Mrd.</b></div>
+        <div class="bi-box"><span>Pro Mensch / Monat</span><b>1.500 Valu</b></div>
+        <div class="bi-box"><span>Pro Mensch / Jahr</span><b>18.000 Valu</b></div>
+        <div class="bi-box total"><span>Weltweit / Jahr</span><b>147,96 Billionen Valu</b></div>
       </div>
       <div class="formula">8,22 Milliarden Menschen × 1.500 Valu × 12 Monate = 147,96 Billionen Valu pro Jahr</div>
       <div class="exact"><strong>Exakte Zahl:</strong> 147,96 Billionen Valu = 147.960.000.000.000 Valu</div>
-    </section>
-
-    <!-- SCHRITT 3 -->
-    <section class="card overview-card" id="gesamtbild">
-      <div class="overview-head">
-        <div class="overview-copy">
-          <div class="kicker">SCHRITT 3 · GESAMTBILD</div>
-          <h2>Die gesamte Startseite – Erde, Planeten und Gesamtmodell</h2>
-          <p class="lead">Das Gesamtbild bleibt immer sichtbar. Darunter wird die vollständige bestehende VALUVENTUM®-Startseite geladen – einschließlich der Erde und der Planeten.</p>
-        </div>
-        <a class="public-link" href="./startseite-original.html" target="_blank" rel="noopener">Gesamte Startseite separat öffnen</a>
-      </div>
-      <div class="public-note"><strong>Öffentlich:</strong> Jeder, der den Gruppen-Link hat, kann diese Seite und die vollständige Startseite darunter sehen. Es ist keine Anmeldung erforderlich.</div>
-      <div class="full-home-shell">
-        <iframe id="full-home" src="./startseite-original.html?v=full-public-1" title="Vollständige VALUVENTUM Startseite" loading="eager"></iframe>
-      </div>
-    </section>
-  </main>
-</div>
+    </div>
+  </div>
+</section>
 
 <script>
 (function(){
   const defaultsAT=['50,5','12,4','28,0','16,8','13,7','4,5'];
   const defaultsFI=['35,7','10,2','18,5','11,2','12,5','3,6'];
+  const names=[
+    'Grundeinkommen (ersetzt Soziales, Pensionen & Arbeitsmarkt)',
+    'Gesundheit, Familie & Jugend',
+    'Wirtschaft, Umwelt, Verkehr & Landwirtschaft',
+    'Bildung, Universitäten, Forschung & Kultur',
+    'Recht, innere Sicherheit & Landesverteidigung',
+    'Reserve / globale Aufgaben (AT: Zinszahlungen)'
+  ];
   const atInputs=[...document.querySelectorAll('[data-at]')];
   const fiInputs=[...document.querySelectorAll('[data-fi]')];
   const atShares=[...document.querySelectorAll('[data-at-share]')];
   const fiShares=[...document.querySelectorAll('[data-fi-share]')];
+  const ubi=147.96;
 
-  function num(value){
-    const cleaned=String(value).trim().replace(/\s/g,'').replace(',','.');
-    const n=Number(cleaned);
-    return Number.isFinite(n)&&n>=0?n:0;
-  }
-  function de(n,digits=1){
-    return n.toLocaleString('de-DE',{minimumFractionDigits:digits,maximumFractionDigits:digits});
-  }
-  function recalcReference(){
+  function num(v){const n=Number(String(v).trim().replace(/\s/g,'').replace(',','.'));return Number.isFinite(n)&&n>=0?n:0}
+  function de(n,d=1){return n.toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d})}
+
+  function recalc(){
     const at=atInputs.map(i=>num(i.value));
     const fi=fiInputs.map(i=>num(i.value));
     const atTotal=at.reduce((a,b)=>a+b,0);
     const fiTotal=fi.reduce((a,b)=>a+b,0);
-    atShares.forEach((cell,i)=>cell.textContent=atTotal>0?de(at[i]/atTotal*100,1)+' %':'–');
-    fiShares.forEach((cell,i)=>cell.textContent=fiTotal>0?de(fi[i]/fiTotal*100,1)+' %':'–');
+    const aShares=at.map(v=>atTotal>0?v/atTotal:0);
+    const fShares=fi.map(v=>fiTotal>0?v/fiTotal:0);
+
+    atShares.forEach((c,i)=>c.textContent=atTotal>0?de(aShares[i]*100,1)+' %':'–');
+    fiShares.forEach((c,i)=>c.textContent=fiTotal>0?de(fShares[i]*100,1)+' %':'–');
     document.getElementById('at-total').textContent=de(atTotal,1)+' Mrd. €';
     document.getElementById('fi-total').textContent=de(fiTotal,1)+' Mrd. €';
-    document.getElementById('at-example').textContent=atTotal>0?de(at[0],1)+' ÷ '+de(atTotal,1)+' × 100 = '+de(at[0]/atTotal*100,1)+' %':'–';
-    document.getElementById('fi-example').textContent=fiTotal>0?de(fi[0],1)+' ÷ '+de(fiTotal,1)+' × 100 = '+de(fi[0]/fiTotal*100,1)+' %':'–';
-  }
-  [...atInputs,...fiInputs].forEach(input=>input.addEventListener('input',recalcReference));
-  document.getElementById('reset-household').addEventListener('click',()=>{
-    atInputs.forEach((input,i)=>input.value=defaultsAT[i]);
-    fiInputs.forEach((input,i)=>input.value=defaultsFI[i]);
-    recalcReference();
-  });
-  recalcReference();
 
-  const rateInput=document.getElementById('community-rate');
-  function recalcValuHousehold(){
-    let rate=num(rateInput.value);
-    if(rate>100) rate=100;
-    const household=2000*rate/100;
-    document.getElementById('rate-display').textContent=de(rate,1)+' %';
-    document.getElementById('valu-household-total').textContent=de(household,2)+' Billionen Valu';
-    document.getElementById('household-formula').textContent='2,0 Billiarden Valu × '+de(rate,1)+' % = '+de(household,2)+' Billionen Valu gemeinsamer Haushalt';
+    const socialShare=aShares[0];
+    const valuTotal=socialShare>0?ubi/socialShare:0;
+    const vals=aShares.map((s,i)=>i===0?ubi:valuTotal*s);
+    const body=document.getElementById('valu-body');
+    body.innerHTML='';
+    names.forEach((name,i)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML='<td class="category">'+name+'</td><td>'+de(aShares[i]*100,1)+' %</td><td>'+de(vals[i],2)+' Billionen Valu</td>';
+      body.appendChild(tr);
+    });
+    document.getElementById('valu-total').textContent=de(valuTotal,2)+' Billionen Valu';
+    document.getElementById('valu-total-box').textContent=de(valuTotal,2)+' Billionen Valu';
+    document.getElementById('at-social-share').textContent=de(socialShare*100,1)+' %';
   }
-  rateInput.addEventListener('input',recalcValuHousehold);
-  rateInput.addEventListener('change',recalcValuHousehold);
-  recalcValuHousehold();
 
-  const frame=document.getElementById('full-home');
-  function fitFrame(){
-    try{
-      const doc=frame.contentDocument||frame.contentWindow.document;
-      if(!doc) return;
-      const h=Math.max(doc.body?doc.body.scrollHeight:0,doc.documentElement?doc.documentElement.scrollHeight:0);
-      if(h>800) frame.style.height=h+'px';
-    }catch(e){}
-  }
-  frame.addEventListener('load',()=>{
-    fitFrame();
-    setTimeout(fitFrame,500);
-    setTimeout(fitFrame,1500);
+  [...atInputs,...fiInputs].forEach(i=>i.addEventListener('input',recalc));
+  document.getElementById('reset').addEventListener('click',()=>{
+    atInputs.forEach((i,n)=>i.value=defaultsAT[n]);
+    fiInputs.forEach((i,n)=>i.value=defaultsFI[n]);
+    recalc();
   });
+  recalc();
 })();
 </script>
 </body>
