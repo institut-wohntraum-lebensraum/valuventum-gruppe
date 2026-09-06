@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>VALUVENTUM® – Zugang gesperrt</title>
+<style>
+:root{--green:#0f5a46;--gold:#c99a2e;--text:#24302d;--muted:#687670;--line:#dce6e0;--soft:#f5faf7;--cream:#fffaf0}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#fff;color:var(--text)}a{text-decoration:none;color:inherit}
+.vv-header{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line)}
+.vv-head{width:min(1180px,92%);min-height:82px;margin:auto;display:flex;align-items:center;gap:16px}.vv-brand{display:flex;align-items:center;gap:12px;margin-right:auto;color:var(--green)}
+.vv-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--green);color:#fff;border:2px solid var(--gold);font-size:22px;font-weight:900}.vv-brand strong{display:block;font-size:18px}.vv-brand small{display:block;color:var(--gold);font-size:10px;font-weight:800;letter-spacing:.12em;margin-top:2px}
+.vv-home{padding:11px 14px;border-radius:10px;color:var(--green);font-size:14px;font-weight:850}.vv-home:hover{background:var(--soft)}
+main{min-height:calc(100vh - 82px);display:grid;place-items:center;padding:42px 18px;background:radial-gradient(circle at 50% 15%,#eef7f2,#fff 55%)}
+.card{width:min(760px,100%);padding:clamp(28px,5vw,52px);border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fffdf7,var(--soft));box-shadow:0 20px 55px rgba(15,90,70,.09);text-align:center}
+.lock{width:76px;height:76px;margin:0 auto 20px;border-radius:22px;display:grid;place-items:center;background:var(--green);color:#fff;font-size:34px;border:2px solid var(--gold)}
+.eyebrow{color:var(--gold);font-size:.78rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.page-name{margin:10px 0 0;color:var(--muted);font-size:.95rem;font-weight:800}
+h1{margin:8px 0 14px;color:var(--green);font-size:clamp(2rem,5vw,3.4rem);line-height:1.05}.lead{margin:0 auto;color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:620px}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 17px;border-radius:12px;font-weight:900;border:1px solid var(--green);background:var(--green);color:#fff}.btn.secondary{background:#fff;color:var(--green);border-color:var(--line)}.btn.secondary:hover{border-color:var(--gold);background:var(--cream)}
+.note{margin-top:20px;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);color:#6a7773;font-size:.9rem;line-height:1.55}
+</style>
+</head>
+<body>
+<header class="vv-header"><div class="vv-head"><a class="vv-brand" href="index.html#start"><span class="vv-mark">V</span><span><strong>VALUVENTUM®</strong><small>MENSCHEN · WERTE · GEMEINSCHAFT · ZUKUNFT</small></span></a><a class="vv-home" href="index.html#start">Startseite</a></div></header>
+<main><section class="card" aria-labelledby="lock-title"><div class="lock" aria-hidden="true">🔒</div><div class="eyebrow">VALUVENTUM® · GESCHÜTZTER BEREICH</div><div class="page-name" id="pageName"></div><h1 id="lock-title">Diese Seite ist derzeit gesperrt.</h1><p class="lead">Der Zugang zu diesem Bereich wird erst nach erfolgreicher Registrierung und Verifizierung freigeschaltet. In der aktuellen Testphase ist die Registrierung noch nicht öffentlich freigegeben.</p><div class="actions"><a class="btn" href="registrieren.html">Registrierung ansehen</a><a class="btn secondary" href="53_Globales_Voting.html">Globales Voting</a><a class="btn secondary" href="index.html#start">Zur Startseite</a></div><div class="note">Die geschützten Seiteninhalte werden in dieser öffentlichen Testversion nicht ausgeliefert.</div></section></main>
+<script>
+(function(){
+const titles={
+'03_Verifizierung':'03 · Verifizierung','04_Anmelden':'04 · Anmelden','05_Wallet':'05 · Mein Wallet','06_Modell_Gemeinschaftsmodell':'06 · Das Gemeinschaftsmodell','07_Grundeinkommen':'07 · Grundeinkommen','08_Gemeinschaftsbeitrag':'08 · Gemeinschaftsbeitrag','09_Taetigkeit_Nachweis':'09 · Tätigkeit & Nachweis','10_Transparenz_Berechnung':'10 · Transparenz & Berechnung','11_Datenbasis_Quellen':'11 · Datenbasis & Quellen','12_Haeufige_Fragen':'12 · Häufige Fragen','13_Einbindung_bestehender_Werte':'13 · Einbindung bestehender Werte','14_Gemeinschaftsunterstuetzung':'14 · Gemeinschaft & Unterstützung','15_Taetigkeiten_Angebote':'15 · Tätigkeiten & Angebote','16_Gemeinschafts_Chat':'16 · Gemeinschafts-Chat','17_Termine_Reservierungen':'17 · Termine & Reservierungen','18_Veranstaltungen_Kalender':'18 · Veranstaltungen & Kalender','19_Suche_Regionen':'19 · Suche & Regionen','20_Meldungen_Moderation':'20 · Meldungen & Moderation','21_Marktplatz_Unternehmen':'21 · Marktplatz & Unternehmen','22_Shop':'22 · Shop','23_Firmenpraesentationen':'23 · Firmenpräsentation','24_Bestellung_Versand_Herkunft':'24 · Bestellung, Versand & Herkunft','25_Zahlung_Abwicklung':'25 · Zahlung & Abwicklung','26_Bewertungen_Beschwerden':'26 · Bewertungen & Beschwerden','27_Therapeuten_Pflege_Gesundheit':'27 · Therapeuten, Pflege & Gesundheit','28_Gastronomie_Vereine_Bauern':'28 · Gastronomie, Vereine & Bauern','29_Medienuebersicht':'29 · Medienübersicht','30_Videokanal':'30 · Videokanal','31_Projektkanal':'31 · Projektkanal','32_Medienarchiv':'32 · Medienarchiv','33_Forschung_Bildung':'33 · Forschung & Bildung','34_Dezentrale_Architektur':'34 · Dezentrale Architektur','35_Unveraenderbare_Grundstruktur':'35 · Unveränderbare dezentrale Grundstruktur','36_Systemintegritaet':'36 · Systemintegrität & Manipulationsschutz','37_Knoten_Netzwerk':'37 · Knoten & Netzwerk','38_Transparenz_Pruefbarkeit':'38 · Transparenz & Prüfbarkeit','39_Finanzkreislaeufe_im_Vergleich':'39 · Finanzkreisläufe im Vergleich','40_Ueber_das_Projekt':'40 · Über das Projekt','41_Kontakt':'41 · Kontakt','42_Nutzungsregeln':'42 · Nutzungsregeln & Gemeinschaftsregeln','43_Regeln_Rahmen':'43 · Regeln & Rahmen','44_Datenschutz':'44 · Datenschutzerklärung','45_Sicherheit_Datenschutz':'45 · Sicherheit & Datenschutz','46_Impressum':'46 · Impressum','47_Rechtliche_Hinweise':'47 · Rechtliche Hinweise','48_Sitemap':'48 · Sitemap & Übersicht','49_Globales_APT_Steuermodell':'49 · Das globale APT-Steuermodell','50_Heutiges_System_im_Vergleich':'50 · Heutiges System im Vergleich','51_APT_Modell_Auswirkungen':'51 · Auswirkungen des APT-Modells','52_Vom_Tempel_zum_digitalen_Geldstrom':'52 · Vom Tempel zum digitalen Geldstrom'};
+const key=new URLSearchParams(location.search).get('seite');
+const el=document.getElementById('pageName'); if(key&&titles[key]){el.textContent=titles[key];document.title='VALUVENTUM® – '+titles[key]+' · gesperrt';}
+})();
+</script>
+</body></html>
