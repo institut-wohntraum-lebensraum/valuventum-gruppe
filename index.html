@@ -19,9 +19,9 @@ h1 span{color:var(--gold)}
 h2{font-size:clamp(1.7rem,3vw,2.5rem)}
 .lead{color:var(--muted);font-size:1.05rem;line-height:1.68;margin:0;max-width:970px}
 
-/* 1 · ERDE + PLANETEN LINKS / TEXT RECHTS */
-.hero{min-height:620px;display:flex;align-items:center;background:radial-gradient(circle at 30% 48%,#eef8f3 0,#fff 54%);border-bottom:1px solid var(--line)}
-.hero-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:64px;align-items:center}
+/* 1 · TEXT LINKS / ERDE + PLANETEN RECHTS */
+.hero{min-height:620px;display:flex;align-items:center;background:radial-gradient(circle at 72% 48%,#eef8f3 0,#fff 54%);border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
 .solar{position:relative;width:min(500px,88vw);aspect-ratio:1;margin:auto}
 .orbit{position:absolute;left:50%;top:50%;border:1px solid rgba(15,90,70,.20);border-radius:50%;transform:translate(-50%,-50%);animation:spin linear infinite}
 .orbit:nth-of-type(even){border-color:rgba(201,154,46,.42)}
@@ -29,11 +29,12 @@ h2{font-size:clamp(1.7rem,3vw,2.5rem)}
 .planet{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);display:block;border-radius:50%;box-shadow:0 3px 10px rgba(15,90,70,.22),0 0 0 3px rgba(255,255,255,.75)}
 .p1{width:11px;height:11px;background:#8d8175}.p2{width:16px;height:16px;background:radial-gradient(circle at 30% 25%,#fff0b4,#d59c2d 68%,#9d671e)}.p3{width:14px;height:14px;background:radial-gradient(circle at 30% 25%,#ffc18a,#c7522c 64%,#7a291a)}.p4{width:25px;height:25px;background:repeating-linear-gradient(0deg,#c77f42 0 4px,#f2d09d 4px 8px,#a95331 8px 10px)}.p5{width:21px;height:21px;background:radial-gradient(circle at 30% 25%,#fff0bd,#cda759 66%,#8e6a31)}
 .p5:after{content:"";position:absolute;left:50%;top:50%;width:185%;height:42%;border:2px solid rgba(201,154,46,.9);border-radius:50%;transform:translate(-50%,-50%) rotate(-18deg)}
-.earth{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;background:radial-gradient(circle at 32% 25%,#bfeefa 0,#4ea7c1 48%,#1c6b83 75%,#0d465c 100%);border:4px solid #fff;box-shadow:0 0 0 3px var(--gold),0 24px 54px rgba(15,90,70,.24),inset -28px -18px 38px rgba(0,35,50,.32);z-index:5}
+.earth{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;background:radial-gradient(circle at 32% 25%,#bfeefa 0,#4ea7c1 48%,#1c6b83 75%,#0d465c 100%);border:4px solid #fff;box-shadow:0 0 0 3px var(--gold),0 24px 54px rgba(15,90,70,.24),inset -28px -18px 38px rgba(0,35,50,.32);z-index:5;animation:earthMove 5s ease-in-out infinite}
 .earth:before{content:"";position:absolute;width:34%;height:22%;left:13%;top:18%;background:#73ad6e;border-radius:56% 42% 62% 38%;box-shadow:58px 28px 0 7px #6ba767,13px 72px 0 3px #83b979,72px 82px 0 -2px #77ae70,-12px 51px 0 -6px #82b779;transform:rotate(-12deg)}
 .earth:after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(120deg,rgba(255,255,255,.42),transparent 38% 65%,rgba(0,30,45,.28))}
 .earth-v{position:absolute;inset:0;z-index:2;display:grid;place-items:center;color:#fff;font-size:clamp(48px,7vw,78px);font-weight:950;text-shadow:0 5px 18px rgba(0,55,45,.7)}
 @keyframes spin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes earthMove{0%,100%{transform:translate(-50%,-50%) rotate(-2deg)}50%{transform:translate(-50%,calc(-50% - 8px)) rotate(2deg)}}
 
 /* TABELLEN */
 .table-wrap{margin-top:22px;overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:#fff}
@@ -84,18 +85,18 @@ button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);col
 <!-- 1 -->
 <section class="hero" id="start">
   <div class="wrap hero-grid">
-    <div class="solar" aria-label="Erde mit Planeten">
+    <div>
+      <div class="eyebrow">VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft</div>
+      <h1>Ein Instrument für <span>Freiheit</span>.</h1>
+      <p class="lead">VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.</p>
+    </div>
+    <div class="solar" aria-label="Bewegliche Erde mit Planeten">
       <div class="orbit o1"><span class="planet p1"></span></div>
       <div class="orbit o2"><span class="planet p2"></span></div>
       <div class="orbit o3"><span class="planet p3"></span></div>
       <div class="orbit o4"><span class="planet p4"></span></div>
       <div class="orbit o5"><span class="planet p5"></span></div>
       <div class="earth"><div class="earth-v">V</div></div>
-    </div>
-    <div>
-      <div class="eyebrow">VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft</div>
-      <h1>Ein Instrument für <span>Freiheit</span>.</h1>
-      <p class="lead">VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.</p>
     </div>
   </div>
 </section>
@@ -159,13 +160,13 @@ button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);col
         <table class="valu-table" aria-label="VALUVENTUM Haushalt nach österreichischer Struktur">
           <thead><tr><th>Bereich</th><th style="text-align:right">AT-Anteil</th><th style="text-align:right">Global / Jahr</th></tr></thead>
           <tbody id="valu-body"></tbody>
-          <tfoot><tr><td>GESAMTHAUSHALT VALUVENTUM®</td><td style="text-align:right">100,0 %</td><td class="money" id="valu-total">–</td></tr></tfoot>
+          <tfoot><tr><td>GESAMTHAUSHALT VALUVENTUM®</td><td style="text-align:right">100,0 %</td><td class="money" id="valu-total">200,00 Billionen Valu</td></tr></tfoot>
         </table>
       </div>
       <div class="valu-summary">
-        <div class="summary-box"><span>AT-Anteil Soziales</span><b id="at-social-share">–</b></div>
+        <div class="summary-box"><span>VALUVENTUM®-Gesamthaushalt</span><b>200,00 Billionen Valu</b></div>
         <div class="summary-box"><span>Grundeinkommen weltweit</span><b>147,96 Billionen Valu</b></div>
-        <div class="summary-box total"><span>Abgeleiteter VALUVENTUM®-Haushalt</span><b id="valu-total-box">–</b></div>
+        <div class="summary-box total"><span>Rest für die AT-Haushaltsliste</span><b>52,04 Billionen Valu</b></div>
       </div>
     </div>
   </div>
@@ -176,20 +177,24 @@ button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);col
   const defaultsAT=['50,5','12,4','28,0','16,8','13,7','4,5'];
   const defaultsFI=['35,7','10,2','18,5','11,2','12,5','3,6'];
   const names=[
-    'Grundeinkommen (anstatt Soziales, Pensionen & Arbeitsmarkt)',
-    'Gesundheit, Familie & Jugend',
-    'Wirtschaft, Umwelt, Verkehr & Landwirtschaft',
-    'Bildung, Universitäten, Forschung & Kultur',
-    'Recht, innere Sicherheit & Landesverteidigung',
-    'Zinszahlungen für Staatsschulden (AT-Referenz)'
+    '1. Soziales, Pensionen & Arbeitsmarkt',
+    '2. Gesundheit, Familie & Jugend',
+    '3. Wirtschaft, Umwelt, Verkehr & Landwirtschaft',
+    '4. Bildung, Universitäten, Forschung & Kultur',
+    '5. Recht, innere Sicherheit & Landesverteidigung',
+    '6. Zinszahlungen für Staatsschulden'
   ];
   const atInputs=[...document.querySelectorAll('[data-at]')];
   const fiInputs=[...document.querySelectorAll('[data-fi]')];
   const atShares=[...document.querySelectorAll('[data-at-share]')];
   const fiShares=[...document.querySelectorAll('[data-fi-share]')];
+  const valuTotal=200.00;
   const ubi=147.96;
+  const rest=valuTotal-ubi;
+
   function num(v){const n=Number(String(v).trim().replace(/\s/g,'').replace(',','.'));return Number.isFinite(n)&&n>=0?n:0}
   function de(n,d=1){return n.toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d})}
+
   function recalc(){
     const at=atInputs.map(i=>num(i.value));
     const fi=fiInputs.map(i=>num(i.value));
@@ -197,26 +202,35 @@ button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);col
     const fiTotal=fi.reduce((a,b)=>a+b,0);
     const aShares=at.map(v=>atTotal>0?v/atTotal:0);
     const fShares=fi.map(v=>fiTotal>0?v/fiTotal:0);
+
     atShares.forEach((c,i)=>c.textContent=atTotal>0?de(aShares[i]*100,1)+' %':'–');
     fiShares.forEach((c,i)=>c.textContent=fiTotal>0?de(fShares[i]*100,1)+' %':'–');
     document.getElementById('at-total').textContent=de(atTotal,1)+' Mrd. €';
     document.getElementById('fi-total').textContent=de(fiTotal,1)+' Mrd. €';
-    const socialShare=aShares[0];
-    const valuTotal=socialShare>0?ubi/socialShare:0;
-    const vals=aShares.map((s,i)=>i===0?ubi:valuTotal*s);
+
+    const vals=aShares.map(s=>rest*s);
     const body=document.getElementById('valu-body');
     body.innerHTML='';
+
+    const ubiRow=document.createElement('tr');
+    ubiRow.innerHTML='<td class="category">Grundeinkommen</td><td>–</td><td>'+de(ubi,2)+' Billionen Valu</td>';
+    body.appendChild(ubiRow);
+
     names.forEach((name,i)=>{
       const tr=document.createElement('tr');
       tr.innerHTML='<td class="category">'+name+'</td><td>'+de(aShares[i]*100,1)+' %</td><td>'+de(vals[i],2)+' Billionen Valu</td>';
       body.appendChild(tr);
     });
+
     document.getElementById('valu-total').textContent=de(valuTotal,2)+' Billionen Valu';
-    document.getElementById('valu-total-box').textContent=de(valuTotal,2)+' Billionen Valu';
-    document.getElementById('at-social-share').textContent=de(socialShare*100,1)+' %';
   }
+
   [...atInputs,...fiInputs].forEach(i=>i.addEventListener('input',recalc));
-  document.getElementById('reset').addEventListener('click',()=>{atInputs.forEach((i,n)=>i.value=defaultsAT[n]);fiInputs.forEach((i,n)=>i.value=defaultsFI[n]);recalc()});
+  document.getElementById('reset').addEventListener('click',()=>{
+    atInputs.forEach((i,n)=>i.value=defaultsAT[n]);
+    fiInputs.forEach((i,n)=>i.value=defaultsFI[n]);
+    recalc();
+  });
   recalc();
 })();
 </script>
