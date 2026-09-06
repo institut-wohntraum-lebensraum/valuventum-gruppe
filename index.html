@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VALUVENTUM® – Grundeinkommen</title>
-<meta name="description" content="VALUVENTUM® Gruppen-Test – Grundeinkommen als Ausgangspunkt der weiteren Haushaltsstruktur.">
+<title>VALUVENTUM® – Grundeinkommen & Haushaltsvergleich</title>
+<meta name="description" content="VALUVENTUM® Gruppen-Test – Grundeinkommen und editierbarer Haushaltsvergleich Österreich/Finnland.">
 <style>
   :root{
     --green:#0f5a46;
@@ -17,14 +17,16 @@
   *{box-sizing:border-box}
   html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background:#fff;color:var(--text)}
   body{padding:24px}
-  .wrap{width:min(1120px,100%);margin:0 auto}
+  .wrap{width:min(1180px,100%);margin:0 auto}
   .brand{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 4px 22px;border-bottom:1px solid var(--line)}
   .brand strong{color:var(--green);font-size:1.15rem;letter-spacing:.04em}
   .brand span{color:var(--gold);font-size:.78rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
   .card{margin:34px auto 0;padding:clamp(24px,4vw,44px);border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fffdf7,var(--green-soft));box-shadow:0 18px 48px rgba(15,90,70,.08)}
   .kicker{color:var(--gold);font-size:.76rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-  h1{margin:8px 0 12px;color:var(--green);font-size:clamp(2rem,4vw,3.5rem);line-height:1.06}
-  .lead{max-width:900px;margin:0;color:var(--muted);font-size:1.04rem;line-height:1.65}
+  h1,h2{margin:8px 0 12px;color:var(--green);line-height:1.06}
+  h1{font-size:clamp(2rem,4vw,3.5rem)}
+  h2{font-size:clamp(1.7rem,3vw,2.6rem)}
+  .lead{max-width:980px;margin:0;color:var(--muted);font-size:1.04rem;line-height:1.65}
   .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
   .item{padding:20px;border:1px solid var(--line);border-radius:18px;background:#fff}
   .item span{display:block;color:#73807c;font-size:.79rem;font-weight:800}
@@ -35,7 +37,35 @@
   .formula{margin-top:18px;padding:17px 19px;border-radius:15px;background:#fff;border:1px solid var(--line);color:#35443f;font-size:1rem;font-weight:850;line-height:1.6;font-variant-numeric:tabular-nums}
   .exact{margin-top:14px;padding:17px 19px;border-left:5px solid var(--gold);border-radius:0 15px 15px 0;background:#fffaf0;color:#5e6b67;line-height:1.6}
   .exact strong{color:var(--green)}
-  @media(max-width:850px){.grid{grid-template-columns:1fr 1fr}}
+
+  .compare-card{background:linear-gradient(145deg,#f7fbf8,#fffaf0)}
+  .compare-note{margin-top:14px;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);color:#63716c;line-height:1.55;font-size:.9rem}
+  .table-wrap{margin-top:22px;overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:#fff}
+  table{width:100%;border-collapse:collapse;min-width:860px}
+  th,td{padding:14px 12px;border-bottom:1px solid #edf1ef;vertical-align:middle}
+  th{background:#f6faf8;color:var(--green);font-size:.82rem;text-align:left}
+  th.country{text-align:center}
+  td.category{font-weight:800;color:#34433e;line-height:1.35}
+  td.money,td.share{text-align:right;font-variant-numeric:tabular-nums}
+  td.share{font-weight:900;color:var(--green);white-space:nowrap}
+  .moneybox{display:flex;align-items:center;justify-content:flex-end;gap:7px}
+  .moneybox input{width:94px;padding:9px 10px;border:1px solid #cfdcd5;border-radius:10px;background:#fff;color:#24302d;font:inherit;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+  .moneybox input:focus{outline:3px solid rgba(15,90,70,.12);border-color:var(--green)}
+  .unit{color:#73807c;font-size:.82rem;white-space:nowrap}
+  tfoot td{background:#0f5a46;color:#fff;border-bottom:0;font-weight:900}
+  tfoot td.total-label{font-size:1rem}
+  tfoot td.total-money{text-align:right;color:#ffd56c;font-variant-numeric:tabular-nums}
+  tfoot td.total-share{text-align:right;color:#fff}
+  .compare-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:16px}
+  .calc-rule{color:#5d6b66;font-size:.9rem;line-height:1.5}
+  button{appearance:none;border:0;border-radius:12px;background:var(--green);color:#fff;padding:11px 16px;font:inherit;font-weight:900;cursor:pointer}
+  button:hover{filter:brightness(1.05)}
+  .examples{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  .example{padding:16px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+  .example strong{display:block;color:var(--green);margin-bottom:6px}
+  .example span{color:#64726d;line-height:1.5;font-size:.9rem}
+
+  @media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.examples{grid-template-columns:1fr}}
   @media(max-width:560px){body{padding:14px}.brand{align-items:flex-start;flex-direction:column}.card{margin-top:20px;padding:22px;border-radius:22px}.grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -74,7 +104,137 @@
         <div class="formula">8,22 Milliarden Menschen × 1.500 Valu × 12 Monate = 147,96 Billionen Valu pro Jahr</div>
         <div class="exact"><strong>Exakte Zahl:</strong> 147,96 Billionen Valu = 147.960.000.000.000 Valu</div>
       </section>
+
+      <section class="card compare-card" id="haushaltsvergleich">
+        <div class="kicker">HAUSHALTSVERGLEICH · ZUM SELBERRECHNEN</div>
+        <h2>Österreich und Finnland direkt gegenübergestellt</h2>
+        <p class="lead">Die Beträge können direkt verändert werden. Gesamthaushalt und Prozentanteile werden automatisch neu berechnet. So können wir die Struktur gemeinsam prüfen, bevor wir daraus eine eigene VALUVENTUM®-Verteilung entwickeln.</p>
+        <div class="compare-note"><strong>Wichtig:</strong> Das sind unsere derzeitigen Arbeitswerte für den Strukturvergleich. Sie werden hier noch nicht als VALUVENTUM®-Haushalt übernommen.</div>
+
+        <div class="table-wrap">
+          <table aria-label="Editierbarer Haushaltsvergleich Österreich Finnland">
+            <thead>
+              <tr>
+                <th rowspan="2">Haushaltsbereich</th>
+                <th class="country" colspan="2">Österreich (AT)</th>
+                <th class="country" colspan="2">Finnland (FI)</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">Mrd. €</th>
+                <th style="text-align:right">Anteil</th>
+                <th style="text-align:right">Mrd. €</th>
+                <th style="text-align:right">Anteil</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="category">1. Soziales, Pensionen & Arbeitsmarkt</td>
+                <td class="money"><div class="moneybox"><input data-at value="50,5" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-at-share>–</td>
+                <td class="money"><div class="moneybox"><input data-fi value="35,7" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-fi-share>–</td>
+              </tr>
+              <tr>
+                <td class="category">2. Gesundheit, Familie & Jugend</td>
+                <td class="money"><div class="moneybox"><input data-at value="12,4" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-at-share>–</td>
+                <td class="money"><div class="moneybox"><input data-fi value="10,2" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-fi-share>–</td>
+              </tr>
+              <tr>
+                <td class="category">3. Wirtschaft, Umwelt, Verkehr & Landwirtschaft</td>
+                <td class="money"><div class="moneybox"><input data-at value="28,0" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-at-share>–</td>
+                <td class="money"><div class="moneybox"><input data-fi value="18,5" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-fi-share>–</td>
+              </tr>
+              <tr>
+                <td class="category">4. Bildung, Universitäten, Forschung & Kultur</td>
+                <td class="money"><div class="moneybox"><input data-at value="16,8" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-at-share>–</td>
+                <td class="money"><div class="moneybox"><input data-fi value="11,2" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-fi-share>–</td>
+              </tr>
+              <tr>
+                <td class="category">5. Recht, innere Sicherheit & Landesverteidigung</td>
+                <td class="money"><div class="moneybox"><input data-at value="13,7" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-at-share>–</td>
+                <td class="money"><div class="moneybox"><input data-fi value="12,5" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-fi-share>–</td>
+              </tr>
+              <tr>
+                <td class="category">6. Zinszahlungen für Staatsschulden</td>
+                <td class="money"><div class="moneybox"><input data-at value="4,5" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-at-share>–</td>
+                <td class="money"><div class="moneybox"><input data-fi value="3,6" inputmode="decimal"><span class="unit">Mrd. €</span></div></td>
+                <td class="share" data-fi-share>–</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="total-label">GESAMTHAUSHALT</td>
+                <td class="total-money" id="at-total">–</td>
+                <td class="total-share">100,0 %</td>
+                <td class="total-money" id="fi-total">–</td>
+                <td class="total-share">100,0 %</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="compare-actions">
+          <div class="calc-rule"><strong>Rechenregel:</strong> Bereich ÷ Gesamthaushalt × 100 = Anteil in Prozent.</div>
+          <button type="button" id="reset-household">Ausgangswerte wiederherstellen</button>
+        </div>
+
+        <div class="examples">
+          <div class="example"><strong id="at-example-title">Österreich – Beispiel</strong><span id="at-example">50,5 ÷ 125,9 × 100 = 40,1 %</span></div>
+          <div class="example"><strong id="fi-example-title">Finnland – Beispiel</strong><span id="fi-example">35,7 ÷ 91,7 × 100 = 38,9 %</span></div>
+        </div>
+      </section>
     </main>
   </div>
+
+<script>
+(function(){
+  const defaultsAT=['50,5','12,4','28,0','16,8','13,7','4,5'];
+  const defaultsFI=['35,7','10,2','18,5','11,2','12,5','3,6'];
+  const atInputs=[...document.querySelectorAll('[data-at]')];
+  const fiInputs=[...document.querySelectorAll('[data-fi]')];
+  const atShares=[...document.querySelectorAll('[data-at-share]')];
+  const fiShares=[...document.querySelectorAll('[data-fi-share]')];
+
+  function num(value){
+    const cleaned=String(value).trim().replace(/\s/g,'').replace(',','.');
+    const n=Number(cleaned);
+    return Number.isFinite(n) && n>=0 ? n : 0;
+  }
+  function de(n,digits=1){
+    return n.toLocaleString('de-DE',{minimumFractionDigits:digits,maximumFractionDigits:digits});
+  }
+  function recalc(){
+    const at=atInputs.map(i=>num(i.value));
+    const fi=fiInputs.map(i=>num(i.value));
+    const atTotal=at.reduce((a,b)=>a+b,0);
+    const fiTotal=fi.reduce((a,b)=>a+b,0);
+
+    atShares.forEach((cell,i)=>cell.textContent=atTotal>0?de(at[i]/atTotal*100,1)+' %':'–');
+    fiShares.forEach((cell,i)=>cell.textContent=fiTotal>0?de(fi[i]/fiTotal*100,1)+' %':'–');
+    document.getElementById('at-total').textContent=de(atTotal,1)+' Mrd. €';
+    document.getElementById('fi-total').textContent=de(fiTotal,1)+' Mrd. €';
+
+    document.getElementById('at-example').textContent=atTotal>0?de(at[0],1)+' ÷ '+de(atTotal,1)+' × 100 = '+de(at[0]/atTotal*100,1)+' %':'–';
+    document.getElementById('fi-example').textContent=fiTotal>0?de(fi[0],1)+' ÷ '+de(fiTotal,1)+' × 100 = '+de(fi[0]/fiTotal*100,1)+' %':'–';
+  }
+
+  [...atInputs,...fiInputs].forEach(input=>input.addEventListener('input',recalc));
+  document.getElementById('reset-household').addEventListener('click',()=>{
+    atInputs.forEach((input,i)=>input.value=defaultsAT[i]);
+    fiInputs.forEach((input,i)=>input.value=defaultsFI[i]);
+    recalc();
+  });
+  recalc();
+})();
+</script>
 </body>
 </html>
