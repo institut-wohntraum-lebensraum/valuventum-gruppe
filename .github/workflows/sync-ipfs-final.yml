@@ -16,9 +16,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Fetch exact Pinata gateway files and publish
+      - name: Fetch exact final Pinata folder and publish
         env:
           CID: bafybeifa2p4dqqspt7dq2o3dvqldv4fvdhnpwfvynbvrvke6rfu5qdavau
+          GATEWAY: https://plum-brilliant-constrictor-196.mypinata.cloud/ipfs
           PATHS_GZ_B64: H4sIAHNlnWoC/21VTXPqOgzd979AIUALy9CmwJSvF9J2+jYaQwRx4zgZ2ym3/PorJyaFO+wSHVmWzpHk9oGbpNzeH3OV7kV+1PcFO6Bu/2Tirk0YP8hc4V1b5l+Y/ghx1+nAOnwLXsZBOHuaRm3zx1jbJvLDCKazIIRx4IfjYBYFyxr0IMQD10ZxVCjbiaHQnR68o+J7fiJjKQ/O2gdfZijixm0AH0wINO73ARZ5jELABDPkUu8Stjc6q2zO5REmFDAmNM2zrAk0vD6yRW4UO187goghlZqSFZZslxyR6xrrdiBSTOqCUe4nGFMJu0Q2GXe78MwMyi3TXMN/JeVxvrLrwZRhuecHhBe6q7H3IOByy2VMUWCL2mCClLCCD1QGnVP/Ot9SGlTalGhOv3cPLtJGSdQdcJs3ER6uI8BTwhyN3UeIUGVcIimjUX3XGjQJDq02VLNhwlR2eGWiStE5jGBT7hKsdM3l+ZzXgQVpV5+wOilmCHZgFxZMpaYQzJzgzZYjMWn08TzYJHnhfnrwwhVhhWKUnzRVnMa1TyoQaUJY/ihTzWQMU1RpKfeuQm8A/7OkcvC3R75LRcOa90DHj8R0nSeFsnKrpuU8Iieh1AssLanrvUAScIIkQZwQ0c6L+olRS+cyzzjaLNDSOWYl1eVcRkRHzFGWuKUk+S5xZ3sdeOcx5imTzHVtrwtrZSfMXBo9F4CpXcK/nZG4yRXlbGsb84puh/ThGU/EliKxwLdnDAUsnWi9AbH+TYVVQm6pnetBoSLKC68H2PwQudQcBg+KG3aevd4jvMrcUrKkJiTGUmcfXg3IWpW4p+hpQ1VvRGpKJk8pcaSFHQkEnlnODgKJltqt34E3SxTETJ/JcEgXXnNqgubfg2VZzYFWpI1wfPd7th/pF0L221j9fj2gljFzcrYBbOheVFbPG/ADzLJCodZl5iyPFJr0E/YUTLm0+8HNWX9IwYgw5pq3P4KJyLekgQZ/HcHGIPXE5YoadKhbS5pb8qjJvkHHoFudduvOL/WR2wZvhnTgwXue0RxnBQo4lRnEnNa1nVNqVmFlzV32g95vRu+54eeGeQ7W89XnIlhG7Sy+ew0/19Gq5S/9+ecmsJYw8J8X1dcmeHoLZ9Fn9V0ten+5CObPb8sJ0Dh+rIIwCsJq29fwZL4a+3N4X0Wz5eTCbt+Hi9/Xzyf4CMbehWm+evLn09UmgmGn06mAmBl2z0qTtOxXG/+wrBDY/tK5rLHvqqgaray0W/FPXaREUm3/0zY5/RRsl9Iirp1ovSnT+mai/KahKbOW3YS04rIvfcbquBf2C2+bUPvatOVFb9SilzQW9NzdAv+xifzAZYt3h/IfQNUPZrX3bt10hd86X+KOnvNS6+q5ouyvcV3gjjPRqt76WwGO1atLpWttV7gFUe1Q1NT9BQuE0l81CAAA
         shell: bash
         run: |
@@ -26,25 +27,32 @@ jobs:
           printf '%s' "$PATHS_GZ_B64" | base64 -d | gzip -d > /tmp/paths.txt
           rm -rf /tmp/final-site
           mkdir -p /tmp/final-site
-          while IFS= read -r path; do
-            [ -n "$path" ] || continue
+
+          fetch_one() {
+            path="$1"
             mkdir -p "/tmp/final-site/$(dirname "$path")"
-            ok=0
-            for base in "https://gateway.pinata.cloud/ipfs" "https://ipfs.io/ipfs" "https://dweb.link/ipfs"; do
-              if curl --fail --location --silent --show-error --retry 3 --retry-delay 2 --retry-all-errors "$base/$CID/$path" -o "/tmp/final-site/$path"; then
-                ok=1
-                break
-              fi
-            done
-            if [ "$ok" -ne 1 ]; then
-              echo "Download failed: $path" >&2
-              exit 1
-            fi
-          done < /tmp/paths.txt
-          test "$(find /tmp/final-site -maxdepth 1 -name '*.html' | wc -l)" -eq 53
+            curl --fail --location --silent --show-error \
+              --connect-timeout 10 --max-time 120 \
+              --retry 2 --retry-delay 2 --retry-all-errors \
+              "$GATEWAY/$CID/$path" -o "/tmp/final-site/$path"
+          }
+
+          fetch_one index.html
+          fetch_one 02_Registrieren.html
+          fetch_one 34_Dezentrale_Architektur.html
           echo '10fd142063f3da745fa5d02120973af11998a448e1773b5b6f02ba06eb532b73  /tmp/final-site/02_Registrieren.html' | sha256sum -c -
           echo 'aad837c8be4e45a6c10a7f464791581ed2da161d2ec81cf8702722a46ed98d6f  /tmp/final-site/34_Dezentrale_Architektur.html' | sha256sum -c -
           echo 'fdf4b9a845ebf602a0e261787ecd972c70fb82bf0fdb7de6512add0a62efafe9  /tmp/final-site/index.html' | sha256sum -c -
+
+          while IFS= read -r path; do
+            [ -n "$path" ] || continue
+            if [ -f "/tmp/final-site/$path" ]; then
+              continue
+            fi
+            fetch_one "$path"
+          done < /tmp/paths.txt
+
+          test "$(find /tmp/final-site -maxdepth 1 -name '*.html' | wc -l)" -eq 53
           git rm -r --ignore-unmatch .
           cp -a /tmp/final-site/. .
           git add -A
