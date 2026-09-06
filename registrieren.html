@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VALUVENTUM® – Registrieren · Testphase</title>
+<style>
+:root{--green:#0f5a46;--gold:#c99a2e;--text:#24302d;--muted:#687670;--line:#dce6e0;--soft:#f5faf7;--cream:#fffaf0;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:#fff;color:var(--text)}
+a{text-decoration:none;color:inherit}
+.wrap{width:min(1180px,92%);margin:auto}
+.vv-header{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.vv-head{width:min(1240px,94%);margin:auto;min-height:82px;display:flex;align-items:center;gap:18px}
+.vv-brand{display:flex;align-items:center;gap:12px;margin-right:auto;color:var(--green)}
+.vv-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--green);color:#fff;border:2px solid var(--gold);font-weight:900;font-size:22px}
+.vv-brand-text strong{display:block;font-size:18px;letter-spacing:.02em}.vv-brand-text small{display:block;font-size:10px;letter-spacing:.13em;color:var(--gold);font-weight:800;margin-top:2px}
+.vv-nav{display:flex;align-items:center}.vv-link{display:flex;align-items:center;padding:11px 14px;border-radius:10px;color:var(--green);font-size:14px;font-weight:800}.vv-link:hover,.vv-link:focus-visible{background:var(--soft);outline:none}
+main{padding:54px 0 80px}.eyebrow{color:var(--gold);font-size:.77rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}h1,h2,h3{color:var(--green);line-height:1.08}h1{font-size:clamp(2.4rem,5vw,4rem);margin:10px 0 14px}.lead{max-width:920px;color:var(--muted);font-size:1.05rem;line-height:1.68}
+.lock{margin:24px 0;padding:20px 22px;border:1px solid #ead3a1;border-left:5px solid var(--gold);border-radius:0 18px 18px 0;background:var(--cream);color:#5d502c;line-height:1.6}.lock strong{display:block;color:var(--green);font-size:1.1rem;margin-bottom:5px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:26px 0}.step{padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--soft)}.step b{display:block;color:var(--green);margin-bottom:5px}
+.form-card{margin-top:22px;border:1px solid var(--line);border-radius:26px;padding:clamp(22px,4vw,38px);background:#fff;box-shadow:0 18px 48px rgba(15,90,70,.07)}fieldset{margin:0;padding:0;border:0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.full{grid-column:1/-1}.section-head{grid-column:1/-1;margin-top:12px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}.section-head h2{margin:4px 0 6px;font-size:1.35rem}.section-head p{margin:0;color:var(--muted);line-height:1.55}
+.field{display:grid;gap:7px}.field label{font-size:.84rem;font-weight:850;color:var(--green)}.field input,.field select,.field textarea{width:100%;padding:12px 13px;border:1px solid #cfdcd5;border-radius:12px;background:#f7f9f8;color:#6c7773;font:inherit}.field textarea{min-height:100px}.field input:disabled,.field select:disabled,.field textarea:disabled{cursor:not-allowed;opacity:.72}.choice-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.choice{display:flex;align-items:center;gap:8px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}.choice input{width:auto}.asset{grid-column:1/-1;padding:18px;border:1px solid var(--line);border-radius:18px;background:#fbfdfc}.asset h3{margin:0 0 12px;font-size:1.08rem}.asset-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.words{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.word{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);border-radius:12px;background:#fff}.word span{width:22px;color:var(--gold);font-size:.75rem;font-weight:900}.word input{border:0;padding:7px 0;background:transparent}.note{grid-column:1/-1;padding:16px 18px;border-left:4px solid var(--gold);border-radius:0 14px 14px 0;background:var(--soft);line-height:1.6;color:#52615c}.btn{margin-top:20px;padding:12px 18px;border:0;border-radius:13px;background:#7b8581;color:#fff;font:inherit;font-weight:900;cursor:not-allowed}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}.choice-grid{grid-template-columns:1fr 1fr}.words{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.vv-head{min-height:70px}.vv-mark{width:42px;height:42px}.vv-brand-text strong{font-size:16px}.vv-brand-text small{font-size:8px}main{padding-top:34px}.grid,.steps,.choice-grid,.asset-grid,.words{grid-template-columns:1fr}.full,.section-head,.choice-grid,.asset,.words,.note{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="vv-header"><div class="vv-head"><a class="vv-brand" href="index.html#start" aria-label="VALUVENTUM Startseite"><div class="vv-mark">V</div><div class="vv-brand-text"><strong>VALUVENTUM®</strong><small>THE INSTRUMENT OF FREEDOM</small></div></a><nav class="vv-nav" aria-label="Hauptnavigation"><a class="vv-link" href="index.html#start">Startseite</a></nav></div></header>
+<main><div class="wrap">
+<div class="eyebrow">VALUVENTUM® · REGISTRIEREN · TESTPHASE</div>
+<h1>Registrieren</h1>
+<p class="lead">Die Registrierungsseite bleibt für die Prüfung sichtbar. Der Ablauf kann angesehen werden, eine tatsächliche Registrierung ist während der Testphase jedoch nicht möglich.</p>
+<div class="lock"><strong>Registrierung noch nicht freigeschaltet</strong>Alle Eingaben, Datei-Uploads und der Abschluss sind deaktiviert. Über diese Seite werden derzeit keine Registrierungsdaten übertragen. Die Freischaltung erfolgt erst, wenn sie ausdrücklich für den öffentlichen Betrieb beschlossen wird.</div>
+<div class="steps"><div class="step"><b>01 · Kontotyp</b>Form der Teilnahme.</div><div class="step"><b>02 · Grunddaten</b>Persönliche Zuordnung.</div><div class="step"><b>03 · Nachweise</b>Identität und Werte.</div><div class="step"><b>04 · 24 Wörter</b>Zugang und Wallet-Zuordnung.</div></div>
+<form class="form-card" action="#" method="get" onsubmit="return false" aria-disabled="true">
+<fieldset disabled><div class="grid">
+<div class="section-head"><div class="eyebrow">01 · KONTOTYP UND GRUNDDATEN</div><h2>Persönliche Angaben</h2><p>Diese Felder sind in der öffentlichen Testphase nur sichtbar und nicht bearbeitbar.</p></div>
+<div class="field full"><label>Kontotyp *</label><select><option>Privater Mensch</option><option>Berufstätiger Mensch</option><option>Unternehmen / Verein / Organisation</option></select></div>
+<div class="field"><label>Rechtmäßiger Name *</label><input type="text" placeholder="Name"></div><div class="field"><label>Private E-Mail-Adresse *</label><input type="email" placeholder="E-Mail"></div>
+<div class="field"><label>Telefonnummer *</label><input type="tel" placeholder="Telefon"></div><div class="field"><label>Land *</label><input type="text" placeholder="Land"></div>
+<div class="field"><label>Arbeitgeber / Unternehmen</label><input type="text"></div><div class="field"><label>Beruf / Tätigkeit</label><input type="text"></div>
+<div class="field"><label>Identitätsnachweis *</label><input type="file" accept="image/*,.pdf"></div><div class="field"><label>Aktuelle Meldebestätigung *</label><input type="file" accept="image/*,.pdf"></div>
+
+<div class="section-head"><div class="eyebrow">02 · VERMÖGENSNACHWEISE</div><h2>Vorhandene Werte zuordnen</h2><p>ONE, Euro, andere Währungen, Edelmetalle und Kryptowährungen werden getrennt erfasst. Alle anderen Währungen werden zusätzlich als Euro-Gesamtwert angegeben.</p></div>
+<div class="choice-grid"><label class="choice"><input type="checkbox"> ONE</label><label class="choice"><input type="checkbox"> Euro</label><label class="choice"><input type="checkbox"> Andere Währungen</label><label class="choice"><input type="checkbox"> Edelmetalle</label><label class="choice"><input type="checkbox"> Kryptowährungen</label></div>
+<div class="asset"><h3>ONE</h3><div class="asset-grid"><div class="field"><label>Name auf dem Konto</label><input type="text"></div><div class="field"><label>Konto / Wallet</label><input type="text"></div><div class="field"><label>ONE-Menge</label><input type="number"></div><div class="field"><label>Euro-Gesamtwert · Vorgabe 1 ONE = 42,50 €</label><input type="text"></div></div></div>
+<div class="asset"><h3>Euro-Guthaben</h3><div class="asset-grid"><div class="field"><label>Name auf dem Konto</label><input type="text"></div><div class="field"><label>Konto / Wallet / Kontoreferenz</label><input type="text"></div><div class="field"><label>Euro-Gesamtwert</label><input type="number"></div><div class="field"><label>Screenshot mit Name, Konto und Bestand</label><input type="file" accept="image/*"></div></div></div>
+<div class="asset"><h3>Andere Währungen</h3><div class="asset-grid"><div class="field"><label>Währung</label><input type="text" placeholder="z. B. USD"></div><div class="field"><label>Konto / Wallet / Kontoreferenz</label><input type="text"></div><div class="field"><label>Bestand</label><input type="number"></div><div class="field"><label>Euro-Gesamtwert</label><input type="number"></div></div></div>
+<div class="asset"><h3>Edelmetalle</h3><div class="asset-grid"><div class="field"><label>Edelmetall</label><input type="text" placeholder="z. B. Gold"></div><div class="field"><label>Depot / Konto / Referenz</label><input type="text"></div><div class="field"><label>Menge und Einheit</label><input type="text"></div><div class="field"><label>Euro-Gesamtwert</label><input type="number"></div></div></div>
+<div class="asset"><h3>Kryptowährungen</h3><div class="asset-grid"><div class="field"><label>Kryptowährung</label><input type="text" placeholder="z. B. BTC"></div><div class="field"><label>Wallet / Konto</label><input type="text"></div><div class="field"><label>Menge</label><input type="number"></div><div class="field"><label>Euro-Gesamtwert</label><input type="number"></div></div></div>
+
+<div class="section-head"><div class="eyebrow">03 · WALLET UND ZUGANG</div><h2>VALUVENTUM®-Zuordnung</h2><p>Die Registrierung und die Einrichtung des persönlichen 24-Wörter-Zugangs bleiben bis zur Freigabe deaktiviert.</p></div>
+<div class="field full"><label>Zugehörige VALUVENTUM-Wallet-ID *</label><input type="text" placeholder="VALU-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX"></div>
+<div class="words">
+<div class="word"><span>01</span><input type="password"></div><div class="word"><span>02</span><input type="password"></div><div class="word"><span>03</span><input type="password"></div><div class="word"><span>04</span><input type="password"></div><div class="word"><span>05</span><input type="password"></div><div class="word"><span>06</span><input type="password"></div><div class="word"><span>07</span><input type="password"></div><div class="word"><span>08</span><input type="password"></div><div class="word"><span>09</span><input type="password"></div><div class="word"><span>10</span><input type="password"></div><div class="word"><span>11</span><input type="password"></div><div class="word"><span>12</span><input type="password"></div><div class="word"><span>13</span><input type="password"></div><div class="word"><span>14</span><input type="password"></div><div class="word"><span>15</span><input type="password"></div><div class="word"><span>16</span><input type="password"></div><div class="word"><span>17</span><input type="password"></div><div class="word"><span>18</span><input type="password"></div><div class="word"><span>19</span><input type="password"></div><div class="word"><span>20</span><input type="password"></div><div class="word"><span>21</span><input type="password"></div><div class="word"><span>22</span><input type="password"></div><div class="word"><span>23</span><input type="password"></div><div class="word"><span>24</span><input type="password"></div>
+</div>
+<div class="note"><strong>Testmodus:</strong> Die Seite enthält absichtlich keinen aktiven Registrierungs-Endpunkt. Selbst ein Absendeversuch kann deshalb keine Registrierung auslösen.</div>
+</div></fieldset>
+<button class="btn" type="submit" disabled aria-disabled="true">Registrierung derzeit gesperrt</button>
+</form>
+</div></main>
+</body>
+</html>
