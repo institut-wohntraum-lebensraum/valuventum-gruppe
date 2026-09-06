@@ -1,0 +1,154 @@
+name: Sync final IPFS site
+
+on:
+  push:
+    paths:
+      - '.github/workflows/sync-ipfs-final.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-final-site:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Replace repository with exact Pinata CID contents
+        env:
+          CID: bafybeifa2p4dqqspt7dq2o3dvqldv4fvdhnpwfvynbvrvke6rfu5qdavau
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cat > /tmp/valuventum-sha256.txt <<'EOF_MANIFEST'
+915a6278208d6d93327fd7d7d92a12288498edb937f7583befa578aa4757272e  ./.github/workflows/pages.yml
+c08f6a7d700a0c2b7f00c45796089e0e7226955e31c8e9c9aa3d3fad8f98aab0  ./.gitignore
+01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b  ./.nojekyll
+e8ce22a8fcbd68716f490dec0ed38bb66f5257d6aa9be491b51e9d6f349bb3a6  ./00_PRUEFBERICHT.txt
+913ff8a6eb2863884660f98ba14ab797ed60624c2f94b88adbd96907d372ffec  ./00_START_HIER_BEARBEITEN.txt
+10fd142063f3da745fa5d02120973af11998a448e1773b5b6f02ba06eb532b73  ./02_Registrieren.html
+80a98247b6bfd15d18fef27352dd812bd51d67c631cc1cbc5f6fa66c322bacbb  ./03_Verifizierung.html
+7c180f57673a765a7b892fc1fca968de4d6dbadecf3571fc77560c84bd0d06ea  ./04_Anmelden.html
+19a8f26c8d85583e0c30fadaec6d833cf41fb111bb8e092634438f5cc537dab3  ./05_Wallet.html
+2cdb1c7dd1b0a60eae2a0cfa3765584bcc7e8b386ca78716d39a0edd5b800885  ./06_Modell_Gemeinschaftsmodell.html
+310a80d281150095a0eb9d74f83fa8b1c961ce2ed07f781666cadeca97532fc1  ./07_Grundeinkommen.html
+e33701bee0e4a88d57cf9f380abf5cf87b5dac0ad64f592f00662641126e7a8b  ./08_Gemeinschaftsbeitrag.html
+bc458b774af1aa0e081baa5157b443a4f3576b77ca4c7ca7a4feaa72f1f5426b  ./09_Taetigkeit_Nachweis.html
+d3d3f25ef05aaf2af3b3063e485b9648215aae3f1ab7e16774b368308aa435eb  ./10_Transparenz_Berechnung.html
+7e138f59f8b31a56336615d73be64958e2644e3ba8617a3ec06eb09627c8e656  ./11_Datenbasis_Quellen.html
+1ef911b35244351f57691b8b92a8c9c70f6f6629a0b70827eb047c2b0dd8c146  ./12_Haeufige_Fragen.html
+88bffdd4ea74323572f2c37bdefa3b6d2f7362f508be6ae8630aa3743d15f444  ./13_Einbindung_bestehender_Werte.html
+cafae93e1cd31927ac2240db3a1aadd7154c53327cabac0ecfb548fbeee50bff  ./14_Gemeinschaftsunterstuetzung.html
+55155073c2d7820f01ae0ae2b938b50a749908e3b49c93e1a2cc9e15b5be1ebd  ./15_Taetigkeiten_Angebote.html
+381fcb9a548b8c5f3b195824855857deef51e3f70f84556565c45bdb4943355a  ./16_Gemeinschafts_Chat.html
+ee8b211b421d372b6643c0c802b116e9315533c001db53956bc4e4ddaefb176e  ./17_Termine_Reservierungen.html
+c1d2da3510aa81ab544ae309d55f0aae13863f87edcd4968e325fd12d697b2d6  ./18_Veranstaltungen_Kalender.html
+48c2ecb031e9db3dbde4aeca6148dc3efc4e98466e0dffa5c62d19c9e65a15b9  ./19_Suche_Regionen.html
+34d8b6816e9a48650951c6a4ed1d9989a2d926b6f995e4fa39cfbe8ff6e7414f  ./20_Meldungen_Moderation.html
+e790ed5dbed4acefb4e529865b2580408b9406b99e5cf86c7bb83d4dbffc146b  ./21_Marktplatz_Unternehmen.html
+c208e745c15131b7426fc7f3e3234769852035974295ef22feab5e25cd90113e  ./22_Shop.html
+f1081bacf8305c82c0872643ba0f8442aeb66bf1a2147afe4ae3be9ba528a582  ./23_Firmenpraesentationen.html
+20419fbccc2e4505ed276e82c0166c12e55ff47802091783530c5de6af337c19  ./24_Bestellung_Versand_Herkunft.html
+d87a61183a5bb67a6dd2ffcbb3b46cb51fc938239bd5843f1980eec0fa55912f  ./25_Zahlung_Abwicklung.html
+0bcd7aa2da4be3fc4a0996621a76af3b3ff4f3ecd006eccce20fbdabb599fcec  ./26_Bewertungen_Beschwerden.html
+e21e954fca8383e23f0f2a8acf2f9ad24bc9369eb59207d049962ebe36d48f47  ./27_Therapeuten_Pflege_Gesundheit.html
+bae8ccb024d9d2cb3c0317379ecf8953fdeaca815177ccf638ff58a1d252f6a9  ./28_Gastronomie_Vereine_Bauern.html
+bc4544f81982b26d79889c7dbf0f06fb3503621d3d5567380bdd307f17686a5e  ./29_Medienuebersicht.html
+3fd219036a150a13ec878fa07d812564e9d786ec6a6a55408d8f159ea6474d85  ./30_Videokanal.html
+823584f86e4f21566f648dbaa3e38712c472f55ee9cd2e210f1bc6fd5bc3a4f4  ./31_Projektkanal.html
+5dc0dfa108ab91b434caaadbcd42c277704e0231def65892565e28bd391d8226  ./32_Medienarchiv.html
+760cdba3f8f4b12140c976343b6c7139fd511ad2b105a0f41ea61d688038eb55  ./33_Forschung_Bildung.html
+aad837c8be4e45a6c10a7f464791581ed2da161d2ec81cf8702722a46ed98d6f  ./34_Dezentrale_Architektur.html
+11a93d12cd8935ea9e7c23ca58b6dfd0f39c878f5ffa4c7beff1152da23c1d53  ./35_Unveraenderbare_Grundstruktur.html
+c6652db404f9b2c53cd64adf4bb04137957f3adedd0a92543d60fc5b9750236d  ./36_Systemintegritaet.html
+f6e41a549c9506ec0c9cdb31bdba637d58ee6fd4ebc0eaef2d957c3d0d23a48d  ./37_Knoten_Netzwerk.html
+1a307d3e4ae81b88a66628c5b80380127b64856104c13673eb4752347e7c352e  ./38_Transparenz_Pruefbarkeit.html
+6b0e949f3810199c78a736508033c76257648923a64d8c3a2496cc927744076f  ./39_Finanzkreislaeufe_im_Vergleich.html
+2c45051f9ae82d2b39a2dd243bde743380c5c2412601454d74da161257e28358  ./40_Ueber_das_Projekt.html
+df526afd2ff563db29338927d0b2d664e451d547aa09cdf42eced67373746655  ./41_Kontakt.html
+7be0198e88e82f7623bf51d575d3ad4cebbb5c47a3b847323881a488426cc037  ./42_Nutzungsregeln.html
+a581561201df04fddf942bbb6fd28a64d2da51dd6e41410ffd52e0dbccb932b1  ./43_Regeln_Rahmen.html
+16501fcc40bf497ab7d4de3e6d99899ef31cefb25c90e84f78e091e96741b1a1  ./44_Datenschutz.html
+edbf11057a9f2043af5a2c9f7d44fddedb3f8cf6020899da0747065b414bfc9b  ./45_Sicherheit_Datenschutz.html
+d237e271876a6e79f3a2d621bcbe8e0c71ee0dbdec9605cab45c3d3b9feac925  ./46_Impressum.html
+b9632875467de527a136c529e235c1aae9ad393508fdc0b7db79ea0b9e9cc1d4  ./47_Rechtliche_Hinweise.html
+ee71d350c706f2c3b604b432dcb54b4d9c146ed6d3d5551c80c0a0d77ed8fa47  ./48_Sitemap.html
+e24698b7cd2be9149a3f3f6d13f349f6520d66602fa063cd7a987d99f6cc2f60  ./49_Globales_APT_Steuermodell.html
+bbf5c937ceeddf0139a117983d51d3d76419515981dbf323d5cc4ac4dcd3f941  ./50_Heutiges_System_im_Vergleich.html
+043c3f1a2035db83331267bd3ac4c702f49cb0d3b73ea94e12c0d5f19822cf85  ./51_APT_Modell_Auswirkungen.html
+7cb9adb2daa70393ac67cbe17255a8d01aaae7a2e2f91277ae72681ac3daf063  ./52_Vom_Tempel_zum_digitalen_Geldstrom.html
+42f7a93d6eb96f819d967653e22fe33332a938067667b426e68ee17325b9cd7c  ./53_Globales_Voting.html
+d49768fde15cd9779e8230c6df22e921a35256bc0edf788069eeb798e37f9ce4  ./DEPLOYMENT.md
+01366ecca8f07df3f8fa75e71cd4259ec28cc0a83d79fff2e89e06c33824c01f  ./KRYPTO-ANALYSE.md
+96d779c251139a29e7c36059ee9532e67a78c9a159e15b52c8714304bb55d816  ./README.md
+8f3dd37482273ed0c702b5ea5a3bc006a7d1fb3bbd9b2ccdd6da7b58611d271f  ./SECURITY.md
+167f86cb75ba3bf6f56e4c2cc0fcef4a2f9c4f4873f2ce559b2df911c0435e5f  ./START_ANMELDUNG_24_WOERTER.txt
+64493c308f65ae6567e0e82b0ed68ae95d975160f8eed0405f8738cd0ea23712  ./START_GLOBAL_VOTING.txt
+bdb279b8738e80da1e50bd7cd7ef3aceef50a4bc29da9ad047b2dd8f9c566198  ./START_HIER.txt
+fdeacc99cd17d18c595c873910e36dbc5cc060250ed9fdb5ba0a098ea8c00be7  ./START_KYC_WEB2.txt
+daab5ed1bca1948d08405d42a385a420736ca1ecd8d0dc10dbbcd4f6508f8ff2  ./START_LOCALHOST_8000.txt
+ed9ea4ff3040f399de7397b1ebd2ca5b22c4506648aa5f3502af94f691f04844  ./data/auth-data.example.json
+57c8221961754a050c23fc3eb46b590733514e42349c9ad83ffa5652ba8bb6e4  ./data/voting-data.json
+fdf4b9a845ebf602a0e261787ecd972c70fb82bf0fdb7de6512add0a62efafe9  ./index.html
+974d5295dc4d3a73f6013ea0b135d1092bddd8f390272cfe3797b34ab08a019a  ./netlify.toml
+b6471164429b57ed5790a12cde0509cc8bf4497fd16b217310ce6353512749d0  ./package.json
+1bd875e405ddeb2afd61d063797bef7297aa50abece1e2177e2ce38a3a6ee57f  ./start-valuventum-server.mjs
+cbef4885431b39deb10025493cef1b3a262972d58566edfbb295406c9c21d7b5  ./start-voting-server.mjs
+b35087e9eaef8121713d825dfed15ac1ec63ab7f299e128c23df6ee03bec9009  ./valuventum-auth.js
+d7b7de723fe51b3cd4743df74dee105d7974f03043acc5088fbb925e36e771d9  ./valuventum-bip39-wordlist.js
+4c946ad5dad0660f5165fc43d6018d92698a1661c8f6e36124ebce378fa344c5  ./valuventum-bip39.js
+45a178ac009b4538e1f69f0867a3d5ffff12f327fd84f2a6cdfb66f1a0433a19  ./valuventum-login-i18n.js
+472036e58a237bc054bf81a18e7b7b44abc98fd166062c3e8b272aee054e6a1e  ./valuventum-registration-auth.js
+4180a339eaf31127bd4dfd15e5760bf3f2a53718702027009fb19e03b3da3aa9  ./valuventum-registration-i18n.js
+689b83c1cadd4a5443c749482633eed2a71ee05d6e21741156ed9b8680f64d11  ./valuventum-rueckflussrechner.js
+20184cc3bbee5ca96d03318e17b2267fdba475c933837dde382ec2aee2113e7f  ./valuventum-special-pages-i18n.js
+1fc707541a7c5d6f4904f0eb7bf3f446be3b652f2cd134946f7411d431d1921b  ./valuventum-wallet-session.js
+45bd1d0a49a7735f83395051c5c0d9535b342448788fb49d0492269b2eb9f28c  ./vercel.json
+EOF_MANIFEST
+
+          git rm -r --ignore-unmatch .
+
+          while read -r expected path; do
+            path="${path#./}"
+            mkdir -p "$(dirname "$path")"
+            tmp="$path.download"
+            ok=0
+
+            for base in \
+              "https://gateway.pinata.cloud/ipfs" \
+              "https://ipfs.io/ipfs" \
+              "https://dweb.link/ipfs"
+            do
+              if curl --fail --location --silent --show-error \
+                --retry 4 --retry-delay 2 --retry-all-errors \
+                "$base/$CID/$path" -o "$tmp"; then
+                mv "$tmp" "$path"
+                ok=1
+                break
+              fi
+            done
+
+            if [ "$ok" -ne 1 ]; then
+              echo "Download failed: $path" >&2
+              exit 1
+            fi
+          done < /tmp/valuventum-sha256.txt
+
+          sha256sum -c /tmp/valuventum-sha256.txt
+
+          git add -A
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --cached --quiet; then
+            echo "Repository already matches the final IPFS version."
+            exit 0
+          fi
+
+          git commit -m "Publish final 53-page IPFS version $CID"
+          git push origin HEAD:main
