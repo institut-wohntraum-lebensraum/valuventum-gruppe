@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VALUVENTUM® – Grundeinkommen & Haushaltsvergleich</title>
-<meta name="description" content="VALUVENTUM® Gruppen-Test – Grundeinkommen und editierbarer Haushaltsvergleich Österreich/Finnland.">
+<title>Haushaltsvergleich AT/FI & VALUVENTUM®</title>
+<meta name="description" content="Gruppen-Test: zuerst Haushaltsvergleich Österreich/Finnland, darunter VALUVENTUM® mit Grundeinkommen.">
 <style>
   :root{
     --green:#0f5a46;
@@ -27,16 +27,6 @@
   h1{font-size:clamp(2rem,4vw,3.5rem)}
   h2{font-size:clamp(1.7rem,3vw,2.6rem)}
   .lead{max-width:980px;margin:0;color:var(--muted);font-size:1.04rem;line-height:1.65}
-  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
-  .item{padding:20px;border:1px solid var(--line);border-radius:18px;background:#fff}
-  .item span{display:block;color:#73807c;font-size:.79rem;font-weight:800}
-  .item b{display:block;margin-top:8px;color:var(--green);font-size:1.28rem;font-variant-numeric:tabular-nums}
-  .item.total{background:var(--green);border-color:var(--green)}
-  .item.total span{color:#d7ece4}
-  .item.total b{color:#ffd56c}
-  .formula{margin-top:18px;padding:17px 19px;border-radius:15px;background:#fff;border:1px solid var(--line);color:#35443f;font-size:1rem;font-weight:850;line-height:1.6;font-variant-numeric:tabular-nums}
-  .exact{margin-top:14px;padding:17px 19px;border-left:5px solid var(--gold);border-radius:0 15px 15px 0;background:#fffaf0;color:#5e6b67;line-height:1.6}
-  .exact strong{color:var(--green)}
 
   .compare-card{background:linear-gradient(145deg,#f7fbf8,#fffaf0)}
   .compare-note{margin-top:14px;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);color:#63716c;line-height:1.55;font-size:.9rem}
@@ -65,6 +55,22 @@
   .example strong{display:block;color:var(--green);margin-bottom:6px}
   .example span{color:#64726d;line-height:1.5;font-size:.9rem}
 
+  .valu-section{margin-top:42px;padding-top:8px}
+  .valu-heading{display:flex;align-items:center;gap:14px;margin:0 4px 14px}
+  .valu-heading::before{content:"V";display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--green);color:#fff;font-weight:900;font-size:1.25rem;box-shadow:0 0 0 2px var(--gold)}
+  .valu-heading strong{display:block;color:var(--green);font-size:1.3rem}
+  .valu-heading span{display:block;margin-top:3px;color:var(--gold);font-size:.75rem;font-weight:900;letter-spacing:.12em}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
+  .item{padding:20px;border:1px solid var(--line);border-radius:18px;background:#fff}
+  .item span{display:block;color:#73807c;font-size:.79rem;font-weight:800}
+  .item b{display:block;margin-top:8px;color:var(--green);font-size:1.28rem;font-variant-numeric:tabular-nums}
+  .item.total{background:var(--green);border-color:var(--green)}
+  .item.total span{color:#d7ece4}
+  .item.total b{color:#ffd56c}
+  .formula{margin-top:18px;padding:17px 19px;border-radius:15px;background:#fff;border:1px solid var(--line);color:#35443f;font-size:1rem;font-weight:850;line-height:1.6;font-variant-numeric:tabular-nums}
+  .exact{margin-top:14px;padding:17px 19px;border-left:5px solid var(--gold);border-radius:0 15px 15px 0;background:#fffaf0;color:#5e6b67;line-height:1.6}
+  .exact strong{color:var(--green)}
+
   @media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.examples{grid-template-columns:1fr}}
   @media(max-width:560px){body{padding:14px}.brand{align-items:flex-start;flex-direction:column}.card{margin-top:20px;padding:22px;border-radius:22px}.grid{grid-template-columns:1fr}}
 </style>
@@ -72,44 +78,16 @@
 <body>
   <div class="wrap">
     <header class="brand">
-      <strong>VALUVENTUM®</strong>
-      <span>THE INSTRUMENT OF FREEDOM</span>
+      <strong>HAUSHALTSVERGLEICH</strong>
+      <span>ÖSTERREICH · FINNLAND · VALUVENTUM®</span>
     </header>
 
     <main>
-      <section class="card" id="grundeinkommen">
-        <div class="kicker">GRUNDEINKOMMEN · AUSGANGSPUNKT</div>
-        <h1>Grundeinkommen</h1>
-        <p class="lead">Wir beginnen die neue Haushaltsstruktur ausschließlich mit dem Grundeinkommen. Alle weiteren Bereiche werden danach gemeinsam Schritt für Schritt neu aufgebaut.</p>
-
-        <div class="grid">
-          <div class="item">
-            <span>Menschen im Basismodell</span>
-            <b>8,22 Mrd.</b>
-          </div>
-          <div class="item">
-            <span>Pro Mensch / Monat</span>
-            <b>1.500 Valu</b>
-          </div>
-          <div class="item">
-            <span>Pro Mensch / Jahr</span>
-            <b>18.000 Valu</b>
-          </div>
-          <div class="item total">
-            <span>Weltweit / Jahr</span>
-            <b>147,96 Billionen Valu</b>
-          </div>
-        </div>
-
-        <div class="formula">8,22 Milliarden Menschen × 1.500 Valu × 12 Monate = 147,96 Billionen Valu pro Jahr</div>
-        <div class="exact"><strong>Exakte Zahl:</strong> 147,96 Billionen Valu = 147.960.000.000.000 Valu</div>
-      </section>
-
       <section class="card compare-card" id="haushaltsvergleich">
-        <div class="kicker">HAUSHALTSVERGLEICH · ZUM SELBERRECHNEN</div>
-        <h2>Österreich und Finnland direkt gegenübergestellt</h2>
-        <p class="lead">Die Beträge können direkt verändert werden. Gesamthaushalt und Prozentanteile werden automatisch neu berechnet. So können wir die Struktur gemeinsam prüfen, bevor wir daraus eine eigene VALUVENTUM®-Verteilung entwickeln.</p>
-        <div class="compare-note"><strong>Wichtig:</strong> Das sind unsere derzeitigen Arbeitswerte für den Strukturvergleich. Sie werden hier noch nicht als VALUVENTUM®-Haushalt übernommen.</div>
+        <div class="kicker">SCHRITT 1 · HAUSHALT ZUM SELBERRECHNEN</div>
+        <h1>Österreich und Finnland direkt gegenübergestellt</h1>
+        <p class="lead">Zuerst vergleichen wir die beiden Haushalte. Die Beträge können direkt verändert werden. Gesamthaushalt und Prozentanteile werden automatisch neu berechnet. Erst danach bauen wir darunter die eigene VALUVENTUM®-Struktur auf.</p>
+        <div class="compare-note"><strong>Arbeitsgrundlage:</strong> Die Werte dienen hier dem Strukturvergleich. Änderungen in den Feldern verändern sofort die Prozente und die Gesamtsumme.</div>
 
         <div class="table-wrap">
           <table aria-label="Editierbarer Haushaltsvergleich Österreich Finnland">
@@ -188,10 +166,44 @@
         </div>
 
         <div class="examples">
-          <div class="example"><strong id="at-example-title">Österreich – Beispiel</strong><span id="at-example">50,5 ÷ 125,9 × 100 = 40,1 %</span></div>
-          <div class="example"><strong id="fi-example-title">Finnland – Beispiel</strong><span id="fi-example">35,7 ÷ 91,7 × 100 = 38,9 %</span></div>
+          <div class="example"><strong>Österreich – Beispiel</strong><span id="at-example">50,5 ÷ 125,9 × 100 = 40,1 %</span></div>
+          <div class="example"><strong>Finnland – Beispiel</strong><span id="fi-example">35,7 ÷ 91,7 × 100 = 38,9 %</span></div>
         </div>
       </section>
+
+      <div class="valu-section">
+        <div class="valu-heading">
+          <div><strong>VALUVENTUM®</strong><span>THE INSTRUMENT OF FREEDOM</span></div>
+        </div>
+
+        <section class="card" id="grundeinkommen">
+          <div class="kicker">SCHRITT 2 · VALUVENTUM® · GRUNDEINKOMMEN</div>
+          <h2>Grundeinkommen</h2>
+          <p class="lead">Hier beginnt darunter unser eigenes VALUVENTUM®-Modell. Vorerst steht nur das Grundeinkommen fest. Die weitere Haushaltsstruktur bauen wir erst nach dem Vergleich oben gemeinsam auf.</p>
+
+          <div class="grid">
+            <div class="item">
+              <span>Menschen im Basismodell</span>
+              <b>8,22 Mrd.</b>
+            </div>
+            <div class="item">
+              <span>Pro Mensch / Monat</span>
+              <b>1.500 Valu</b>
+            </div>
+            <div class="item">
+              <span>Pro Mensch / Jahr</span>
+              <b>18.000 Valu</b>
+            </div>
+            <div class="item total">
+              <span>Weltweit / Jahr</span>
+              <b>147,96 Billionen Valu</b>
+            </div>
+          </div>
+
+          <div class="formula">8,22 Milliarden Menschen × 1.500 Valu × 12 Monate = 147,96 Billionen Valu pro Jahr</div>
+          <div class="exact"><strong>Exakte Zahl:</strong> 147,96 Billionen Valu = 147.960.000.000.000 Valu</div>
+        </section>
+      </div>
     </main>
   </div>
 
