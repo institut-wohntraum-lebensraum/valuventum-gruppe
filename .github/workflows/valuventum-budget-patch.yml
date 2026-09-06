@@ -1,4 +1,4 @@
-name: Fix VALUVENTUM step numbering
+name: Add visible VALUVENTUM start image
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Correct step labels only
+      - name: Add Earth and planets to step 3
         shell: bash
         run: |
           python3 - <<'PY'
@@ -24,15 +24,60 @@ jobs:
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
+          marker = 'VALUVENTUM_START_IMAGE_V1'
+          if marker in text:
+              print('Start image already present.')
+              raise SystemExit(0)
 
-          text = text.replace(
-              'SCHRITT 1 · HAUSHALT ZUM SELBERRECHNEN',
-              'HAUSHALTSVERGLEICH · ZUM SELBERRECHNEN'
-          )
-          text = text.replace(
-              'SCHRITT 2 · VALUVENTUM® · GRUNDEINKOMMEN',
-              'SCHRITT 1 · VALUVENTUM® · GRUNDEINKOMMEN'
-          )
+          css_anchor = '.full-home-shell{margin-top:24px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 14px 32px rgba(15,90,70,.07)}'
+          css = r'''
+/* VALUVENTUM_START_IMAGE_V1 */
+.start-image-panel{margin-top:24px;padding:22px;border:1px solid var(--line);border-radius:22px;background:radial-gradient(circle at 50% 48%,#f2faf6 0,#fff 68%);overflow:hidden}
+.start-image-title{text-align:center;color:var(--green);font-weight:900;font-size:1.05rem;margin-bottom:10px}
+.start-image-sub{text-align:center;color:var(--muted);font-size:.9rem;margin:0 auto 16px;max-width:760px;line-height:1.5}
+.solar-stage{position:relative;width:min(650px,92vw);aspect-ratio:1;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(199,154,46,.13) 0 10%,rgba(15,90,70,.035) 27%,transparent 67%);filter:drop-shadow(0 24px 34px rgba(15,90,70,.10))}
+.solar-orbit{position:absolute;left:50%;top:50%;border:1px solid rgba(15,90,70,.20);border-radius:50%;transform:translate(-50%,-50%);animation:vvSpin linear infinite}
+.solar-orbit:nth-child(even){border-color:rgba(199,154,46,.38)}
+.solar-orbit.o1{width:34%;height:34%;animation-duration:8s}.solar-orbit.o2{width:46%;height:46%;animation-duration:12s}.solar-orbit.o3{width:58%;height:58%;animation-duration:17s}.solar-orbit.o4{width:70%;height:70%;animation-duration:23s}.solar-orbit.o5{width:83%;height:83%;animation-duration:31s}.solar-orbit.o6{width:96%;height:96%;animation-duration:39s}
+.planet{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);border-radius:50%;box-shadow:0 4px 12px rgba(12,57,46,.24),0 0 0 4px rgba(255,255,255,.75)}
+.p1{width:12px;height:12px;background:radial-gradient(circle at 30% 25%,#eee4d7,#736b63)}
+.p2{width:17px;height:17px;background:radial-gradient(circle at 32% 26%,#fff0b4,#d69c2e 65%,#9d671e)}
+.p3{width:15px;height:15px;background:radial-gradient(circle at 30% 25%,#ffc18a,#c7522c 62%,#7a291a)}
+.p4{width:28px;height:28px;background:repeating-linear-gradient(0deg,#c77f42 0 4px,#f2d09d 4px 8px,#a95331 8px 10px)}
+.p5{width:23px;height:23px;background:radial-gradient(circle at 30% 25%,#fff0bd,#cda759 66%,#8e6a31)}
+.p5:after{content:"";position:absolute;left:50%;top:50%;width:185%;height:42%;border:2px solid rgba(199,154,46,.9);border-radius:50%;transform:translate(-50%,-50%) rotate(-18deg)}
+.p6{width:19px;height:19px;background:radial-gradient(circle at 30% 25%,#dfffff,#69c1c8 66%,#318794)}
+.earth-core{position:absolute;left:50%;top:50%;width:25%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;z-index:10;background:radial-gradient(circle at 34% 26%,#bfeefa,#4ca3bd 58%,#185f77);border:4px solid #fff;box-shadow:0 0 0 2px rgba(199,154,46,.82),0 12px 30px rgba(15,90,70,.28),inset -14px -10px 22px rgba(3,47,61,.3)}
+.earth-core:before{content:"";position:absolute;width:31%;height:22%;left:16%;top:22%;background:#74ad70;border-radius:60% 38% 52% 44%;box-shadow:48px 22px 0 3px #6ba767,-14px 54px 0 -2px #82ba78,62px 70px 0 -5px #77ad70;transform:rotate(-13deg)}
+.earth-core:after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(120deg,rgba(255,255,255,.38),transparent 43% 69%,rgba(0,40,55,.24))}
+.earth-v{position:absolute;inset:0;z-index:3;display:grid;place-items:center;color:#fff;font-size:clamp(38px,7vw,72px);font-weight:900;text-shadow:0 3px 12px rgba(0,55,45,.65)}
+.earth-label{position:absolute;left:50%;top:64%;z-index:12;transform:translateX(-50%);padding:5px 10px;border-radius:999px;background:var(--green);color:#fff;font-size:.72rem;font-weight:900;white-space:nowrap;box-shadow:0 4px 12px rgba(15,90,70,.2)}
+@keyframes vvSpin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@media(max-width:560px){.start-image-panel{padding:14px}.solar-stage{width:min(390px,94vw)}.earth-label{font-size:.58rem}.p4{width:22px;height:22px}.p5{width:19px;height:19px}}
+'''
+          if css_anchor not in text:
+              raise SystemExit('CSS anchor not found; index.html left unchanged.')
+          text = text.replace(css_anchor, css + '\n' + css_anchor, 1)
+
+          html_anchor = '<div class="public-note"><strong>Öffentlich:</strong> Jeder, der den Gruppen-Link hat, kann diese Seite und die vollständige Startseite darunter sehen. Es ist keine Anmeldung erforderlich.</div>'
+          html = r'''
+      <div class="start-image-panel" aria-label="VALUVENTUM Startbild mit Erde und Planeten">
+        <div class="start-image-title">Startbild · Erde und Planeten</div>
+        <p class="start-image-sub">Das Gesamtbild bleibt als fester Teil der Startseite sichtbar.</p>
+        <div class="solar-stage" aria-hidden="true">
+          <div class="solar-orbit o1"><span class="planet p1"></span></div>
+          <div class="solar-orbit o2"><span class="planet p2"></span></div>
+          <div class="solar-orbit o3"><span class="planet p3"></span></div>
+          <div class="solar-orbit o4"><span class="planet p4"></span></div>
+          <div class="solar-orbit o5"><span class="planet p5"></span></div>
+          <div class="solar-orbit o6"><span class="planet p6"></span></div>
+          <div class="earth-core"><div class="earth-v">V</div></div>
+          <div class="earth-label">VALUVENTUM® · ERDE</div>
+        </div>
+      </div>'''
+          if html_anchor not in text:
+              raise SystemExit('HTML anchor not found; index.html left unchanged.')
+          text = text.replace(html_anchor, html_anchor + '\n' + html, 1)
 
           path.write_text(text, encoding='utf-8')
           PY
@@ -44,5 +89,5 @@ jobs:
             echo "Nothing to commit."
             exit 0
           fi
-          git commit -m "Set VALUVENTUM basic income as step 1"
+          git commit -m "Show Earth and planets start image in step 3"
           git push
