@@ -28,6 +28,14 @@ jobs:
           curl -fL --retry 4 "https://dist.ipfs.tech/kubo/${KUBO_VERSION}/kubo_${KUBO_VERSION}_linux-amd64.tar.gz" -o /tmp/kubo.tgz
           tar -xzf /tmp/kubo.tgz -C /tmp
           /tmp/kubo/ipfs init --profile=lowpower
+          nohup /tmp/kubo/ipfs daemon > /tmp/ipfs-daemon.log 2>&1 &
+          for i in $(seq 1 30); do
+            if /tmp/kubo/ipfs id >/dev/null 2>&1; then
+              break
+            fi
+            sleep 1
+          done
+          /tmp/kubo/ipfs id >/dev/null
           timeout 600 /tmp/kubo/ipfs get "$CID" -o /tmp/valuventum-final
 
           test -f /tmp/valuventum-final/index.html
