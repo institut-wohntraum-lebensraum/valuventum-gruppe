@@ -19,22 +19,44 @@ h1 span{color:var(--gold)}
 h2{font-size:clamp(1.7rem,3vw,2.5rem)}
 .lead{color:var(--muted);font-size:1.05rem;line-height:1.68;margin:0;max-width:970px}
 
-/* 1 · TEXT LINKS / ERDE + PLANETEN RECHTS */
-.hero{min-height:620px;display:flex;align-items:center;background:radial-gradient(circle at 72% 48%,#eef8f3 0,#fff 54%);border-bottom:1px solid var(--line)}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
-.solar{position:relative;width:min(500px,88vw);aspect-ratio:1;margin:auto}
-.orbit{position:absolute;left:50%;top:50%;border:1px solid rgba(15,90,70,.20);border-radius:50%;transform:translate(-50%,-50%);animation:spin linear infinite}
-.orbit:nth-of-type(even){border-color:rgba(201,154,46,.42)}
-.o1{width:36%;height:36%;animation-duration:9s}.o2{width:49%;height:49%;animation-duration:13s}.o3{width:62%;height:62%;animation-duration:18s}.o4{width:76%;height:76%;animation-duration:25s}.o5{width:90%;height:90%;animation-duration:34s}
-.planet{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);display:block;border-radius:50%;box-shadow:0 3px 10px rgba(15,90,70,.22),0 0 0 3px rgba(255,255,255,.75)}
-.p1{width:11px;height:11px;background:#8d8175}.p2{width:16px;height:16px;background:radial-gradient(circle at 30% 25%,#fff0b4,#d59c2d 68%,#9d671e)}.p3{width:14px;height:14px;background:radial-gradient(circle at 30% 25%,#ffc18a,#c7522c 64%,#7a291a)}.p4{width:25px;height:25px;background:repeating-linear-gradient(0deg,#c77f42 0 4px,#f2d09d 4px 8px,#a95331 8px 10px)}.p5{width:21px;height:21px;background:radial-gradient(circle at 30% 25%,#fff0bd,#cda759 66%,#8e6a31)}
-.p5:after{content:"";position:absolute;left:50%;top:50%;width:185%;height:42%;border:2px solid rgba(201,154,46,.9);border-radius:50%;transform:translate(-50%,-50%) rotate(-18deg)}
-.earth{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;background:radial-gradient(circle at 32% 25%,#bfeefa 0,#4ea7c1 48%,#1c6b83 75%,#0d465c 100%);border:4px solid #fff;box-shadow:0 0 0 3px var(--gold),0 24px 54px rgba(15,90,70,.24),inset -28px -18px 38px rgba(0,35,50,.32);z-index:5;animation:earthMove 5s ease-in-out infinite}
-.earth:before{content:"";position:absolute;width:34%;height:22%;left:13%;top:18%;background:#73ad6e;border-radius:56% 42% 62% 38%;box-shadow:58px 28px 0 7px #6ba767,13px 72px 0 3px #83b979,72px 82px 0 -2px #77ae70,-12px 51px 0 -6px #82b779;transform:rotate(-12deg)}
-.earth:after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(120deg,rgba(255,255,255,.42),transparent 38% 65%,rgba(0,30,45,.28))}
-.earth-v{position:absolute;inset:0;z-index:2;display:grid;place-items:center;color:#fff;font-size:clamp(48px,7vw,78px);font-weight:950;text-shadow:0 5px 18px rgba(0,55,45,.7)}
-@keyframes spin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-@keyframes earthMove{0%,100%{transform:translate(-50%,-50%) rotate(-2deg)}50%{transform:translate(-50%,calc(-50% - 8px)) rotate(2deg)}}
+/* 1 · ORIGINALER VALUVENTUM®-EINSTIEG: TEXT LINKS / BEWEGLICHE ERDE + PLANETEN RECHTS */
+.hero{padding:72px 0 48px;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:52px;align-items:center}
+.hero .eyebrow{font-weight:800;letter-spacing:.12em;font-size:13px}
+.hero h1{font-size:clamp(44px,7vw,78px);line-height:.96;margin:16px 0 22px;color:var(--green);letter-spacing:-.04em}
+.hero .lead{font-size:clamp(18px,2vw,22px);color:#4b5854;max-width:720px}
+.visual{min-height:430px;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#eef7f2 0,#fff 66%)}
+.solar-visual{min-height:560px;overflow:visible}
+.vv-solar-system{position:relative;width:min(520px,92vw);aspect-ratio:1;border-radius:50%;isolation:isolate;background:radial-gradient(circle at 50% 50%,rgba(199,162,74,.12) 0 12%,transparent 35%),radial-gradient(circle at 50% 50%,#f4faf7 0 25%,rgba(255,255,255,.6) 62%,transparent 73%);filter:drop-shadow(0 28px 40px rgba(15,90,70,.10))}
+.vv-solar-system:before,.vv-solar-system:after{content:"";position:absolute;border-radius:50%;background:#c7a24a;opacity:.34;box-shadow:0 0 14px rgba(199,162,74,.4)}
+.vv-solar-system:before{width:4px;height:4px;left:9%;top:23%}.vv-solar-system:after{width:3px;height:3px;right:10%;bottom:20%}
+.vv-solar-orbit{--orbit-size:50%;--speed:20s;--delay:0s;--planet-size:16px;position:absolute;left:50%;top:50%;width:var(--orbit-size);height:var(--orbit-size);border:1px solid rgba(15,90,70,.2);border-radius:50%;z-index:1;animation:vvPlanetOrbit var(--speed) linear var(--delay) infinite}
+.vv-solar-orbit:nth-of-type(even){border-color:rgba(199,162,74,.38)}
+.vv-planet-shell{position:absolute;left:50%;top:0;display:flex;flex-direction:column;align-items:center;gap:4px;transform:translate(-50%,-50%);z-index:3;animation:vvPlanetCounter var(--speed) linear var(--delay) infinite}
+.vv-planet{position:relative;display:block;width:var(--planet-size);height:var(--planet-size);border-radius:50%;border:1px solid rgba(255,255,255,.8);box-shadow:0 4px 12px rgba(12,57,46,.24),0 0 0 4px rgba(255,255,255,.7)}
+.vv-planet-label{padding:2px 5px;border-radius:999px;background:rgba(255,255,255,.9);color:#0f5a46;font-size:9px;font-weight:800;line-height:1;letter-spacing:.02em;box-shadow:0 2px 8px rgba(15,90,70,.08)}
+.vv-orbit-mercury{--orbit-size:32%;--speed:8s;--delay:-3s;--planet-size:10px}
+.vv-orbit-venus{--orbit-size:44%;--speed:12s;--delay:-7s;--planet-size:15px}
+.vv-orbit-mars{--orbit-size:56%;--speed:16s;--delay:-10s;--planet-size:13px}
+.vv-orbit-jupiter{--orbit-size:69%;--speed:23s;--delay:-14s;--planet-size:25px}
+.vv-orbit-saturn{--orbit-size:83%;--speed:31s;--delay:-18s;--planet-size:21px}
+.vv-orbit-uranus{--orbit-size:96%;--speed:39s;--delay:-25s;--planet-size:18px}
+.vv-planet.mercury{background:radial-gradient(circle at 32% 28%,#eee4d7,#8d8175 68%,#665d55)}
+.vv-planet.venus{background:radial-gradient(circle at 34% 28%,#fff0b4,#d9a53a 62%,#a96c20)}
+.vv-planet.mars{background:radial-gradient(circle at 32% 25%,#ffbd81,#c7582c 58%,#7f2d1d)}
+.vv-planet.jupiter{background:repeating-linear-gradient(0deg,#c77f42 0 3px,#f4d3a1 3px 6px,#a95331 6px 8px)}
+.vv-planet.saturn{background:radial-gradient(circle at 30% 25%,#fff0bd,#d4ad62 65%,#9a7438)}
+.vv-planet.saturn:after{content:"";position:absolute;left:50%;top:50%;width:185%;height:42%;border:2px solid rgba(199,162,74,.85);border-radius:50%;transform:translate(-50%,-50%) rotate(-16deg);box-shadow:0 0 0 2px rgba(255,255,255,.42)}
+.vv-planet.uranus{background:radial-gradient(circle at 30% 25%,#dfffff,#77cbd1 64%,#3c929f)}
+.vv-earth{position:absolute;left:50%;top:50%;width:25%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;z-index:5;background:radial-gradient(circle at 34% 26%,#bfeefa,#4ca3bd 58%,#185f77);border:3px solid #fff;box-shadow:0 0 0 2px rgba(199,162,74,.76),0 12px 30px rgba(15,90,70,.28),inset -14px -10px 22px rgba(3,47,61,.3)}
+.vv-earth-map{position:absolute;inset:-3%;animation:vvEarthSpin 20s linear infinite;transform-origin:center}
+.vv-earth-map svg{display:block;width:100%;height:100%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.12))}
+.vv-earth-v{position:absolute;inset:0;z-index:3;display:grid;place-items:center;color:#fff;font-size:clamp(32px,6vw,62px);font-weight:900;text-shadow:0 3px 12px rgba(0,55,45,.65)}
+.vv-earth:after{content:"";position:absolute;inset:0;z-index:2;border-radius:50%;background:linear-gradient(120deg,rgba(255,255,255,.38),transparent 42% 68%,rgba(0,40,55,.22))}
+.vv-earth-label{position:absolute;left:50%;top:64%;z-index:7;transform:translateX(-50%);padding:3px 8px;border-radius:999px;background:#0f5a46;color:#fff;font-size:10px;font-weight:800;box-shadow:0 4px 12px rgba(15,90,70,.2)}
+@keyframes vvPlanetOrbit{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes vvPlanetCounter{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(-360deg)}}
+@keyframes vvEarthSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
 /* TABELLEN */
 .table-wrap{margin-top:22px;overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:#fff}
@@ -76,8 +98,8 @@ button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);col
 .summary-box.total{background:var(--green);border-color:var(--green)}
 .summary-box.total span{color:#d4ebe2}.summary-box.total b{color:#ffd56c}
 
-@media(max-width:900px){.hero{min-height:auto;padding:52px 0}.hero-grid{grid-template-columns:1fr;gap:32px}.solar{width:min(420px,88vw)}.bi-grid{grid-template-columns:1fr 1fr}.valu-summary{grid-template-columns:1fr}}
-@media(max-width:540px){.section{padding:30px 0}.card{border-radius:22px;padding:22px}.bi-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.visual{min-height:350px}.bi-grid{grid-template-columns:1fr 1fr}.valu-summary{grid-template-columns:1fr}}
+@media(max-width:560px){.wrap{width:min(100% - 22px,1180px)}.hero{padding-top:44px}.solar-visual{min-height:390px}.vv-solar-system{width:min(360px,94vw)}.vv-planet-label{font-size:7px;padding:2px 4px}.section{padding:30px 0}.card{border-radius:22px;padding:22px}.bi-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -90,13 +112,32 @@ button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);col
       <h1>Ein Instrument für <span>Freiheit</span>.</h1>
       <p class="lead">VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.</p>
     </div>
-    <div class="solar" aria-label="Bewegliche Erde mit Planeten">
-      <div class="orbit o1"><span class="planet p1"></span></div>
-      <div class="orbit o2"><span class="planet p2"></span></div>
-      <div class="orbit o3"><span class="planet p3"></span></div>
-      <div class="orbit o4"><span class="planet p4"></span></div>
-      <div class="orbit o5"><span class="planet p5"></span></div>
-      <div class="earth"><div class="earth-v">V</div></div>
+    <div aria-hidden="true" class="visual solar-visual">
+      <div class="vv-solar-system">
+        <div class="vv-solar-orbit vv-orbit-mercury"><span class="vv-planet-shell"><span class="vv-planet mercury"></span><small class="vv-planet-label">Merkur</small></span></div>
+        <div class="vv-solar-orbit vv-orbit-venus"><span class="vv-planet-shell"><span class="vv-planet venus"></span><small class="vv-planet-label">Venus</small></span></div>
+        <div class="vv-solar-orbit vv-orbit-mars"><span class="vv-planet-shell"><span class="vv-planet mars"></span><small class="vv-planet-label">Mars</small></span></div>
+        <div class="vv-solar-orbit vv-orbit-jupiter"><span class="vv-planet-shell"><span class="vv-planet jupiter"></span><small class="vv-planet-label">Jupiter</small></span></div>
+        <div class="vv-solar-orbit vv-orbit-saturn"><span class="vv-planet-shell"><span class="vv-planet saturn"></span><small class="vv-planet-label">Saturn</small></span></div>
+        <div class="vv-solar-orbit vv-orbit-uranus"><span class="vv-planet-shell"><span class="vv-planet uranus"></span><small class="vv-planet-label">Uranus</small></span></div>
+        <div class="vv-earth">
+          <div class="vv-earth-map">
+            <svg aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#0f7356">
+                <path d="M27 55c8-17 25-25 42-23l14 9-6 12-13 4-5 12-10 5-5 18-10-9-3-14-9-6z"></path>
+                <path d="M60 91l13 5 8 18-6 18-9 12-7-7 2-15-8-14z"></path>
+                <path d="M91 45l15-7 20 3 8 8-12 8-13-2-8 8-13-7z"></path>
+                <path d="M103 66l20-5 15 13-5 15-10 5-3 18-12 18-9-20 5-14-8-13z"></path>
+                <path d="M130 47l22-7 24 10-4 13-15 3-7 12-20-4-8-12z"></path>
+                <path d="M149 119l17-5 13 11-8 14-17 2-11-9z"></path>
+                <path d="M79 39l8-12 12 2-3 10z"></path>
+              </g>
+            </svg>
+          </div>
+          <div class="vv-earth-v">V</div>
+        </div>
+        <small class="vv-earth-label">Erde</small>
+      </div>
     </div>
   </div>
 </section>
