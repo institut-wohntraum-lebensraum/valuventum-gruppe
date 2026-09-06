@@ -9,6 +9,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:Inter,Arial,sans-serif;background:#fff;color:var(--text)}
+a{text-decoration:none;color:inherit}
 .wrap{width:min(1180px,92%);margin:auto}
 .section{padding:54px 0}
 .card{border:1px solid var(--line);border-radius:28px;padding:clamp(24px,4vw,44px);background:linear-gradient(145deg,#fffdf7,var(--soft));box-shadow:0 18px 48px rgba(15,90,70,.07)}
@@ -18,6 +19,17 @@ h1{font-size:clamp(2.6rem,5vw,4.5rem);letter-spacing:-.035em}
 h1 span{color:var(--gold)}
 h2{font-size:clamp(1.7rem,3vw,2.5rem)}
 .lead{color:var(--muted);font-size:1.05rem;line-height:1.68;margin:0;max-width:970px}
+
+/* KOPFZEILE · NUR STARTSEITE */
+.vv-header{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.vv-head{width:min(1240px,94%);margin:auto;min-height:82px;display:flex;align-items:center;gap:18px}
+.vv-brand{display:flex;align-items:center;gap:12px;margin-right:auto;color:var(--green)}
+.vv-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--green);color:#fff;border:2px solid var(--gold);font-weight:900;font-size:22px}
+.vv-brand-text strong{display:block;font-size:18px;letter-spacing:.02em}
+.vv-brand-text small{display:block;font-size:10px;letter-spacing:.13em;color:var(--gold);font-weight:800;margin-top:2px}
+.vv-nav{display:flex;align-items:center}
+.vv-link{display:flex;align-items:center;padding:11px 14px;border-radius:10px;color:var(--green);font-size:14px;font-weight:800}
+.vv-link:hover,.vv-link:focus-visible{background:var(--soft);outline:none}
 
 /* 1 · ORIGINALER VALUVENTUM®-EINSTIEG: TEXT LINKS / BEWEGLICHE ERDE + PLANETEN RECHTS */
 .hero{padding:72px 0 48px;border-bottom:1px solid var(--line)}
@@ -98,17 +110,41 @@ button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);col
 .summary-box.total{background:var(--green);border-color:var(--green)}
 .summary-box.total span{color:#d4ebe2}.summary-box.total b{color:#ffd56c}
 
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.visual{min-height:350px}.bi-grid{grid-template-columns:1fr 1fr}.valu-summary{grid-template-columns:1fr}}
-@media(max-width:560px){.wrap{width:min(100% - 22px,1180px)}.hero{padding-top:44px}.solar-visual{min-height:390px}.vv-solar-system{width:min(360px,94vw)}.vv-planet-label{font-size:7px;padding:2px 4px}.section{padding:30px 0}.card{border-radius:22px;padding:22px}.bi-grid{grid-template-columns:1fr}}
+/* 5 · ABGABENVERGLEICH */
+.tax-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
+.tax-row{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(120px,.55fr) minmax(120px,.55fr);gap:14px;align-items:stretch}
+.tax-label,.tax-value{border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px}
+.tax-label strong{display:block;color:var(--green);font-size:1rem;line-height:1.35}
+.tax-label span{display:block;color:var(--muted);font-size:.88rem;line-height:1.5;margin-top:6px}
+.tax-value{display:flex;flex-direction:column;justify-content:center;text-align:center}
+.tax-value span{font-size:.78rem;font-weight:850;color:var(--muted)}
+.tax-value b{display:block;margin-top:6px;color:var(--green);font-size:1.45rem;font-variant-numeric:tabular-nums}
+.tax-head{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(120px,.55fr) minmax(120px,.55fr);gap:14px;margin-top:20px;color:var(--green);font-size:.82rem;font-weight:900}
+.tax-head div{padding:0 18px}.tax-head div:not(:first-child){text-align:center}
+
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.visual{min-height:350px}.bi-grid{grid-template-columns:1fr 1fr}.valu-summary{grid-template-columns:1fr}.tax-row,.tax-head{grid-template-columns:1fr 1fr}.tax-row .tax-label,.tax-head div:first-child{grid-column:1/-1}.tax-head div:first-child{display:none}}
+@media(max-width:560px){.vv-head{min-height:70px}.vv-mark{width:42px;height:42px}.vv-brand-text strong{font-size:16px}.vv-brand-text small{font-size:8px}.wrap{width:min(100% - 22px,1180px)}.hero{padding-top:44px}.solar-visual{min-height:390px}.vv-solar-system{width:min(360px,94vw)}.vv-planet-label{font-size:7px;padding:2px 4px}.section{padding:30px 0}.card{border-radius:22px;padding:22px}.bi-grid{grid-template-columns:1fr}.tax-row,.tax-head{grid-template-columns:1fr}.tax-head{display:none}}
 </style>
 </head>
 <body>
+
+<header class="vv-header">
+  <div class="vv-head">
+    <a class="vv-brand" href="#start" aria-label="VALUVENTUM Startseite">
+      <div class="vv-mark">V</div>
+      <div class="vv-brand-text"><strong>VALUVENTUM®</strong><small>THE INSTRUMENT OF FREEDOM</small></div>
+    </a>
+    <nav class="vv-nav" aria-label="Hauptnavigation">
+      <a class="vv-link" href="#start">Startseite</a>
+    </nav>
+  </div>
+</header>
 
 <!-- 1 -->
 <section class="hero" id="start">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft</div>
+      <div class="eyebrow">1 · STARTSEITE · VALUVENTUM® DEZENTRAL · Menschen · Werte · Gemeinschaft · Zukunft</div>
       <h1>Ein Instrument für <span>Freiheit</span>.</h1>
       <p class="lead">VALUVENTUM® ist ein global gedachtes Gemeinschaftsmodell, das wirtschaftlichen Fluss, Transparenz und ein bedingungsloses Grundeinkommen miteinander verbindet.</p>
     </div>
@@ -208,6 +244,39 @@ button{border:0;border-radius:11px;padding:10px 14px;background:var(--green);col
         <div class="summary-box"><span>VALUVENTUM®-Gesamthaushalt</span><b>200,00 Billionen Valu</b></div>
         <div class="summary-box"><span>Grundeinkommen weltweit</span><b>147,96 Billionen Valu</b></div>
         <div class="summary-box total"><span>Rest für die AT-Haushaltsliste</span><b>52,04 Billionen Valu</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="section" id="abgabenvergleich">
+  <div class="wrap">
+    <div class="card">
+      <div class="eyebrow">5 · ABGABENVERGLEICH AT ↔ FI</div>
+      <h2>Österreich und Finnland</h2>
+      <div class="tax-head"><div>Vergleich</div><div>Österreich (AT)</div><div>Finnland (FI)</div></div>
+      <div class="tax-grid">
+        <div class="tax-row">
+          <div class="tax-label"><strong>1. Effektive Abgaben auf Arbeit</strong><span>Lohnsteuer & Sozialversicherung</span></div>
+          <div class="tax-value"><span>Österreich (AT)</span><b>ca. 47,1 %</b></div>
+          <div class="tax-value"><span>Finnland (FI)</span><b>ca. 42,5 %</b></div>
+        </div>
+        <div class="tax-row">
+          <div class="tax-label"><strong>2. Realer Durchschnitt aller Konsumsteuern</strong><span>MwSt., Sprit, Tabak, CO₂, Energie</span></div>
+          <div class="tax-value"><span>Österreich (AT)</span><b>ca. 21,3 %</b></div>
+          <div class="tax-value"><span>Finnland (FI)</span><b>ca. 23,8 %</b></div>
+        </div>
+        <div class="tax-row">
+          <div class="tax-label"><strong>3. Tatsächliche Gesamtbelastung für einen Vollzeit-Arbeitnehmer</strong><span>Was vom erwirtschafteten Geld des Arbeitgebers am Ende real beim Staat landet</span></div>
+          <div class="tax-value"><span>Österreich (AT)</span><b>ca. 58,3 %</b></div>
+          <div class="tax-value"><span>Finnland (FI)</span><b>ca. 56,2 %</b></div>
+        </div>
+        <div class="tax-row">
+          <div class="tax-label"><strong>4. Gesamtwirtschaftliche Abgabenquote</strong><span>Durchschnitt über die gesamte Bevölkerung</span></div>
+          <div class="tax-value"><span>Österreich (AT)</span><b>44,3 %</b></div>
+          <div class="tax-value"><span>Finnland (FI)</span><b>43,1 %</b></div>
+        </div>
       </div>
     </div>
   </div>
