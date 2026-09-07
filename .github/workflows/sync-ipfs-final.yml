@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/sync-ipfs-final.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -53,10 +54,32 @@ jobs:
           done < /tmp/paths.txt
 
           test "$(find /tmp/final-site -maxdepth 1 -name '*.html' | wc -l)" -eq 53
+
+          # TEMPORARY ONLINE TEST MODE FOR valuventum.eth.limo
+          # The 24-word login is handled locally in the browser on eth.limo while the test phase is active.
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('/tmp/final-site/valuventum-auth.js')
+          s = p.read_text(encoding='utf-8')
+          old = "function n(){return location.protocol===`file:`||location.hostname===`terminal.local`}"
+          new = "function n(){return location.protocol===`file:`||location.hostname===`terminal.local`||location.hostname===`valuventum.eth.limo`}"
+          if old in s:
+              s = s.replace(old, new, 1)
+          export_old = "window.ValuventumAuth=Object.freeze({deriveIdentity:a,login:l,logout:u,currentSession:c,syncPage:d,normalizeWords:i})"
+          export_new = "window.ValuventumAuth=Object.freeze({deriveIdentity:a,login:l,logout:u,currentSession:c,syncPage:d,normalizeWords:i,registerLocalAccount:async function(n){if(!n||!n.accountId)throw Error(`Ungültiges VALUVENTUM-Konto.`);try{localStorage.setItem(`valuventum-account:${n.accountId}`,JSON.stringify(n))}catch{}return n},startLocalSession:async function(n){if(!n||!n.accountId)throw Error(`Ungültiges VALUVENTUM-Konto.`);return s(n)}})"
+          if export_old in s and 'registerLocalAccount' not in s:
+              s = s.replace(export_old, export_new, 1)
+          p.write_text(s, encoding='utf-8')
+          if 'valuventum.eth.limo' not in s:
+              raise SystemExit('eth.limo test unlock patch failed')
+          if 'registerLocalAccount' not in s:
+              raise SystemExit('registration helper patch failed')
+          PY
+
           git rm -r --ignore-unmatch .
           cp -a /tmp/final-site/. .
           git add -A
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m "Publish final 53-page IPFS version $CID"
+          git commit -m "Publish full 53-page site with temporary eth.limo test access"
           git push origin HEAD:main
