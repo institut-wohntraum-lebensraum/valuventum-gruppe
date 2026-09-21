@@ -1,0 +1,55 @@
+name: Mirror Wohntraum Static
+on:
+  push:
+    branches:
+      - wohntraum-static-export
+  workflow_dispatch:
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mirror live site
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf site
+          mkdir -p site
+          cd site
+          wget \
+            --mirror \
+            --page-requisites \
+            --convert-links \
+            --adjust-extension \
+            --execute robots=off \
+            --no-host-directories \
+            --restrict-file-names=unix \
+            --domains=institut-wohntraum-lebensraum.at \
+            --reject-regex='/(wp-admin|wp-login\.php|wp-json|comments/feed|feed)(/|\?|$)' \
+            --user-agent='Mozilla/5.0' \
+            https://institut-wohntraum-lebensraum.at/
+          touch .nojekyll
+          test -f index.html
+      - name: Build archive
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, zipfile
+          root='site'
+          out='WOHNTRAUM_1ZU1_STATISCH.zip'
+          with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
+              for base, dirs, files in os.walk(root):
+                  for f in files:
+                      p=os.path.join(base,f)
+                      z.write(p, os.path.relpath(p, root))
+          print(out)
+          PY
+      - name: Upload static site
+        uses: actions/upload-artifact@v4
+        with:
+          name: wohntraum-static-1zu1
+          path: WOHNTRAUM_1ZU1_STATISCH.zip
+          if-no-files-found: error
+          retention-days: 7
