@@ -1,0 +1,42 @@
+name: Wohntraum Static Export
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/wohntraum-export-trigger.txt'
+  workflow_dispatch:
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Mirror current site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site
+          cd site
+          wget --mirror --page-requisites --convert-links --adjust-extension --execute robots=off --no-host-directories --restrict-file-names=unix --domains=institut-wohntraum-lebensraum.at --reject-regex='/(wp-admin|wp-login\.php|wp-json|comments/feed|feed)(/|\?|$)' --user-agent='Mozilla/5.0' https://institut-wohntraum-lebensraum.at/
+          test -f index.html
+          touch .nojekyll
+      - name: Package ZIP
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, zipfile
+          root='site'
+          out='WOHNTRAUM_1ZU1_STATISCH.zip'
+          with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
+              for base, dirs, files in os.walk(root):
+                  for f in files:
+                      p=os.path.join(base,f)
+                      z.write(p, os.path.relpath(p, root))
+          PY
+      - name: Upload archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: wohntraum-static-1zu1
+          path: WOHNTRAUM_1ZU1_STATISCH.zip
+          retention-days: 7
