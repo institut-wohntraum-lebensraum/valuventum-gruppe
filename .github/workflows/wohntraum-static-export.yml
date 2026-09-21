@@ -1,4 +1,4 @@
-name: Wohntraum Static Export
+name: Wohntraum IPFS Export
 on:
   push:
     branches:
@@ -16,27 +16,166 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          rm -rf site selfcontained
           mkdir -p site
           cd site
-          wget --mirror --page-requisites --convert-links --adjust-extension --execute robots=off --no-host-directories --restrict-file-names=unix --domains=institut-wohntraum-lebensraum.at --reject-regex='/(wp-admin|wp-login\.php|wp-json|comments/feed|feed)(/|\?|$)' --user-agent='Mozilla/5.0' https://institut-wohntraum-lebensraum.at/
+          set +e
+          wget --mirror --page-requisites --convert-links --adjust-extension --execute robots=off --no-host-directories --restrict-file-names=unix --domains=institut-wohntraum-lebensraum.at --reject-regex='/(wp-admin|wp-login\\.php|wp-json|xmlrpc\\.php|comments/feed|feed)(/|\\?|$)' --user-agent='Mozilla/5.0' https://institut-wohntraum-lebensraum.at/
+          code=$?
+          set -e
+          if [ "$code" -ne 0 ] && [ "$code" -ne 8 ]; then exit "$code"; fi
           test -f index.html
           touch .nojekyll
-      - name: Package ZIP
+      - name: Build self-contained HTML pages
+        shell: bash
+        run: |
+          python3 -m pip install --quiet beautifulsoup4
+          python3 - <<'PY'
+          import base64, mimetypes, os, re, shutil
+          from pathlib import Path
+          from urllib.parse import unquote, urlsplit
+          from bs4 import BeautifulSoup
+
+          SRC=Path('site').resolve()
+          DST=Path('selfcontained').resolve()
+          DOMAIN='institut-wohntraum-lebensraum.at'
+          if DST.exists(): shutil.rmtree(DST)
+          shutil.copytree(SRC,DST)
+
+          def local_path(ref, base_dir):
+              if not ref or ref.startswith(('data:','mailto:','tel:','javascript:','#')):
+                  return None
+              s=urlsplit(ref)
+              if s.scheme in ('http','https') or ref.startswith('//'):
+                  host=s.netloc or urlsplit('https:'+ref).netloc
+                  if host and host != DOMAIN:
+                      return None
+                  p=unquote(s.path.lstrip('/'))
+                  cand=SRC/p
+                  if cand.exists(): return cand
+                  return None
+              raw=unquote(ref.split('#',1)[0])
+              cand=(base_dir/raw).resolve()
+              try: cand.relative_to(SRC)
+              except Exception: return None
+              return cand if cand.exists() and cand.is_file() else None
+
+          def data_uri(path):
+              mime=mimetypes.guess_type(path.name.split('?',1)[0])[0] or 'application/octet-stream'
+              return f'data:{mime};base64,'+base64.b64encode(path.read_bytes()).decode('ascii')
+
+          url_re=re.compile(r'url\\(([^)]+)\\)',re.I)
+          def inline_css(css, css_dir):
+              def repl(m):
+                  raw=m.group(1).strip().strip('\\"\\\'')
+                  if raw.startswith('data:'): return m.group(0)
+                  p=local_path(raw, css_dir)
+                  if not p: return m.group(0)
+                  try: return 'url("'+data_uri(p)+'")'
+                  except Exception: return m.group(0)
+              return url_re.sub(repl,css)
+
+          htmls=list(SRC.rglob('*.html'))
+          for src_html in htmls:
+              rel=src_html.relative_to(SRC)
+              out=DST/rel
+              soup=BeautifulSoup(src_html.read_text('utf-8',errors='ignore'),'html.parser')
+              base_dir=src_html.parent
+
+              for tag in list(soup.find_all('link')):
+                  rels=[x.lower() for x in (tag.get('rel') or [])]
+                  href=tag.get('href','')
+                  if 'stylesheet' in rels:
+                      p=local_path(href,base_dir)
+                      if p:
+                          css=p.read_text('utf-8',errors='ignore')
+                          st=soup.new_tag('style')
+                          st.string=inline_css(css,p.parent)
+                          tag.replace_with(st)
+                      elif href.startswith(('http://','https://','//')):
+                          tag.decompose()
+                  elif 'icon' in rels or 'apple-touch-icon' in rels:
+                      p=local_path(href,base_dir)
+                      if p: tag['href']=data_uri(p)
+                  elif href.startswith(('http://','https://','//')) and any(x in rels for x in ('preconnect','dns-prefetch','alternate')):
+                      tag.decompose()
+
+              for st in soup.find_all('style'):
+                  if st.string:
+                      st.string=inline_css(st.string,base_dir)
+
+              for tag in soup.find_all(style=True):
+                  tag['style']=inline_css(tag['style'],base_dir)
+
+              for tag in soup.find_all(['img','source','video','audio']):
+                  for attr in ('src','poster'):
+                      ref=tag.get(attr)
+                      p=local_path(ref,base_dir) if ref else None
+                      if p:
+                          try: tag[attr]=data_uri(p)
+                          except Exception: pass
+                  if tag.has_attr('srcset'): del tag['srcset']
+
+              for tag in list(soup.find_all('script',src=True)):
+                  ref=tag.get('src','')
+                  p=local_path(ref,base_dir)
+                  if p:
+                      content=p.read_text('utf-8',errors='ignore').replace('</script>','<\\/script>')
+                      tag.attrs={k:v for k,v in tag.attrs.items() if k not in ('src','integrity','crossorigin')}
+                      tag.string=content
+                  else:
+                      tag.decompose()
+
+              for tag in soup.find_all(['a','form']):
+                  attr='href' if tag.name=='a' else 'action'
+                  ref=tag.get(attr)
+                  if ref and ref.startswith(('https://'+DOMAIN,'http://'+DOMAIN)):
+                      s=urlsplit(ref)
+                      path=s.path.lstrip('/')
+                      target=os.path.relpath(DST/path, out.parent)
+                      if not path: target=os.path.relpath(DST/'index.html',out.parent)
+                      elif target.endswith(os.sep): target += 'index.html'
+                      tag[attr]=target + (('#'+s.fragment) if s.fragment else '')
+
+              for meta in soup.find_all('meta'):
+                  if meta.get('http-equiv','').lower()=='refresh':
+                      meta.decompose()
+
+              out.write_text(str(soup),'utf-8')
+
+          # Keep only self-contained HTML plus non-image documents (e.g. PDFs).
+          for p in sorted(DST.rglob('*'), reverse=True):
+              if p.is_file() and p.suffix.lower() not in ('.html','.pdf','.txt','.xml','.xsl'):
+                  p.unlink()
+          for p in sorted(DST.rglob('*'), reverse=True):
+              if p.is_dir():
+                  try: p.rmdir()
+                  except OSError: pass
+
+          assert (DST/'index.html').exists()
+          print('Self-contained HTML pages:', len(list(DST.rglob('*.html'))))
+          PY
+      - name: Package archives
         shell: bash
         run: |
           python3 - <<'PY'
           import os, zipfile
-          root='site'
-          out='WOHNTRAUM_1ZU1_STATISCH.zip'
-          with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
-              for base, dirs, files in os.walk(root):
-                  for f in files:
-                      p=os.path.join(base,f)
-                      z.write(p, os.path.relpath(p, root))
+          def pack(root,out):
+              with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
+                  for base,dirs,files in os.walk(root):
+                      for f in files:
+                          p=os.path.join(base,f)
+                          z.write(p,os.path.relpath(p,root))
+          pack('site','WOHNTRAUM_IPFS_STATISCH.zip')
+          pack('selfcontained','WOHNTRAUM_IPFS_SELBSTSTAENDIG.zip')
+          assert os.path.isfile('selfcontained/index.html')
           PY
-      - name: Upload archive
+      - name: Upload archives
         uses: actions/upload-artifact@v4
         with:
-          name: wohntraum-static-1zu1
-          path: WOHNTRAUM_1ZU1_STATISCH.zip
+          name: wohntraum-ipfs-export
+          path: |
+            WOHNTRAUM_IPFS_STATISCH.zip
+            WOHNTRAUM_IPFS_SELBSTSTAENDIG.zip
+            selfcontained/index.html
           retention-days: 7
